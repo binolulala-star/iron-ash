@@ -68,3 +68,12 @@ Object.assign(CH_ART,{vera:{cw:62,ch:98,body:98,fr:['idle','walkA','walkB']},how
 /* generic fortress soldiers borrowed Erik's sprite: keep them generic */
 TOWN_KIND.soldier='soldier';
 {const o=hrChar;hrChar=function(kind,h){if(kind==='soldier'){const r=CHT.erik;delete CHT.erik;const s=o('erik',h);if(r)CHT.erik=r;s.kind='soldier';return s;}return o(kind,h);};}
+/* passers-by (G1–G6) + map-only variants of battle kinds */
+Object.assign(CH_ART,{folkA:{cw:64,ch:98,body:98,fr:['idle','walkA','walkB']},folkB:{cw:66,ch:98,body:98,fr:['idle','walkA','walkB']},folkC:{cw:56,ch:98,body:98,fr:['idle','walkA','walkB']},
+ keeper:{cw:64,ch:98,body:98,fr:['idle','walkA','walkB']},mp:{cw:52,ch:98,body:98,fr:['idle','walkA','walkB']},soldier:{cw:52,ch:98,body:98,fr:['idle','walkA','walkB']},
+ minermap:{cw:154,ch:98,body:98,fr:['idle','atk'],src:'miner'}});
+const MAPK={guard:'mp',miner:'minermap'};
+['folkA','folkB','folkC','keeper','mp','soldier','minermap'].forEach(kind=>{const meta=CH_ART[kind],img=new Image();img.onload=()=>{const c={};meta.fr.forEach((n,k)=>c[n]=chCanvas(img,meta,k));
+  const T={};Object.entries(c).forEach(([n,cv])=>T[n]=tex(cv));T.hurt=tex(chTilt(c.idle,-.16,-3));T.wind=tex(chTilt(c.walkB||c.idle,-.08,-2));T.win=T.idle;delete T.atk;Object.values(T).forEach(t=>t.__ch=1);CHT[kind]=T;
+  E.sprites.forEach(s=>{if(s.chKind===kind||(!s.painted&&s.kind===kind&&E.mode!=='battle')){s.kind=kind;s.painted=false;chApply(s);}});};img.src='env/ch_'+(meta.src||kind)+'.webp';});
+{const o=hrChar;hrChar=function(kind,h){const s=o(kind,h);const k=MAPK[kind]||kind;if(k!==kind||kind==='soldier'){s.chKind=k;if(chReady(k)){s.kind=k;s.painted=false;chApply(s);}}return s;};}
