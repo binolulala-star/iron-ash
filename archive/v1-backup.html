@@ -1,0 +1,1223 @@
+<title>鐵與灰的等價律</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* 柴油龐克工業儀表：油黑鋼板底、黃銅儀表框、琥珀為記憶與危險、銅綠為陣法 */
+:root{
+  --ink:#0d1216;       /* 機油黑 */
+  --plate:#161e24;     /* 鋼板 */
+  --plate-2:#1f2a31;   /* 亮鋼板 */
+  --rule:#33424b;      /* 鉚接線 */
+  --ash:#a7b0b3;       /* 灰瞳灰 */
+  --paper:#e9e3d4;     /* 文字 */
+  --brass:#c9a24a;     /* 黃銅 */
+  --amber:#e8892b;     /* 記憶琥珀 */
+  --verd:#4fb3a1;      /* 銅綠／陣法 */
+  --crimson:#c8473b;   /* 警報 */
+  --water:#3f86c7;
+  --display:"Noto Serif TC","Songti TC",serif;
+  --body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--body);overflow:hidden;
+  padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+button{font-family:var(--body);cursor:pointer}
+button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column}
+.mono{font-family:var(--mono)}
+/* ---------- Title ---------- */
+#title{align-items:center;justify-content:center;gap:28px;padding:24px max(16px,env(safe-area-inset-left,0px));
+  background:
+   radial-gradient(ellipse 60% 50% at 50% 42%, rgba(232,137,43,.16), transparent 70%),
+   repeating-linear-gradient(90deg, transparent 0 79px, rgba(201,162,74,.06) 79px 80px),
+   var(--ink)}
+.t-eyebrow{font-family:var(--mono);letter-spacing:.32em;font-size:12px;color:var(--brass);text-transform:uppercase}
+.t-name{font-family:var(--display);font-weight:900;font-size:clamp(40px,9vw,92px);line-height:1.05;margin:0;text-align:center;
+  letter-spacing:.06em;text-wrap:balance}
+.t-name em{font-style:normal;color:var(--amber)}
+.t-sub{font-family:var(--mono);color:var(--ash);font-size:13px;letter-spacing:.12em;text-align:center}
+.t-fork{width:min(420px,80vw);height:60px}
+.menu{display:flex;flex-direction:column;gap:10px;min-width:min(280px,86vw)}
+.mbtn{background:transparent;color:var(--paper);border:1px solid var(--rule);padding:12px 18px;font-size:16px;text-align:left;
+  display:flex;justify-content:space-between;align-items:center;transition:border-color .15s,background .15s}
+.mbtn:hover{border-color:var(--brass);background:rgba(201,162,74,.08)}
+.mbtn small{font-family:var(--mono);color:var(--ash);font-size:11px}
+.mbtn.primary{border-color:var(--brass);color:var(--brass)}
+.t-foot{position:absolute;bottom:calc(14px + env(safe-area-inset-bottom,0px));font-family:var(--mono);font-size:11px;color:#5d6b72}
+/* ---------- Story ---------- */
+#story{background:var(--ink)}
+.st-bg{position:absolute;inset:0;transition:background 1s}
+.st-loc{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));left:max(16px,env(safe-area-inset-left,0px));
+  font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--brass);background:rgba(13,18,22,.7);padding:6px 10px;border-left:2px solid var(--brass)}
+.st-skip{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));
+  background:rgba(13,18,22,.7);color:var(--ash);border:1px solid var(--rule);padding:6px 12px;font-size:13px}
+.st-stage{position:absolute;inset:0 0 auto 0;bottom:200px;display:flex;justify-content:space-between;align-items:flex-end;
+  padding:0 max(16px,4vw);pointer-events:none}
+.portrait{width:min(34vw,300px);transition:opacity .25s,transform .25s,filter .25s;filter:brightness(.45) saturate(.6);transform:translateY(8px)}
+.portrait.on{filter:none;transform:none}
+.portrait.right svg{transform:scaleX(-1)}
+.portrait svg{width:100%;height:auto;display:block}
+.st-box{position:absolute;left:0;right:0;bottom:0;padding:16px max(16px,4vw) calc(18px + env(safe-area-inset-bottom,0px));
+  background:linear-gradient(180deg,rgba(13,18,22,.0),rgba(13,18,22,.92) 26%);min-height:200px;cursor:pointer;
+  display:flex;flex-direction:column;justify-content:flex-end}
+.st-inner{max-width:900px;margin:0 auto;width:100%;border-top:1px solid var(--rule);padding-top:12px}
+.st-name{display:flex;gap:10px;align-items:baseline;margin-bottom:8px;min-height:24px}
+.st-name b{font-family:var(--display);font-size:20px;color:var(--brass)}
+.st-name span{font-family:var(--mono);font-size:11px;color:var(--ash);letter-spacing:.06em}
+.st-text{font-size:clamp(16px,2.2vw,19px);line-height:1.75;min-height:3.5em}
+.st-text.narr{color:var(--ash);font-style:italic}
+.st-next{font-family:var(--mono);font-size:11px;color:#6c7a80;margin-top:8px;text-align:right}
+.st-choices{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.st-choices button{background:rgba(201,162,74,.08);border:1px solid var(--brass);color:var(--paper);padding:10px 14px;text-align:left;font-size:15px}
+.fx-flash{animation:flash .9s ease-out}
+@keyframes flash{0%{background:#fff}100%{background:transparent}}
+.fx-shake{animation:shake .5s}
+@keyframes shake{0%,100%{transform:none}20%{transform:translate(-8px,3px)}40%{transform:translate(7px,-4px)}60%{transform:translate(-5px,2px)}80%{transform:translate(4px,-1px)}}
+#fxlayer{position:absolute;inset:0;pointer-events:none}
+/* ---------- Base camp ---------- */
+#base{background:
+  linear-gradient(180deg,rgba(201,162,74,.06),transparent 30%),var(--ink)}
+.bc-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:calc(12px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--rule)}
+.bc-head h2{font-family:var(--display);margin:0;font-size:22px;letter-spacing:.08em}
+.bc-head h2 small{font-family:var(--mono);font-size:11px;color:var(--ash);margin-left:10px;letter-spacing:.1em}
+.tabs{display:flex;gap:4px}
+.tab{background:transparent;border:1px solid var(--rule);color:var(--ash);padding:8px 14px;font-size:14px}
+.tab[aria-selected="true"]{border-color:var(--brass);color:var(--brass);background:rgba(201,162,74,.08)}
+.bc-body{flex:1;overflow:auto;padding:16px max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px))}
+.bc-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;max-width:1200px;margin:0 auto}
+@media (max-width:860px){.bc-grid{grid-template-columns:minmax(0,1fr)}}
+.bc-foot{display:flex;justify-content:flex-end;gap:10px;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));border-top:1px solid var(--rule)}
+.rlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
+.rcard{border:1px solid var(--rule);background:var(--plate);padding:10px 12px;text-align:left;color:var(--paper);display:flex;flex-direction:column;gap:6px;min-width:0}
+.rcard:hover:not(:disabled){border-color:var(--verd)}
+.rcard.eq{border-color:var(--brass);background:linear-gradient(180deg,rgba(201,162,74,.12),var(--plate))}
+.rcard:disabled{opacity:.38;cursor:not-allowed}
+.rcard .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.rcard .id{font-family:var(--mono);font-size:11px;color:var(--brass)}
+.rcard .nm{font-weight:700;font-size:15px}
+.rcard .meta{display:flex;gap:6px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--ash)}
+.rcard .ds{font-size:12px;color:#c3c0b5;line-height:1.5}
+.chip{border:1px solid var(--rule);padding:1px 6px;font-family:var(--mono);font-size:11px;white-space:nowrap}
+.chip.el{border-color:#3b5560;color:#bfe3dc}
+.panel{border:1px solid var(--rule);background:var(--plate);padding:14px}
+.panel h3{margin:0 0 10px;font-family:var(--display);font-size:16px;letter-spacing:.06em;color:var(--brass)}
+.slots{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.slot{border:1px dashed var(--rule);min-height:52px;padding:8px;font-size:13px;display:flex;flex-direction:column;justify-content:center}
+.slot b{font-size:13px}
+.slot .id{font-family:var(--mono);font-size:10px;color:var(--brass)}
+.mods{display:flex;flex-direction:column;gap:14px}
+.modrow h4{margin:0 0 6px;font-size:13px;color:var(--ash);font-weight:500;letter-spacing:.1em}
+.modopts{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.load{height:14px;background:var(--plate-2);border:1px solid var(--rule);position:relative;margin:6px 0 4px}
+.load i{position:absolute;inset:0 auto 0 0;background:var(--verd);transition:width .25s}
+.load.over i{background:var(--crimson)}
+.load .cap{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--paper)}
+.stat{display:grid;grid-template-columns:1fr auto;gap:2px 10px;font-size:13px}
+.stat dt{color:var(--ash)}.stat dd{margin:0;font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.note{font-size:12px;color:var(--ash);line-height:1.6}
+.warn{color:var(--crimson)}
+.btn{background:transparent;border:1px solid var(--rule);color:var(--paper);padding:9px 16px;font-size:14px}
+.btn:hover:not(:disabled){border-color:var(--brass)}
+.btn.primary{border-color:var(--brass);background:var(--brass);color:var(--ink);font-weight:700}
+.btn.primary:hover{filter:brightness(1.1)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+/* ---------- Battle ---------- */
+#battle{background:#0a0e11}
+#gl{position:absolute;inset:0;display:block;width:100%;height:100%}
+.hud-top{position:absolute;left:0;right:0;top:0;display:grid;grid-template-columns:1fr minmax(0,1.2fr) 1fr;gap:10px;
+  padding:calc(10px + env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) 10px max(12px,env(safe-area-inset-left,0px));
+  background:linear-gradient(180deg,rgba(10,14,17,.95),rgba(10,14,17,.6) 70%,transparent);pointer-events:none}
+.hud-top>*{pointer-events:auto;min-width:0}
+.env b{font-family:var(--display);font-size:15px;display:block}
+.env span{font-family:var(--mono);font-size:11px;color:var(--ash)}
+.boss{border:1px solid var(--rule);background:rgba(22,30,36,.85);padding:8px 10px}
+.boss .row{display:flex;justify-content:space-between;font-size:12px;gap:8px}
+.boss .row b{font-size:13px}
+.bar{height:8px;background:#0b1013;border:1px solid var(--rule);margin-top:4px;position:relative;overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;transition:width .35s}
+.bar.hp i{background:var(--crimson)}.bar.tg i{background:var(--brass)}
+.tags{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap}
+.tag{font-family:var(--mono);font-size:10px;border:1px solid var(--rule);padding:0 5px;color:var(--ash)}
+.tag.hot{border-color:var(--amber);color:var(--amber)}
+.guide{border-left:2px solid var(--verd);background:rgba(22,30,36,.85);padding:8px 10px;font-size:12.5px;line-height:1.55}
+.guide b{color:var(--verd);font-family:var(--mono);font-size:11px;letter-spacing:.1em;display:block;margin-bottom:2px}
+@media (max-width:760px){.hud-top{grid-template-columns:1fr 1fr}.hud-top .env{display:none}.guide{font-size:11.5px}}
+.deck{position:absolute;left:0;right:0;bottom:0;display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr) minmax(0,1.3fr);gap:10px;
+  padding:10px max(12px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));
+  background:linear-gradient(0deg,rgba(10,14,17,.97),rgba(10,14,17,.85) 80%,transparent);max-height:48vh;overflow:auto}
+@media (max-width:860px){.deck{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.deck .acts{grid-column:1/-1}}
+.ucards{display:flex;flex-direction:column;gap:6px}
+.ucard{border:1px solid var(--rule);background:var(--plate);padding:7px 9px;text-align:left;color:var(--paper)}
+.ucard.sel{border-color:var(--brass);box-shadow:inset 3px 0 0 var(--brass)}
+.ucard.dead{opacity:.4}
+.ucard .r1{display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+.ucard .r1 b{font-size:14px}
+.ap{display:flex;gap:3px}
+.ap i{width:9px;height:9px;transform:rotate(45deg);border:1px solid var(--brass)}
+.ap i.f{background:var(--brass)}
+.ucard .bar{height:6px}
+.ucard .bar i{background:var(--verd)}
+.ucard .st{font-family:var(--mono);font-size:10px;color:var(--ash);margin-top:3px;min-height:12px}
+.pool h5,.acts h5{margin:0 0 6px;font-size:11px;letter-spacing:.14em;color:var(--ash);font-weight:500}
+.els{display:flex;gap:5px;flex-wrap:wrap}
+.el{border:1px solid #2f4750;background:#122027;padding:3px 7px;font-family:var(--mono);font-size:12px;color:#cfe9e3;font-variant-numeric:tabular-nums}
+.el.zero{opacity:.35}
+.anc{margin-top:8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12px}
+.anc .shape{font-family:var(--mono);color:var(--brass)}
+.abtns{display:flex;flex-wrap:wrap;gap:6px}
+.ab{border:1px solid var(--rule);background:var(--plate);color:var(--paper);padding:6px 9px;font-size:12.5px;text-align:left;display:flex;flex-direction:column;gap:2px;min-width:0}
+.ab small{font-family:var(--mono);font-size:10px;color:var(--ash)}
+.ab:hover:not(:disabled){border-color:var(--verd)}
+.ab.on{border-color:var(--verd);background:rgba(79,179,161,.14)}
+.ab.rc{border-color:#4b5f3a}
+.ab.rc.ready{border-color:var(--brass);background:rgba(201,162,74,.1)}
+.ab:disabled{opacity:.35;cursor:not-allowed}
+.ab.forbid{border-color:#6b2a24;color:#f0b3ab}
+.ab.end{border-color:var(--brass);color:var(--brass)}
+.field-ctl{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;align-items:center}
+.strike{background:var(--amber);color:var(--ink);border:0;padding:12px 20px;font-weight:700;font-size:15px;letter-spacing:.06em}
+.strike:disabled{background:#4a3a28;color:#998a74;cursor:not-allowed}
+.banner{position:absolute;left:0;right:0;top:40%;text-align:center;pointer-events:none;font-family:var(--display);font-weight:900;
+  font-size:clamp(28px,6vw,56px);letter-spacing:.2em;color:var(--paper);text-shadow:0 0 30px rgba(232,137,43,.6);opacity:0}
+.banner.show{animation:ban 1.6s ease-out}
+@keyframes ban{0%{opacity:0;letter-spacing:.6em}20%{opacity:1;letter-spacing:.2em}75%{opacity:1}100%{opacity:0}}
+.banner small{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.3em;color:var(--brass);margin-top:6px}
+.ftxt{position:absolute;pointer-events:none;font-family:var(--mono);font-weight:600;font-size:18px;text-shadow:0 2px 6px #000;
+  transform:translate(-50%,-50%);animation:ft 1.3s ease-out forwards;white-space:nowrap}
+@keyframes ft{0%{opacity:0;margin-top:8px}15%{opacity:1}100%{opacity:0;margin-top:-46px}}
+.log{position:absolute;right:max(12px,env(safe-area-inset-right,0px));top:120px;width:240px;max-height:30vh;overflow:hidden;
+  display:flex;flex-direction:column;gap:3px;pointer-events:none}
+.log div{font-size:11.5px;background:rgba(13,18,22,.8);border-left:2px solid var(--rule);padding:3px 7px;animation:lg 6s forwards}
+@keyframes lg{0%{opacity:0}5%{opacity:1}80%{opacity:1}100%{opacity:0}}
+@media (max-width:760px){.log{display:none}}
+.grey{filter:grayscale(1) contrast(1.2)}
+.overlay{position:absolute;inset:0;background:rgba(10,14,17,.86);display:flex;align-items:center;justify-content:center;padding:20px}
+.overlay .card{border:1px solid var(--brass);background:var(--plate);padding:24px;max-width:460px;width:100%;display:flex;flex-direction:column;gap:12px}
+.overlay h3{margin:0;font-family:var(--display);font-size:26px;letter-spacing:.1em}
+.overlay p{margin:0;line-height:1.7;color:#cfcabd}
+.overlay .row{display:flex;gap:8px;flex-wrap:wrap}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition:none!important}}
+</style>
+
+<!-- ======================= TITLE ======================= -->
+<section id="title" class="screen">
+  <div class="t-eyebrow">The Law of Iron &amp; Ash · Ver 2.0</div>
+  <h1 class="t-name">鐵與灰的<em>等價律</em></h1>
+  <svg class="t-fork" viewBox="0 0 420 60" aria-hidden="true">
+    <path d="M0 30 H150" stroke="#33424b" stroke-width="1"/>
+    <path d="M270 30 H420" stroke="#33424b" stroke-width="1"/>
+    <path d="M150 30 H180 M180 22 V38 M180 22 H240 M180 38 H240" stroke="#c9a24a" stroke-width="3" fill="none"/>
+    <path id="wave" d="M240 30 Q250 18 260 30 T280 30" stroke="#e8892b" stroke-width="2" fill="none"/>
+    <text x="210" y="56" fill="#a7b0b3" font-family="IBM Plex Mono,monospace" font-size="10" text-anchor="middle">440 Hz</text>
+  </svg>
+  <div class="t-sub">理解成分 · 分解晶格 · 幾何再構築</div>
+  <div class="menu">
+    <button class="mbtn primary" id="m-new">開始遊戲 <small>序幕 → 第一章</small></button>
+    <button class="mbtn" id="m-base">整備基地 <small>手札／工坊</small></button>
+    <button class="mbtn" id="m-battle">直接進入第一章戰鬥 <small>略過劇情</small></button>
+  </div>
+  <div class="t-foot">試作版：序幕＋第一章 · 第三蒸氣機庫</div>
+</section>
+
+<!-- ======================= STORY ======================= -->
+<section id="story" class="screen" hidden>
+  <div class="st-bg" id="st-bg"></div>
+  <div class="st-loc" id="st-loc"></div>
+  <button class="st-skip" id="st-skip">跳過這段 ›</button>
+  <div class="st-stage">
+    <div class="portrait" id="pt-l"></div>
+    <div class="portrait right" id="pt-r"></div>
+  </div>
+  <div class="st-box" id="st-box">
+    <div class="st-inner">
+      <div class="st-name" id="st-name"></div>
+      <div class="st-text" id="st-text"></div>
+      <div class="st-choices" id="st-choices"></div>
+      <div class="st-next" id="st-next">點擊或按空白鍵繼續</div>
+    </div>
+  </div>
+  <div id="fxlayer"></div>
+</section>
+
+<!-- ======================= BASE ======================= -->
+<section id="base" class="screen" hidden>
+  <div class="bc-head">
+    <h2>戰前整備基地<small>BASE CAMP · CH.1</small></h2>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-r" aria-selected="true">萊恩・陣法研究手札</button>
+      <button class="tab" role="tab" id="tab-w" aria-selected="false">克蕾雅・機械鎧工坊</button>
+    </div>
+  </div>
+  <div class="bc-body" id="bc-body"></div>
+  <div class="bc-foot">
+    <button class="btn" id="bc-back">回到標題</button>
+    <button class="btn primary" id="bc-go">攜帶目前配裝出擊</button>
+  </div>
+</section>
+
+<!-- ======================= BATTLE ======================= -->
+<section id="battle" class="screen" hidden>
+  <canvas id="gl"></canvas>
+  <div class="hud-top">
+    <div class="env"><b id="h-ch">第一章 · 第三蒸氣機庫</b><span id="h-env">環境 38°C · 濕度 92% · 地面 L0</span></div>
+    <div class="boss">
+      <div class="row"><b>重裝蒸氣警衛機甲</b><span class="mono" id="h-cell">[L0] (4,3)</span></div>
+      <div class="row mono"><span>HP</span><span id="h-hp">500 / 500</span></div>
+      <div class="bar hp"><i id="b-hp" style="width:100%"></i></div>
+      <div class="row mono" style="margin-top:4px"><span>外裝甲韌性</span><span id="h-tg">100 / 100</span></div>
+      <div class="bar tg"><i id="b-tg" style="width:100%"></i></div>
+      <div class="tags" id="h-tags"></div>
+    </div>
+    <div class="guide"><b id="g-head">戰術指南</b><span id="g-text"></span></div>
+  </div>
+  <div class="log" id="log"></div>
+  <div class="field-ctl" id="field-ctl">
+    <button class="strike" id="strike" disabled>重擊冷卻水箱</button>
+  </div>
+  <div class="deck" id="deck" hidden>
+    <div class="ucards" id="ucards"></div>
+    <div class="pool">
+      <h5>物質暫存庫</h5>
+      <div class="els" id="els"></div>
+      <div class="anc" id="anc"></div>
+    </div>
+    <div class="acts">
+      <h5 id="acts-h">行動</h5>
+      <div class="abtns" id="abtns"></div>
+    </div>
+  </div>
+  <div class="banner" id="banner"></div>
+  <div id="ftl"></div>
+</section>
+
+<div id="ov"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+"use strict";
+/* =========================================================
+   DATA
+   ========================================================= */
+const EL = {Si:'土石',Fe:'純鐵',H2O:'水',C:'碳油',Acid:'強酸',Al:'鋁',Mg:'鎂',NaCl:'鹽',P:'磷',Org:'有機物'};
+const ELF = {Si:'Si',Fe:'Fe',H2O:'H₂O',C:'C',Acid:'H⁺',Al:'Al',Mg:'Mg',NaCl:'NaCl',P:'P',Org:'Org'};
+const SHAPE = {1:'1 點・單格',2:'2 點・直線',3:'3 點・三角',4:'4 點・四方',8:'8 點・八邊形'};
+const RECIPES = [
+ ['R01','石英穿刺矛',1,['Si','Si'],1,1,'對錨點 3 格內的目標刺出石英，75 穿刺傷並削減 20 外裝甲'],
+ ['R02','高碳鋼重刃強化',1,['Fe','C'],1,1,'克蕾雅下次攻擊傷害與破甲效率 +100%'],
+ ['R03','緊急蒸氣煙幕',1,['H2O','C'],1,1,'清除全隊負面狀態並回復 50 HP'],
+ ['R04','強酸破甲飛沫',1,['Acid','H2O'],1,1,'錨點 3 格內目標：削減 65 外裝甲，45 酸蝕傷'],
+ ['R05','防爆石牆',2,['Si','Si'],1,1,'沿兩點連線升起石牆，阻擋機甲移動與砲擊'],
+ ['R06','高壓電弧鐵絲網',2,['Fe','H2O'],2,1,'連線上或相鄰的敵人：95 電擊傷並麻痺 1 回合'],
+ ['R07','凝固汽油火牆',2,['C','C'],1,1,'連線上 110 火傷；碰到氫氧氣雲立即引爆'],
+ ['R08','鋼鐵捕獸枷・改',3,['Fe','Fe'],2,1,'陣內敵人：80 傷害並完全定身 2 回合'],
+ ['R09','高壓電解氫氧雲',3,['H2O','Fe'],2,1,'陣內積水電解為 2H₂+O₂ 氣雲，遇火引爆 380 真實傷'],
+ ['R10','鋁熱劑高溫熔爐',3,['Al','Fe'],2,1,'鋁粉還原鐵鏽，2500°C：陣內敵人外裝甲歸零（BREAK）＋60 傷'],
+ ['R11','矽藻流沙陷坑',3,['Si','H2O'],2,1,'陣內敵人定身 2 回合，削減 50 外裝甲'],
+ ['R12','王水腐蝕毒霧陣',3,['Acid','Fe'],2,1,'陣內敵人 160 真實毒傷'],
+ ['R13','法拉第電磁穹頂',4,['Fe','Si'],2,1,'全隊回滿 HP 並清除負面狀態'],
+ ['R14','真空抽氧窒息室',4,['C','Acid'],2,1,'陣內敵人 240 無視防禦傷害'],
+ ['R15','超載諧振・強制逆構',4,['Org','Fe'],0,1,'禁忌：常駐於戰鬥列，不需裝備'],
+ ['R16','地殼隆起・升降岩柱',1,['Si','Fe'],1,2,'目標網格升高 1 層'],
+ ['R17','極寒折射・冰晶稜鏡陣',3,['H2O','Si'],2,2,'185 折射傷，全隊反射護盾'],
+ ['R18','勞倫茲力・電磁軌道砲',2,['Fe','Fe'],2,3,'180 貫穿傷，擊退 3 格'],
+ ['R19','伯努利・暴風氣旋障壁',3,['H2O','C'],2,3,'免疫強風；陣內敵人浮空 1 回合'],
+ ['R20','鎂光閃焰・白晝照明彈',1,['Mg','Mg'],1,4,'照亮 5×5 漆黑區，致盲 2 回合'],
+ ['R21','逆向諧振・神經剝離陣',3,['Fe','Org'],2,4,'停機琥珀植入物，剝離控制晶片'],
+ ['R22','阿基米德・聚焦太陽熱線',2,['Si','C'],2,5,'120 火傷；經青銅鏡折射升至 200'],
+ ['R23','亥姆霍茲・逆相位消音陣',3,['Fe','Si'],2,5,'封鎖同步復活與吟唱 2 回合'],
+ ['R24','伯努利・跨谷上升氣流橋',2,['H2O','Si'],1,5,'滑翔越過深淵'],
+ ['R25','氯鹼工業・食鹽水電解陣',3,['H2O','Acid'],2,6,'電解海水產生氯氣，240 真實腐蝕傷'],
+ ['R26','戴維法・純鈉金屬水雷',2,['NaCl','C'],2,6,'碳電極電解熔融海鹽，遇水爆炸 320 傷'],
+ ['R27','非晶質・強化玻璃壁壘',4,['Si','C'],3,6,'免疫錫疫與強酸的玻璃穹頂'],
+ ['R28','法拉第・反重力磁浮矩陣',4,['Fe','Si'],3,7,'中和重力壓制，全隊移動 +2'],
+ ['R29','白磷閃燃・無死角封鎖陣',3,['P','C'],2,7,'220 真實灼燒，架勢崩潰 2 回合'],
+ ['R30','麥克斯韋・逆熵歸還大陣',8,['音叉','八基座'],0,8,'歸還兩千萬國民記憶'],
+].map(r=>({id:r[0],name:r[1],n:r[2],el:r[3],ap:r[4],ch:r[5],desc:r[6]}));
+const RBY = Object.fromEntries(RECIPES.map(r=>[r.id,r]));
+const MODS = {
+ frame:{label:'主骨架',opts:[
+  {id:'F1',name:'制式黑鐵骨架',load:20,hp:30,arm:20,atk:0,mv:0,skill:'穩固重心：免疫擊退'},
+  {id:'F2',name:'航空杜拉鋁輕骨架',load:10,hp:0,arm:0,atk:10,mv:2,skill:'疾風走位：每回合首次移動 0 AP'},
+  {id:'F3',name:'重型鎢鋼防爆骨架',load:45,hp:80,arm:60,atk:0,mv:-1,skill:'鎢鋼重甲：受到的傷害再減半'}]},
+ weapon:{label:'腕部兵裝',opts:[
+  {id:'W1',name:'高壓蒸氣打樁機',load:25,hp:0,arm:10,atk:45,mv:0,skill:'震盪重錘（1 AP）：相鄰，削 35 裝甲並擊退 1 格'},
+  {id:'W2',name:'內藏式燧發火銃',load:20,hp:0,arm:0,atk:35,mv:0,skill:'打火石點火（1 AP）：射程 4，引爆氣雲或射擊'},
+  {id:'W3',name:'高頻震動鍊金刃',load:35,hp:0,arm:0,atk:65,mv:0,skill:'解剖斬擊（1 AP）：對定身／破甲目標必暴擊，削落 Fe×2'}]},
+ util:{label:'掌部輔助',opts:[
+  {id:'U1',name:'氣動定點樁發射器',load:15,hp:0,arm:0,atk:10,mv:0,skill:'遠程釘樁（1 AP）：4 格內任意網格釘下錨點'},
+  {id:'U2',name:'工業電磁吸盤模組',load:25,hp:0,arm:10,atk:15,mv:0,skill:'隔空取物（1 AP）：吸取 4 格內廢鐵與碎石，腳下刻錨點'},
+  {id:'U3',name:'液態氮急速冷凍噴嘴',load:30,hp:10,arm:15,atk:20,mv:0,skill:'瞬間急凍（1 AP）：相鄰敵人定身 1 回合，周圍化為融水'}]},
+ core:{label:'動力爐心',opts:[
+  {id:'C1',name:'雙缸微型蒸氣鍋爐',load:20,hp:20,arm:10,atk:10,mv:0,skill:'蒸氣洩壓（0 AP）：每回合一次，全隊回復 30 HP'},
+  {id:'C2',name:'高轉速發條儲能匣',load:15,hp:0,arm:0,atk:5,mv:0,skill:'先手突襲：第 1 回合額外 +2 AP'},
+  {id:'C3',name:'試作型記憶琥珀核心',load:40,hp:0,arm:25,atk:60,mv:1,skill:'赤紅超載：傷害 +50%，每次施放技能扣 8 HP'}]},
+};
+const MODBY = {}; Object.values(MODS).forEach(g=>g.opts.forEach(o=>MODBY[o.id]=o));
+
+/* ---------- save ---------- */
+const SAVE_KEY='iron-ash-v2';
+let save = {equip:['R09','R08','R06','R10'],mods:{frame:'F1',weapon:'W2',util:'U1',core:'C2'},cap:100,cleared:false};
+try{const s=JSON.parse(localStorage.getItem(SAVE_KEY)||'null'); if(s&&s.equip&&s.mods) save=Object.assign(save,s);}catch(e){}
+function persist(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(save));}catch(e){}}
+
+/* =========================================================
+   SCREEN ROUTER
+   ========================================================= */
+const $=id=>document.getElementById(id);
+function show(id){['title','story','base','battle'].forEach(s=>$(s).hidden=(s!==id)); $('ov').innerHTML='';}
+
+/* =========================================================
+   PORTRAITS (procedural SVG)
+   ========================================================= */
+function face({skin,hair,hairBack,eyeL,eyeR,coat,collar,expr,extra,brow='#2a2420'}){
+  const mouths={
+    neutral:'M88 150 Q100 153 112 150',
+    grin:'M84 146 Q100 162 116 146 Q100 154 84 146 Z',
+    smirk:'M88 151 Q102 152 114 144',
+    angry:'M86 154 Q100 146 114 154',
+    open:'M88 148 Q100 166 112 148 Q100 156 88 148 Z',
+    sad:'M88 154 Q100 147 112 154',
+    soft:'M88 149 Q100 156 112 149'};
+  const m = mouths[expr.mouth||'neutral'];
+  const browL = expr.brow==='angry'?'M70 104 L92 112':expr.brow==='sad'?'M70 110 L92 104':'M70 106 L92 106';
+  const browR = expr.brow==='angry'?'M130 104 L108 112':expr.brow==='sad'?'M130 110 L108 104':'M130 106 L108 106';
+  return `<svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
+   ${hairBack||''}
+   <path d="M40 260 Q44 196 100 188 Q156 196 160 260 Z" fill="${coat}"/>
+   ${collar||''}
+   <rect x="88" y="168" width="24" height="24" fill="${skin}"/>
+   <ellipse cx="100" cy="125" rx="40" ry="48" fill="${skin}"/>
+   <path d="${browL}" stroke="${brow}" stroke-width="4" stroke-linecap="round"/>
+   <path d="${browR}" stroke="${brow}" stroke-width="4" stroke-linecap="round"/>
+   <ellipse cx="81" cy="124" rx="8" ry="${expr.closed?1.5:7}" fill="${eyeL}"/>
+   <ellipse cx="119" cy="124" rx="8" ry="${expr.closed?1.5:7}" fill="${eyeR}"/>
+   ${expr.closed?'':`<circle cx="83" cy="121" r="2" fill="#fff" opacity=".8"/><circle cx="121" cy="121" r="2" fill="#fff" opacity=".8"/>`}
+   <path d="${m}" stroke="#4a2a24" stroke-width="3" fill="${/Z$/.test(m)?'#5a2a24':'none'}" stroke-linecap="round"/>
+   ${expr.blush?'<ellipse cx="74" cy="140" rx="9" ry="4" fill="#e06a6a" opacity=".45"/><ellipse cx="126" cy="140" rx="9" ry="4" fill="#e06a6a" opacity=".45"/>':''}
+   ${expr.tear?'<path d="M76 132 Q73 142 76 148 Q80 142 76 132" fill="#9fd4ff"/>':''}
+   ${hair}
+   ${extra||''}
+  </svg>`;
+}
+const EXPR={
+  Default_Cold:{mouth:'neutral'}, Cynical_Smirk:{mouth:'smirk'}, AshEye_Overload:{mouth:'angry',brow:'angry',ash:true},
+  Fork_Gaze:{mouth:'soft',brow:'sad'}, Combat_Roar:{mouth:'open',brow:'angry'}, Epilogue_Color:{mouth:'soft'},
+  Default_Grin:{mouth:'grin'}, Angry_Steam:{mouth:'angry',brow:'angry',steam:true}, Memory_Headache:{mouth:'sad',brow:'sad',closed:true,quartz:true},
+  Gear_Nerd:{mouth:'grin'}, Teary_Fierce:{mouth:'angry',brow:'angry',tear:true}, Blush_LookAway:{mouth:'soft',blush:true},
+  Smile:{mouth:'smirk'}, Hurt:{mouth:'sad',brow:'sad'}, Neutral:{mouth:'neutral'}
+};
+function portrait(who,exprName){
+  const e=EXPR[exprName]||EXPR.Neutral;
+  if(who==='ryan'){
+    const lattice = `<g stroke="#e9e3d4" stroke-width=".6" opacity="${e.ash?1:.55}"><path d="M111 118 L127 118 M111 124 L127 124 M111 130 L127 130 M114 116 L114 132 M120 116 L120 132 M126 116 L126 132"/></g>`;
+    return face({skin:'#e8cbb0',coat:'#22344a',eyeL:'#c8892d',eyeR:'#8f989b',expr:e,
+      hair:'<path d="M58 118 Q56 70 100 66 Q148 66 144 118 Q138 92 120 90 Q112 104 96 92 Q84 104 70 96 Q62 104 58 118 Z" fill="#14171b"/>',
+      collar:'<path d="M70 196 L100 230 L130 196 L120 190 L100 214 L80 190 Z" fill="#162434"/><circle cx="128" cy="226" r="12" fill="#b88a36" stroke="#e2c27a" stroke-width="2"/><path d="M128 226 L134 219" stroke="#1b1b1b" stroke-width="2"/>',
+      extra: lattice + (e.ash?'<path d="M119 132 L118 150" stroke="#cfd6d8" stroke-width="2.4"/><circle cx="119" cy="124" r="13" fill="none" stroke="#e9e3d4" stroke-width="1" opacity=".7"/>':'') +
+        (exprName==='Fork_Gaze'||exprName==='Combat_Roar'?'<g transform="translate(150 150)"><rect x="-3" y="20" width="6" height="40" fill="#2b2b2b"/><rect x="-10" y="-20" width="5" height="44" fill="#c9cdd0"/><rect x="5" y="-20" width="5" height="44" fill="#c9cdd0"/><rect x="-10" y="18" width="20" height="6" fill="#2b2b2b"/></g>':'')});
+  }
+  if(who==='claire'){
+    const steam = e.steam?'<g fill="#e9e3d4" opacity=".55"><circle cx="40" cy="200" r="10"/><circle cx="30" cy="186" r="7"/><circle cx="22" cy="172" r="5"/></g>':'';
+    return face({skin:'#f0d2b8',coat:'#3a2a22',eyeL:'#2f9a6a',eyeR:'#2f9a6a',expr:e,brow:'#8a2a1a',
+      hairBack:'<path d="M130 80 Q178 90 170 170 Q160 140 146 120 Z" fill="#c2382a"/>',
+      hair:'<path d="M58 120 Q54 66 100 64 Q146 66 142 120 Q134 90 100 84 Q70 90 58 120 Z" fill="#c2382a"/><rect x="66" y="80" width="68" height="12" rx="6" fill="#8a6a2a"/><circle cx="84" cy="86" r="9" fill="#d9b25a" stroke="#5a4520" stroke-width="2"/><circle cx="116" cy="86" r="9" fill="#d9b25a" stroke="#5a4520" stroke-width="2"/>',
+      collar:`<path d="M40 260 Q40 206 64 194 L78 260 Z" fill="#2a2a2e"/><circle cx="62" cy="214" r="9" fill="#5a4520"/><circle cx="62" cy="214" r="5" fill="${e.quartz?'#bfe9ff':'#6fb7e0'}"/><rect x="44" y="226" width="22" height="34" fill="#3a3a40"/><rect x="48" y="232" width="14" height="6" fill="#c9a24a"/>`,
+      extra:steam+(e.quartz?'<circle cx="62" cy="214" r="16" fill="none" stroke="#bfe9ff" stroke-width="2" opacity=".8"/>':'')});
+  }
+  if(who==='vera'){
+    return face({skin:'#e9e6ea',coat:'#0c0c10',eyeL:'#8c8f9a',eyeR:'#8c8f9a',expr:e,brow:'#222',
+      hairBack:'<path d="M54 110 Q40 200 60 250 L80 250 Q70 180 76 120 Z M146 110 Q160 200 140 250 L120 250 Q130 180 124 120 Z" fill="#b9c0c8"/>',
+      hair:'<path d="M56 124 Q52 64 100 62 Q148 64 144 124 Q132 82 100 80 Q68 82 56 124 Z" fill="#cfd4da"/>',
+      collar:'<path d="M70 196 L100 214 L130 196 L130 260 L70 260 Z" fill="#1a1a22"/>',
+      extra:'<g fill="#cfd4da"><ellipse cx="62" cy="252" rx="4" ry="7"/><ellipse cx="138" cy="246" rx="4" ry="7"/></g><path d="M86 150 Q100 156 114 150" stroke="#6a2a3a" stroke-width="3" fill="none"/>'});
+  }
+  if(who==='howard'){
+    return face({skin:'#e2c4a6',coat:'#d8d4ca',eyeL:'#4a3a2a',eyeR:'#4a3a2a',expr:e,
+      hair:'<path d="M60 112 Q62 72 100 70 Q138 72 140 112 Q130 88 100 86 Q70 88 60 112 Z" fill="#8a8a86"/><g fill="none" stroke="#3a3a3a" stroke-width="2.5"><circle cx="81" cy="124" r="12"/><circle cx="119" cy="124" r="12"/><path d="M93 124 H107"/></g>',
+      collar:'<path d="M84 196 L100 220 L116 196" fill="#f2efe8"/><path d="M96 236 Q104 246 112 240" fill="#8a2a24"/>'});
+  }
+  return '';
+}
+
+/* =========================================================
+   STORY ENGINE
+   ========================================================= */
+const BG={
+  reactor:'radial-gradient(circle at 50% 38%, rgba(190,140,255,.55), rgba(90,40,140,.35) 22%, transparent 48%), linear-gradient(180deg,#1a1022,#0b0b12)',
+  train:'linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.7)), repeating-linear-gradient(90deg,#26323a 0 120px,#1a2329 120px 128px), linear-gradient(180deg,#56606a 0 38%,#2a3238 38% 100%)',
+  sewer:'radial-gradient(ellipse at 50% 80%, rgba(120,200,90,.18), transparent 60%), linear-gradient(180deg,#141a14,#0a0d0a)',
+  hangar:'radial-gradient(ellipse at 50% 30%, rgba(232,137,43,.35), transparent 55%), repeating-linear-gradient(90deg,#1b2228 0 60px,#141a1f 60px 62px)',
+  aftermath:'radial-gradient(ellipse at 50% 40%, rgba(232,137,43,.5), transparent 50%), linear-gradient(180deg,#22160f,#0c0a09)',
+  black:'#000'
+};
+const SCENES = {
+ prologue:[
+  {loc:'場景 0-1｜中央學院城・地下零號共振爐（三年前・11 月 11 日）',bg:'reactor',fx:'shake'},
+  {n:'警報與蓋革計數器般的咔噠聲。直徑十公尺的零號逆熵共振爐正發生紫白色的空間扭曲。防爆玻璃全部震碎，霍華德教授倒在控制台前，胸口中了一槍。'},
+  {who:'howard',e:'Hurt',side:'r',t:'萊恩……別算了！亞伯特抽走了爐心的阻尼棒，他想引爆零號爐，把整座學院城三十萬人的記憶結晶化來收集樣本！快帶著克蕾雅從排氣井逃走……'},
+  {who:'ryan',e:'Combat_Roar',side:'l',t:'逃不掉的，老師！距離臨界只剩二十秒。只要在主接地端接入一個有分子解析腦波的「活體電阻」，配合這支逆相音叉對沖頻率，就能把爆炸壓縮在這個房間裡！'},
+  {who:'claire',e:'Teary_Fierce',side:'r',t:'萊恩！！你瘋了嗎？！用肉體當接地電阻，你的大腦跟內臟會在一秒鐘內全部結晶化的！給我放手——！！'},
+  {n:'萊恩左手握住赤紅發亮的接地桿，右手把黑銀音叉敲在爐心外殼上。',fx:'flash'},
+  {n:'嗡————！！灰白色的結晶波順著他的左臂狂湧而上，左眼在半秒內失去了所有色彩。克蕾雅撲上去想把他撞開，次級結晶波正面掃過她的右臂。',fx:'shake'},
+  {who:'claire',e:'Memory_Headache',side:'r',t:'啊——！！我的右手變成石頭了……好冷……腦袋裡好冷……躺在地上那個流血的男人是誰？'},
+  {who:'ryan',e:'AshEye_Overload',side:'l',t:'給我……停下來啊啊啊——！！'},
+  {n:'一聲琉璃碎裂般的巨響。強光吞沒了一切。',fx:'flash',bg:'black'},
+  {loc:'場景 0-2｜前往東部礦區奧姆鎮的裝甲列車（現在）',bg:'train'},
+  {n:'規律的鐵軌聲。萊恩輕敲音叉，清越的 440 赫茲泛音在車廂裡迴盪，胸前的黃銅差動氣壓計微微顫動。'},
+  {who:'claire',e:'Default_Grin',side:'r',t:'喂，少校大人，別再敲你那支破音叉了，聽得我右肩那塊「石頭」又開始發麻。三年前全實驗室就活下來我們兩個——你的左眼變成人形顯微鏡，我卻少了一隻手，還忘了自己老爸長什麼樣子。'},
+  {who:'ryan',e:'Default_Cold',side:'l',t:'妳右肩那塊記憶結晶的分子結構很穩定。只要找到當年被抽走的原始阻尼波長，我就能把它解凍。在那之前，別隨便把機械鎧的蒸氣壓力開到紅線區，准尉。'},
+  {who:'claire',e:'Angry_Steam',side:'r',t:'安啦！本小姐自己打造的赫菲斯托斯，公差不到千分之一毫米！倒是奧姆鎮的礦工失聯了一個禮拜，葛蘭將軍卻只派我們兩個人來查——這裡面肯定有鬼。'},
+  {who:'ryan',e:'Cynical_Smirk',side:'l',t:'葛蘭上將沒有三倍的利益連眼皮都不會抬。他把我們支開首都，要嘛這裡藏著他不想讓憲兵隊知道的東西，要嘛他根本不希望我們回去。'},
+  {n:'列車緊急煞車。數十名眼神空洞、掛著詭異微笑的礦工動作整齊劃一，用焊槍切割車門。',fx:'shake'},
+  {who:'ryan',e:'AshEye_Overload',side:'l',t:'……不是罷工暴動。克蕾雅，看他們的眼睛——痛覺神經跟近期記憶都被抽乾了。是一群被挖空腦子的「工蜂」。'},
+ ],
+ ch1a:[
+  {loc:'第一章｜鏽鐵城鎮的無聲悲鳴',bg:'sewer'},
+  {n:'兩人用石牆封住失常的礦工，進入奧姆鎮。數千名礦工像夢遊一樣排隊走進第三蒸氣機庫，出來時全成了只會傻笑挖礦、手指斷了也不覺得痛的空殼。'},
+  {n:'他們用碳酸鈣中和地下水道的強酸，在廢棄診療室找到霍華德三年前留下的字條：「奧姆鎮的蒸氣機不在發電。他們在抽取工人的記憶與痛覺，提煉一種名為記憶琥珀的演算燃料。」'},
+  {loc:'場景 1-2｜第三蒸氣機庫',bg:'hangar'},
+  {n:'機庫中央矗立著離心式記憶抽取塔。數百名礦工戴著頭盔坐在椅子上，金紅色的黏稠液體順著玻璃管匯入儲油槽。'},
+  {who:'vera',e:'Smile',side:'r',t:'看看這些礦工，以前每天為了工資爭吵不休，多麼混亂啊。我們幫他們把痛苦的記憶抽出來，他們成了不會痛的快樂工蜂；而這台裝了五百名鐵匠記憶的機甲，擁有了宗師級的戰鬥反應——這不是最完美的工業升級嗎，萊恩少校？'},
+  {who:'claire',e:'Angry_Steam',side:'l',t:'把活生生的人當成榨油的芝麻，還敢說什麼工業升級？！老娘今天就把妳連同那台破銅爛鐵一起拆成廢料！！'},
+  {n:'ヴェラ化成一灘水銀鑽進通風管。四公尺高的重裝蒸氣警衛機甲亮起紅眼，開始沿著機庫來回巡邏。'},
+  {who:'ryan',e:'AshEye_Overload',side:'r',t:'它正面是高碳複合裝甲，硬砍沒用。克蕾雅，趁它背對妳的時候繞到後面，砸爛那個藍色的高壓冷卻水箱，讓地面鋪滿積水。我分解兩側的廢鐵連出三角陣，用高壓電解把它炸開。'},
+  {who:'claire',e:'Default_Grin',side:'l',t:'水箱交給我，陣法交給你。出發前先讓我檢查一下手臂的配裝！'},
+ ],
+ ch1b:[
+  {loc:'場景 1-3｜記憶回流與音叉共鳴',bg:'aftermath'},
+  {n:'機甲在氣爆中解體。ヴェラ在遠處引爆了抽取塔的洩壓閥，高溫強酸蒸氣即將灌進底層的礦工拘留區。機甲殘骸裡滾出一枚完好的核心記憶琥珀。',fx:'shake'},
+  {who:'ryan',e:'Fork_Gaze',side:'l',t:'這枚核心琥珀裡有完整的逆向解晶波長。現在接進妳右肩，妳父親的記憶馬上就能解凍。但要救底下五百個礦工，我得把它投進抽取塔逆轉幫浦——琥珀會當場燒毀。'},
+  {choice:[
+    {t:'把琥珀接入克蕾雅的右肩',go:'self'},
+    {t:'把琥珀投入抽取塔逆轉幫浦',go:'pump'}]},
+ ],
+ ch1self:[
+  {who:'claire',e:'Teary_Fierce',side:'r',t:'你在說什麼傻話！'},
+  {n:'克蕾雅一腳把琥珀踢回萊恩手裡。'},
+ ],
+ ch1end:[
+  {who:'claire',e:'Teary_Fierce',side:'r',t:'我老爸要是看到我為了自己的記憶，讓五百個人一輩子當沒有靈魂的傻子，他就算從棺材裡爬出來也會拿扳手敲死我！給我扔進去，少校！！'},
+  {n:'萊恩把琥珀拍進抽取塔基座。金紅色的記憶光流倒灌回礦工腦中，他們一個接一個抱著頭醒過來。',fx:'flash'},
+  {n:'琥珀燒毀的最後一瞬間，音叉受到次聲波共鳴，表面浮現一段只有灰瞳看得見的駐波刻度。'},
+  {who:'ryan',e:'Fork_Gaze',side:'l',t:'……指向北方。白銀之顎要塞。'},
+  {who:'claire',e:'Blush_LookAway',side:'r',t:'那還等什麼。先說好，北方很冷，我的手臂要是凍住了，你負責烤火。'},
+ ],
+};
+let story={list:[],i:0,onEnd:null,typing:false,full:''};
+let typeTimer=null;
+function playScene(list,onEnd){
+  show('story'); story={list:list.slice(),i:0,onEnd,typing:false,full:''};
+  $('pt-l').innerHTML='';$('pt-r').innerHTML='';
+  step();
+}
+function setBg(k){ $('st-bg').style.background=BG[k]||BG.black; }
+function fx(kind){
+  const L=$('fxlayer');
+  if(kind==='flash'){L.classList.remove('fx-flash');void L.offsetWidth;L.classList.add('fx-flash');}
+  if(kind==='shake'){const s=$('story');s.classList.remove('fx-shake');void s.offsetWidth;s.classList.add('fx-shake');}
+}
+const NAMES={ryan:'萊恩',claire:'克蕾雅',vera:'ヴェラ（水銀）',howard:'霍華德教授'};
+function step(){
+  clearInterval(typeTimer);
+  $('st-choices').innerHTML='';
+  if(story.i>=story.list.length){ const f=story.onEnd; story.onEnd=null; f&&f(); return; }
+  const L=story.list[story.i];
+  if(L.bg) setBg(L.bg);
+  if(L.loc!==undefined){ $('st-loc').textContent=L.loc; }
+  if(L.fx) fx(L.fx);
+  if(L.loc && !L.n && !L.who && !L.choice){ story.i++; return step(); }
+  if(L.choice){
+    $('st-name').innerHTML='<b>抉擇</b>';
+    $('st-text').className='st-text'; $('st-text').textContent='';
+    $('st-next').textContent='';
+    L.choice.forEach(c=>{const b=document.createElement('button');b.textContent=c.t;b.onclick=(ev)=>{ev.stopPropagation();
+      const rest=story.list.slice(story.i+1); const seq=(c.go==='self'?SCENES.ch1self:[]).concat(SCENES.ch1end).concat(rest);
+      story.list=seq; story.i=0; step();};$('st-choices').appendChild(b);});
+    return;
+  }
+  $('st-next').textContent='點擊或按空白鍵繼續';
+  if(L.who){
+    const slot=L.side==='r'?'pt-r':'pt-l', other=L.side==='r'?'pt-l':'pt-r';
+    $(slot).innerHTML=portrait(L.who,L.e); $(slot).classList.add('on'); $(other).classList.remove('on');
+    $('st-name').innerHTML=`<b>${NAMES[L.who]}</b><span>[${L.e}]</span>`;
+    $('st-text').className='st-text';
+  }else{
+    $('st-name').innerHTML=''; $('pt-l').classList.remove('on'); $('pt-r').classList.remove('on');
+    $('st-text').className='st-text narr';
+  }
+  const txt=L.who?`「${L.t}」`:L.n; story.full=txt; story.typing=true;
+  let k=0; const el=$('st-text'); el.textContent='';
+  const speed = matchMedia('(prefers-reduced-motion: reduce)').matches?1000:2;
+  typeTimer=setInterval(()=>{k+=speed;el.textContent=txt.slice(0,k);if(k>=txt.length){clearInterval(typeTimer);story.typing=false;}},22);
+}
+function advance(){
+  if($('story').hidden) return;
+  const L=story.list[story.i]; if(!L||L.choice) return;
+  if(story.typing){clearInterval(typeTimer);$('st-text').textContent=story.full;story.typing=false;return;}
+  story.i++; step();
+}
+$('st-box').addEventListener('click',advance);
+$('st-skip').addEventListener('click',e=>{e.stopPropagation();
+  const ci=story.list.findIndex((l,i)=>i>=story.i&&l.choice);
+  if(ci>=0){story.i=ci;step();}else{story.i=story.list.length;step();}});
+document.addEventListener('keydown',e=>{ if((e.key===' '||e.key==='Enter')&&!$('story').hidden){e.preventDefault();advance();} });
+
+/* =========================================================
+   BASE CAMP
+   ========================================================= */
+let baseTab='r', baseReturn=null;
+const CHAPTER=1;
+function claireStats(mods){
+  let s={hp:200,arm:0,atk:30,mv:3,load:0};
+  Object.values(mods).forEach(id=>{const m=MODBY[id];s.hp+=m.hp;s.arm+=m.arm;s.atk+=m.atk;s.mv+=m.mv;s.load+=m.load;});
+  return s;
+}
+function openBase(onGo){
+  baseReturn=onGo||null; show('base'); renderBase();
+}
+function renderBase(){
+  $('tab-r').setAttribute('aria-selected',baseTab==='r'); $('tab-w').setAttribute('aria-selected',baseTab==='w');
+  const B=$('bc-body');
+  if(baseTab==='r'){
+    const slots=[0,1,2,3].map(i=>{const r=RBY[save.equip[i]];return `<div class="slot">${r?`<span class="id">#${r.id} · ${SHAPE[r.n]}</span><b>${r.name}</b>`:'<span class="note">空槽：點選左側配方裝入</span>'}</div>`;}).join('');
+    B.innerHTML=`<div class="bc-grid">
+     <div><p class="note" style="margin:0 0 10px">點選配方裝入或卸下出擊快捷列（最多 4 招）。灰色配方要到之後的章節才會解鎖；#R15 禁忌配方常駐於戰鬥列，不佔欄位。</p>
+      <div class="rlist">${RECIPES.map(r=>{
+        const locked=r.ch>CHAPTER, eq=save.equip.includes(r.id), special=r.id==='R15'||r.id==='R30';
+        return `<button class="rcard${eq?' eq':''}" data-r="${r.id}" ${locked||special?'disabled':''}>
+          <div class="top"><span class="id">#${r.id}${locked?` · 第 ${r.ch} 章解鎖`:''}</span><span class="id">${r.ap} AP</span></div>
+          <div class="nm">${r.name}</div>
+          <div class="meta"><span class="chip">${SHAPE[r.n]}</span>${r.el.map(e=>`<span class="chip el">${ELF[e]||e}</span>`).join('')}</div>
+          <div class="ds">${r.desc}</div></button>`;}).join('')}</div></div>
+     <aside class="panel" style="align-self:start;position:sticky;top:0"><h3>出擊戰術快捷列</h3><div class="slots">${slots}</div>
+      <p class="note" style="margin-top:12px">第一章機甲的弱點：背部冷卻水箱會噴出大量積水。#R09 把三角陣內的積水電解成氫氧氣雲，克蕾雅的火銃或 #R07 火牆可以引爆它。</p></aside></div>`;
+    B.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{
+      const id=b.dataset.r, k=save.equip.indexOf(id);
+      if(k>=0) save.equip.splice(k,1); else if(save.equip.length<4) save.equip.push(id); else {save.equip.shift();save.equip.push(id);}
+      persist(); renderBase();});
+  }else{
+    const s=claireStats(save.mods), cap=save.cap, over=s.load>cap;
+    B.innerHTML=`<div class="bc-grid">
+      <div class="mods">${Object.entries(MODS).map(([k,g])=>`<div class="modrow"><h4>${g.label}</h4><div class="modopts">${g.opts.map(o=>`
+        <button class="rcard${save.mods[k]===o.id?' eq':''}" data-k="${k}" data-m="${o.id}">
+          <div class="top"><span class="id">${o.id}</span><span class="id">${o.load} Load</span></div>
+          <div class="nm">${o.name}</div>
+          <div class="meta">${o.hp?`<span class="chip">HP ${o.hp>0?'+':''}${o.hp}</span>`:''}${o.arm?`<span class="chip">護甲 +${o.arm}</span>`:''}${o.atk?`<span class="chip">攻擊 +${o.atk}</span>`:''}${o.mv?`<span class="chip">移動 ${o.mv>0?'+':''}${o.mv}</span>`:''}</div>
+          <div class="ds">${o.skill}</div></button>`).join('')}</div></div>`).join('')}</div>
+      <aside class="panel" style="align-self:start;position:sticky;top:0"><h3>赫菲斯托斯 Mk.IV</h3>
+        <div class="note">神經負荷 <span class="mono">${s.load} / ${cap} Load</span>${over?' <b class="warn">超載</b>':''}</div>
+        <div class="load${over?' over':''}"><i style="width:${Math.min(100,s.load/1.2)}%"></i><span class="cap" style="left:${cap/1.2}%"></span></div>
+        <dl class="stat" style="margin-top:12px"><dt>HP</dt><dd>${s.hp}</dd><dt>護甲</dt><dd>${s.arm}</dd><dt>攻擊</dt><dd>${s.atk}</dd><dt>移動</dt><dd>${s.mv} 格</dd></dl>
+        <p class="note" style="margin-top:12px">${over?'<span class="warn">超過上限時，克蕾雅的技能傷害 +30%，但每次施放扣 10 HP。</span>':'在上限內配裝，沒有神經反噬。'}</p>
+        ${cap<100?`<p class="note warn">上一場使用了禁忌超載逆構，神經負荷上限降到 ${cap}。</p><button class="btn" id="recal">花一晚重新校準神經（上限回到 100）</button>`:''}
+      </aside></div>`;
+    B.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{save.mods[b.dataset.k]=b.dataset.m;persist();renderBase();});
+    const rc=$('recal'); if(rc) rc.onclick=()=>{save.cap=100;persist();renderBase();};
+  }
+}
+$('tab-r').onclick=()=>{baseTab='r';renderBase();};
+$('tab-w').onclick=()=>{baseTab='w';renderBase();};
+$('bc-back').onclick=()=>show('title');
+$('bc-go').onclick=()=>{ const f=baseReturn; baseReturn=null; startBattle(f||(()=>chapterEnd())); };
+
+/* =========================================================
+   BATTLE — three.js world
+   ========================================================= */
+const N=9;
+let R3=null; // renderer bundle
+function initThree(){
+  if(R3) return R3;
+  const canvas=$('gl');
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
+  renderer.setPixelRatio(Math.min(2,window.devicePixelRatio||1));
+  renderer.shadowMap.enabled=true;
+  const scene=new THREE.Scene();
+  scene.background=new THREE.Color(0x0a0e11);
+  scene.fog=new THREE.Fog(0x0a0e11,14,30);
+  const camera=new THREE.PerspectiveCamera(42,1,.1,100);
+  camera.position.set(0,10.5,9.5);
+  const controls=new THREE.OrbitControls(camera,canvas);
+  controls.target.set(0,0,0); controls.enableDamping=true; controls.maxPolarAngle=1.25; controls.minDistance=7; controls.maxDistance=20; controls.enablePan=false;
+  scene.add(new THREE.HemisphereLight(0x9fb3c0,0x1a1410,.55));
+  const key=new THREE.DirectionalLight(0xffd9a0,1.0); key.position.set(-6,12,4); key.castShadow=true;
+  key.shadow.mapSize.set(1024,1024); key.shadow.camera.left=-8;key.shadow.camera.right=8;key.shadow.camera.top=8;key.shadow.camera.bottom=-8;
+  scene.add(key);
+  const amberLight=new THREE.PointLight(0xe8892b,1.2,12); amberLight.position.set(0,3,-6); scene.add(amberLight);
+  // backdrop: hangar pillars
+  const pillarMat=new THREE.MeshStandardMaterial({color:0x1d262c,metalness:.6,roughness:.6});
+  for(let k=-2;k<=2;k++){ const p=new THREE.Mesh(new THREE.BoxGeometry(.5,6,.5),pillarMat); p.position.set(k*2.6,3,-6.2); scene.add(p); }
+  const tower=new THREE.Mesh(new THREE.CylinderGeometry(1.1,1.4,7,16),new THREE.MeshStandardMaterial({color:0x2a2018,metalness:.5,roughness:.4,emissive:0x3a1a05}));
+  tower.position.set(0,3.5,-7.6); scene.add(tower);
+  const ground=new THREE.Mesh(new THREE.PlaneGeometry(40,40),new THREE.MeshStandardMaterial({color:0x0e1316,roughness:1}));
+  ground.rotation.x=-Math.PI/2; ground.position.y=-.12; ground.receiveShadow=true; scene.add(ground);
+  const world=new THREE.Group(); scene.add(world);
+  const ray=new THREE.Raycaster(), mouse=new THREE.Vector2();
+  R3={renderer,scene,camera,controls,world,ray,mouse,clock:new THREE.Clock()};
+  function resize(){const w=canvas.clientWidth,h=canvas.clientHeight; if(!w||!h)return;
+    renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov = w<600?62:42;
+    const want=w<600?18.5:14.2; if(Math.abs(camera.position.length()-want)>.5) camera.position.setLength(want);
+    // 讓棋盤置中於頂部 HUD 與底部操作列之間
+    const top=document.querySelector('.hud-top').offsetHeight||0, deck=$('deck').hidden?0:($('deck').offsetHeight||0);
+    camera.setViewOffset(w,h,0,Math.round((deck-top)/2),w,h);
+    camera.updateProjectionMatrix();}
+  window.addEventListener('resize',resize); R3.resize=resize;
+  canvas.addEventListener('pointerdown',e=>{R3.downAt=[e.clientX,e.clientY];});
+  canvas.addEventListener('pointerup',e=>{ if(!R3.downAt) return; const d=Math.hypot(e.clientX-R3.downAt[0],e.clientY-R3.downAt[1]); R3.downAt=null; if(d<8) onCanvasClick(e); });
+  function loop(){ requestAnimationFrame(loop); if($('battle').hidden) return; const dt=Math.min(.05,R3.clock.getDelta()); tick(dt); controls.update(); renderer.render(scene,camera); }
+  loop();
+  return R3;
+}
+const W=(i,j)=>new THREE.Vector3(i-4,0,j-4);
+
+/* ---------- battle state ---------- */
+let B=null;
+const TILE_COL={floor:0x2a3339,water:0x2f6fa6,scrap:0x3b3f44,si:0x5b5348,oil:0x2a2622,acid:0x2f3a24,al:0x8d969c,wall:0x6d6a64};
+function newBattle(){
+  const s=claireStats(save.mods);
+  const over=s.load>save.cap;
+  B={phase:'field', turn:1, ambush:false, over,
+    tiles:[], tileMesh:[], props:{}, gas:new Set(),
+    anchors:[], pool:{Si:0,Fe:0,H2O:0,C:0,Acid:0,Al:0},
+    units:{
+      ryan:{key:'ryan',name:'萊恩',hp:160,max:160,ap:4,mv:3,i:4,j:8,arm:0,alive:true,st:[]},
+      claire:{key:'claire',name:'克蕾雅',hp:s.hp,max:s.hp,ap:4,mv:s.mv,i:4,j:7,arm:s.arm,atk:s.atk,alive:true,st:[],buff2:false,freeMove:false,ventUsed:false}
+    },
+    mech:{hp:500,max:500,tg:100,tgMax:100,i:4,j:3,x:0,z:-1,dir:1,stun:0,root:0,alive:true,wait:0},
+    sel:'claire', mode:null, targets:new Map(), forbidUsed:false, busy:false, onWin:null
+  };
+  for(let i=0;i<N;i++){B.tiles[i]=[];for(let j=0;j<N;j++)B.tiles[i][j]='floor';}
+  [[0,7],[8,6],[3,6]].forEach(([i,j])=>B.tiles[i][j]='si');
+  [[8,1],[0,2]].forEach(([i,j])=>B.tiles[i][j]='oil');
+  B.tiles[6][7]='acid'; B.tiles[2][7]='al';
+}
+function clearWorld(){ while(R3.world.children.length) R3.world.remove(R3.world.children[0]); }
+const MAT={}; function mat(c,o={}){const k=c+JSON.stringify(o); return MAT[k]||(MAT[k]=new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.7,metalness:.2},o)));}
+function buildWorld(){
+  clearWorld(); B.tileMesh=[]; B.props={};
+  const tileGeo=new THREE.BoxGeometry(.96,.2,.96);
+  for(let i=0;i<N;i++){B.tileMesh[i]=[];for(let j=0;j<N;j++){
+    const m=new THREE.Mesh(tileGeo,mat(TILE_COL.floor)); m.position.copy(W(i,j)); m.position.y=-.1; m.receiveShadow=true;
+    m.userData.cell=[i,j]; R3.world.add(m); B.tileMesh[i][j]=m;
+  }}
+  // overlay plane per tile
+  B.ovl=[]; const og=new THREE.PlaneGeometry(.9,.9);
+  for(let i=0;i<N;i++){B.ovl[i]=[];for(let j=0;j<N;j++){
+    const p=new THREE.Mesh(og,new THREE.MeshBasicMaterial({color:0x4fb3a1,transparent:true,opacity:0,depthWrite:false}));
+    p.rotation.x=-Math.PI/2; p.position.copy(W(i,j)); p.position.y=.02; p.userData.cell=[i,j]; R3.world.add(p); B.ovl[i][j]=p;}}
+  for(let i=0;i<N;i++)for(let j=0;j<N;j++) refreshTile(i,j);
+  // units
+  B.units.ryan.mesh=makeUnit(0x22344a,0x14171b,false);
+  B.units.claire.mesh=makeUnit(0x3a2a22,0xc2382a,true);
+  R3.world.add(B.units.ryan.mesh,B.units.claire.mesh);
+  B.mech.mesh=makeMech(); R3.world.add(B.mech.mesh);
+  // vision cone
+  const cg=new THREE.CircleGeometry(3.2,24,-0.9,1.8);
+  B.cone=new THREE.Mesh(cg,new THREE.MeshBasicMaterial({color:0xc8473b,transparent:true,opacity:.22,side:THREE.DoubleSide,depthWrite:false}));
+  B.cone.rotation.x=-Math.PI/2; B.cone.position.y=.03; R3.world.add(B.cone);
+  B.anchorGroup=new THREE.Group(); R3.world.add(B.anchorGroup);
+  B.gasGroup=new THREE.Group(); R3.world.add(B.gasGroup);
+  placeUnits(true);
+}
+function makeUnit(coat,hair,arm){
+  const g=new THREE.Group();
+  const body=new THREE.Mesh(new THREE.CylinderGeometry(.18,.24,.62,10),mat(coat)); body.position.y=.31; body.castShadow=true;
+  const head=new THREE.Mesh(new THREE.SphereGeometry(.15,12,10),mat(0xe8cbb0)); head.position.y=.75; head.castShadow=true;
+  const h=new THREE.Mesh(new THREE.SphereGeometry(.16,12,10,0,Math.PI*2,0,1.4),mat(hair)); h.position.y=.78;
+  g.add(body,head,h);
+  if(arm){const a=new THREE.Mesh(new THREE.BoxGeometry(.16,.5,.16),mat(0x3a3a40,{metalness:.8,roughness:.3}));a.position.set(-.27,.36,0);a.castShadow=true;
+    const b=new THREE.Mesh(new THREE.BoxGeometry(.22,.12,.22),mat(0xc9a24a,{metalness:.9,roughness:.3}));b.position.set(-.27,.12,0);g.add(a,b);}
+  else{const f=new THREE.Mesh(new THREE.BoxGeometry(.05,.3,.05),mat(0xc9cdd0,{metalness:1,roughness:.2}));f.position.set(.27,.4,0);g.add(f);}
+  const ring=new THREE.Mesh(new THREE.RingGeometry(.3,.36,24),new THREE.MeshBasicMaterial({color:0xc9a24a,transparent:true,opacity:0,side:THREE.DoubleSide}));
+  ring.rotation.x=-Math.PI/2; ring.position.y=.03; g.add(ring); g.userData.ring=ring;
+  return g;
+}
+function makeMech(){
+  const g=new THREE.Group(); const steel=mat(0x4a525a,{metalness:.8,roughness:.35});
+  const body=new THREE.Mesh(new THREE.BoxGeometry(.8,.7,.7),steel); body.position.y=.95; body.castShadow=true;
+  [[-.28,-.2],[.28,-.2],[-.28,.2],[.28,.2]].forEach(([x,z])=>{const l=new THREE.Mesh(new THREE.BoxGeometry(.16,.6,.16),mat(0x2b3036,{metalness:.7}));l.position.set(x,.3,z);l.castShadow=true;g.add(l);});
+  const eye=new THREE.Mesh(new THREE.BoxGeometry(.4,.08,.05),new THREE.MeshBasicMaterial({color:0xff3a2a})); eye.position.set(0,1.1,.36);
+  const tank=new THREE.Mesh(new THREE.CylinderGeometry(.2,.2,.55,14),mat(0x3f86c7,{emissive:0x0b2a4a,metalness:.3,roughness:.2}));
+  tank.rotation.x=Math.PI/2; tank.position.set(0,1.05,-.48); tank.rotation.z=Math.PI/2; tank.rotation.set(0,0,Math.PI/2); tank.position.set(0,1.05,-.48);
+  const core=new THREE.Mesh(new THREE.SphereGeometry(.12,12,10),new THREE.MeshBasicMaterial({color:0xe8892b})); core.position.set(0,1.38,0);
+  const arm1=new THREE.Mesh(new THREE.BoxGeometry(.2,.2,.7),steel); arm1.position.set(.52,.95,.15);
+  const arm2=arm1.clone(); arm2.position.x=-.52;
+  g.add(body,eye,tank,core,arm1,arm2); g.userData.tank=tank; g.userData.eye=eye; g.userData.core=core;
+  return g;
+}
+function refreshTile(i,j){
+  const t=B.tiles[i][j]; B.tileMesh[i][j].material=mat(t==='water'?TILE_COL.water:t==='wall'?TILE_COL.floor:TILE_COL.floor,t==='water'?{metalness:.6,roughness:.1,emissive:0x0a2238}:{});
+  const key=i+','+j; if(B.props[key]){R3.world.remove(B.props[key]);delete B.props[key];}
+  let p=null;
+  if(t==='scrap'){p=new THREE.Group();for(let k=0;k<3;k++){const b=new THREE.Mesh(new THREE.BoxGeometry(.3,.12,.22),mat(0x4b4f55,{metalness:.9,roughness:.5}));b.position.set((k-1)*.18,.06+k*.05,(k%2)*.12-.06);b.rotation.y=k;b.castShadow=true;p.add(b);}}
+  if(t==='si'){p=new THREE.Mesh(new THREE.ConeGeometry(.32,.35,6),mat(0x6b6153));p.position.y=.17;}
+  if(t==='oil'){p=new THREE.Mesh(new THREE.CylinderGeometry(.2,.2,.5,12),mat(0x5a2a1a,{metalness:.5}));p.position.y=.25;}
+  if(t==='acid'){p=new THREE.Mesh(new THREE.CylinderGeometry(.16,.16,.42,12),mat(0x6aa83a,{emissive:0x1a3a0a}));p.position.y=.21;}
+  if(t==='al'){p=new THREE.Mesh(new THREE.BoxGeometry(.34,.14,.34),mat(0xd4dce0,{metalness:.3,roughness:.3,emissive:0x2a3034}));p.position.y=.07;}
+  if(t==='wall'){p=new THREE.Mesh(new THREE.BoxGeometry(.96,.9,.96),mat(0x6d6a64,{roughness:.9}));p.position.y=.45;p.castShadow=true;}
+  if(p){p.position.x+=i-4;p.position.z+=j-4;p.traverse(o=>o.userData.cell=[i,j]);R3.world.add(p);B.props[key]=p;}
+}
+function placeUnits(instant){
+  ['ryan','claire'].forEach(k=>{const u=B.units[k];const v=W(u.i,u.j);u.target=v;if(instant)u.mesh.position.copy(v);u.mesh.visible=u.alive;});
+  const m=B.mech; if(B.phase!=='field'){m.target=W(m.i,m.j); if(instant)m.mesh.position.copy(m.target);}
+}
+function rebuildAnchors(){
+  const G=B.anchorGroup; while(G.children.length)G.remove(G.children[0]);
+  const pts=B.anchors.map(a=>{const v=W(a.i,a.j);v.y=.08;return v;});
+  B.anchors.forEach((a,k)=>{const o=new THREE.Mesh(new THREE.OctahedronGeometry(.16),new THREE.MeshBasicMaterial({color:0xffd27a}));
+    o.position.copy(pts[k]);o.position.y=.45;o.userData.spin=true;
+    const beam=new THREE.Mesh(new THREE.CylinderGeometry(.02,.02,.9,6),new THREE.MeshBasicMaterial({color:0xffd27a,transparent:true,opacity:.5}));beam.position.copy(pts[k]);beam.position.y=.45;
+    G.add(o,beam);});
+  const n=pts.length;
+  if(n>=2){
+    const col=n===2?0x4fd1e0:n===3?0x4fe08a:0xe0465a;
+    const ring=n>=3?orderPoly(pts.slice()):pts.slice();
+    const lp=ring.concat(n>=3?[ring[0]]:[]);
+    const lg=new THREE.BufferGeometry().setFromPoints(lp.map(p=>new THREE.Vector3(p.x,.1,p.z)));
+    G.add(new THREE.Line(lg,new THREE.LineBasicMaterial({color:col})));
+    if(n>=3){const sh=new THREE.Shape(ring.map(p=>new THREE.Vector2(p.x,-p.z)));
+      const f=new THREE.Mesh(new THREE.ShapeGeometry(sh),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.16,side:THREE.DoubleSide,depthWrite:false}));
+      f.rotation.x=-Math.PI/2;f.position.y=.06;G.add(f);}
+  }
+  renderDeck();
+}
+function orderPoly(pts){const c=pts.reduce((a,p)=>({x:a.x+p.x/pts.length,z:a.z+p.z/pts.length}),{x:0,z:0});
+  return pts.sort((a,b)=>Math.atan2(a.z-c.z,a.x-c.x)-Math.atan2(b.z-c.z,b.x-c.x));}
+function rebuildGas(){
+  const G=B.gasGroup; while(G.children.length)G.remove(G.children[0]);
+  B.gas.forEach(k=>{const [i,j]=k.split(',').map(Number);
+    const m=new THREE.Mesh(new THREE.BoxGeometry(.95,.7,.95),new THREE.MeshBasicMaterial({color:0xb48cff,transparent:true,opacity:.22,depthWrite:false}));
+    m.position.copy(W(i,j));m.position.y=.38;m.userData.gas=true;G.add(m);});
+}
+
+/* ---------- tick ---------- */
+let fieldTarget=null;
+function tick(dt){
+  const t=performance.now()/1000;
+  if(B.anchorGroup) B.anchorGroup.children.forEach(o=>{if(o.userData.spin){o.rotation.y+=dt*2;o.position.y=.45+Math.sin(t*3)*.05;}});
+  if(B.gasGroup) B.gasGroup.children.forEach((o,k)=>{o.material.opacity=.18+Math.sin(t*2+k)*.06;});
+  const m=B.mech;
+  if(m.mesh && m.alive){ m.mesh.userData.core.material.color.setHSL(.07,1,.45+Math.sin(t*4)*.1); }
+  if(B.phase==='field') fieldTick(dt);
+  else{
+    ['ryan','claire'].forEach(k=>{const u=B.units[k];if(u.target)u.mesh.position.lerp(u.target,Math.min(1,dt*10));
+      u.mesh.userData.ring.material.opacity=(B.sel===k&&B.phase==='player')?.9:0;});
+    if(m.target&&m.alive)m.mesh.position.lerp(m.target,Math.min(1,dt*6));
+  }
+}
+function fieldTick(dt){
+  const m=B.mech, c=B.units.claire;
+  if(m.wait>0){m.wait-=dt;} else { m.x+=m.dir*dt*.9; if(m.x>2.2||m.x<-2.2){m.x=Math.max(-2.2,Math.min(2.2,m.x));m.dir*=-1;m.wait=1.2;} }
+  m.mesh.position.set(m.x,0,m.z);
+  const face=m.wait>0?-m.dir:m.dir; // turning at ends
+  const ang=face>0?Math.PI/2:-Math.PI/2; m.mesh.rotation.y=ang;
+  B.cone.position.set(m.x,.03,m.z); B.cone.rotation.z=face>0?0:Math.PI;
+  // claire movement
+  if(fieldTarget){const p=c.mesh.position, d=fieldTarget.clone().sub(p); d.y=0; const L=d.length();
+    if(L<.05) fieldTarget=null; else {p.add(d.normalize().multiplyScalar(Math.min(L,dt*2.6))); c.mesh.rotation.y=Math.atan2(d.x,d.z);} }
+  // detection & strike check
+  const rel=new THREE.Vector3(c.mesh.position.x-m.x,0,c.mesh.position.z-m.z); const dist=rel.length();
+  const fwd=new THREE.Vector3(face,0,0);
+  const cos=dist>0?rel.dot(fwd)/dist:1;
+  if(dist<3.2 && cos>Math.cos(.9)){ spotted(); return; }
+  const behind = cos < -Math.cos(1.0);
+  const can = dist<1.7 && behind;
+  $('strike').disabled=!can;
+  $('strike').textContent = can?'重擊冷卻水箱！':(dist<1.7?'繞到它背後':'接近機甲背後');
+  m.mesh.userData.tank.material.emissive.setHex(can?0x2a6aaa:0x0b2a4a);
+}
+function snapField(){
+  const m=B.mech; m.i=Math.round(m.x+4); m.j=Math.round(m.z+4);
+  const c=B.units.claire; c.i=Math.max(0,Math.min(8,Math.round(c.mesh.position.x+4))); c.j=Math.max(0,Math.min(8,Math.round(c.mesh.position.z+4)));
+  if(c.i===m.i&&c.j===m.j){ c.j=Math.min(8,c.j+1); }
+  const r=B.units.ryan; if(c.i===r.i&&c.j===r.j){ c.i=c.i>0?c.i-1:c.i+1; }
+  m.mesh.rotation.y=0;
+}
+function spotted(){
+  if(B.phase!=='field')return; B.phase='trans'; fieldTarget=null;
+  snapField(); banner('被發現了','機甲轉身迎擊・無先攻');
+  log('機甲的感測器捕捉到克蕾雅，沒有取得先攻。');
+  setTimeout(()=>startTactical(false),1400);
+}
+$('strike').onclick=()=>{
+  if(B.phase!=='field')return; B.phase='trans'; fieldTarget=null; snapField();
+  const m=B.mech; m.stun=1; B.ambush=true;
+  for(let di=-1;di<=1;di++)for(let dj=-1;dj<=1;dj++){const i=m.i+di,j=m.j+dj;if(inb(i,j)&&B.tiles[i][j]==='floor')B.tiles[i][j]='water';}
+  [[m.i-2,m.j],[m.i+2,m.j]].forEach(([i,j])=>{i=Math.max(0,Math.min(8,i));if(B.tiles[i][j]!=='floor'&&B.tiles[i][j]!=='water')j=Math.min(8,j+1);B.tiles[i][j]='scrap';});
+  for(let i=0;i<N;i++)for(let j=0;j<N;j++)refreshTile(i,j);
+  m.mesh.userData.tank.visible=false; damageMech(50,{raw:true,quiet:true});
+  floatAt(W(m.i,m.j),'水箱破裂！','#7fc4ff');
+  banner('原野突襲成功','感測器暈眩・地面鋪滿積水');
+  log('水箱破裂：機甲暈眩 1 回合，周圍 3×3 化為積水，掉落兩塊廢鐵甲（Fe×2）。');
+  setTimeout(()=>startTactical(true),1500);
+};
+function startBattle(onWin){
+  initThree(); newBattle(); B.onWin=onWin; show('battle'); R3.resize(); buildWorld();
+  B.phase='field'; fieldTarget=null;
+  const m=B.mech; m.x=-1.5; m.dir=1;
+  $('deck').hidden=true; $('field-ctl').hidden=false; B.cone.visible=true;
+  B.units.ryan.mesh.position.copy(W(4,8));
+  B.units.claire.mesh.position.copy(W(4,7));
+  R3.controls.target.set(0,0,0);
+  updateHud();
+  guide('原野突襲','點擊地面移動克蕾雅。避開機甲前方的紅色視野，趁它背對妳時繞到背後，按「重擊冷卻水箱」。');
+  banner('第一章','第三蒸氣機庫・原野突襲');
+}
+function startTactical(ambush){
+  B.phase='player'; B.cone.visible=false; $('field-ctl').hidden=true; $('deck').hidden=false;
+  placeUnits(false);
+  const c=B.units.claire; c.ap=4+(save.mods.core==='C2'?2:0);
+  B.units.ryan.ap=4;
+  setTimeout(()=>{banner('戰術展開',ambush?'先攻・全隊行動':'第 1 回合');
+    guide('第 1 回合', ambush?'萊恩走到廢鐵旁「分解」取得 Fe 並留下錨點；用克蕾雅的定點樁補第三個錨點，把機甲和積水框進三角陣，再發動 #R09。':'機甲沒有暈眩。先用克蕾雅的急凍或打樁機牽制，萊恩去收集資源、留下錨點。');},300);
+  selectUnit('claire'); updateHud(); R3.resize();
+}
+
+/* ---------- helpers ---------- */
+const inb=(i,j)=>i>=0&&j>=0&&i<N&&j<N;
+const md=(a,b,c,d)=>Math.abs(a-c)+Math.abs(b-d);
+function occupied(i,j,ignore){
+  for(const k of ['ryan','claire']){const u=B.units[k];if(u!==ignore&&u.alive&&u.i===i&&u.j===j)return true;}
+  if(B.mech.alive&&B.mech!==ignore&&B.mech.i===i&&B.mech.j===j)return true;
+  return B.tiles[i][j]==='wall';
+}
+function reach(u,steps){
+  const out=new Map(), q=[[u.i,u.j,0]], seen=new Set([u.i+','+u.j]);
+  while(q.length){const [i,j,d]=q.shift(); if(d>0)out.set(i+','+j,{i,j,d});
+    if(d>=steps)continue;
+    [[1,0],[-1,0],[0,1],[0,-1]].forEach(([a,b])=>{const ni=i+a,nj=j+b,k=ni+','+nj;
+      if(inb(ni,nj)&&!seen.has(k)&&!occupied(ni,nj,u)){seen.add(k);q.push([ni,nj,d+1]);}});}
+  return out;
+}
+function cellsOfShape(pts){
+  if(pts.length===1) return [[pts[0].i,pts[0].j]];
+  if(pts.length===2){ const [a,b]=pts; const out=[]; const n=Math.max(Math.abs(b.i-a.i),Math.abs(b.j-a.j));
+    for(let k=0;k<=n;k++){const i=Math.round(a.i+(b.i-a.i)*k/(n||1)),j=Math.round(a.j+(b.j-a.j)*k/(n||1));if(!out.some(c=>c[0]===i&&c[1]===j))out.push([i,j]);} return out;}
+  const poly=orderPoly(pts.map(p=>({x:p.i,z:p.j})));
+  const out=[]; for(let i=0;i<N;i++)for(let j=0;j<N;j++){ if(inPoly(i,j,poly)||pts.some(p=>p.i===i&&p.j===j)) out.push([i,j]); }
+  return out;
+}
+function inPoly(x,z,poly){ // includes edges with tolerance
+  let inside=false; for(let a=0,b=poly.length-1;a<poly.length;b=a++){
+    const xi=poly[a].x,zi=poly[a].z,xj=poly[b].x,zj=poly[b].z;
+    const cross=(x-xi)*(zj-zi)-(z-zi)*(xj-xi); const dot=(x-xi)*(xj-xi)+(z-zi)*(zj-zi); const len=(xj-xi)**2+(zj-zi)**2;
+    if(Math.abs(cross)<.6*Math.sqrt(len)&&dot>=0&&dot<=len) return true;
+    if(((zi>z)!==(zj>z))&&(x<(xj-xi)*(z-zi)/(zj-zi)+xi)) inside=!inside;}
+  return inside;
+}
+function mechIn(cells){return B.mech.alive&&cells.some(([i,j])=>i===B.mech.i&&j===B.mech.j);}
+function mechNear(cells,r=1){return B.mech.alive&&cells.some(([i,j])=>md(i,j,B.mech.i,B.mech.j)<=r);}
+
+/* ---------- damage & fx ---------- */
+function damageMech(amt,o={}){
+  const m=B.mech; if(!m.alive)return;
+  let d=amt; if(!o.true&&!o.raw&&m.tg>0) d=Math.round(d*.2);
+  m.hp=Math.max(0,m.hp-d);
+  if(!o.quiet) floatAt(W(m.i,m.j),'-'+d,o.true?'#ffd27a':'#ff7a6a');
+  if(o.tg){ const before=m.tg; m.tg=Math.max(0,m.tg-o.tg); if(o.tg&&!o.quiet)floatAt(W(m.i,m.j).add(new THREE.Vector3(.4,.6,0)),'裝甲 -'+(before-m.tg),'#c9a24a');
+    if(before>0&&m.tg===0){ banner('BREAK','外裝甲粉碎・全傷害生效'); m.stun=Math.max(m.stun,1); log('外裝甲歸零：機甲 BREAK，暈眩 1 回合。'); } }
+  updateHud();
+  if(m.hp<=0){ m.alive=false; mechDie(); }
+}
+function damageUnit(u,amt){
+  if(!u.alive)return; let d=amt; if(u.arm) d=Math.max(5,Math.round(d-u.arm*.5));
+  if(u.key==='claire'&&save.mods.frame==='F3') d=Math.round(d/2);
+  u.hp=Math.max(0,u.hp-d); floatAt(u.mesh.position.clone(),'-'+d,'#ff7a6a');
+  if(u.hp===0){u.alive=false;u.mesh.visible=false;log(`${u.name}倒下了。`);}
+  renderDeck();
+}
+function floatAt(v,txt,color){
+  const p=v.clone(); p.y+=1.3; p.project(R3.camera);
+  const r=$('gl').getBoundingClientRect();
+  const d=document.createElement('div'); d.className='ftxt'; d.textContent=txt; d.style.color=color;
+  d.style.left=(r.left+(p.x+1)/2*r.width)+'px'; d.style.top=(r.top+(1-p.y)/2*r.height)+'px';
+  $('ftl').appendChild(d); setTimeout(()=>d.remove(),1400);
+}
+function banner(a,b){const e=$('banner');e.innerHTML=a+(b?`<small>${b}</small>`:'');e.classList.remove('show');void e.offsetWidth;e.classList.add('show');}
+function log(t){const d=document.createElement('div');d.textContent=t;$('log').prepend(d);setTimeout(()=>d.remove(),6200);}
+function guide(h,t){$('g-head').textContent=h;$('g-text').textContent=t;}
+function mechDie(){
+  const m=B.mech; banner('擊破','重裝蒸氣警衛機甲');
+  const g=m.mesh; let k=0; const iv=setInterval(()=>{k++;g.rotation.z+=.06;g.position.y-=.03;g.scale.multiplyScalar(.97);if(k>40){clearInterval(iv);g.visible=false;}},30);
+  B.phase='done';
+  setTimeout(()=>{ const f=B.onWin; f&&f(); },2400);
+}
+function updateHud(){
+  const m=B.mech;
+  $('h-hp').textContent=`${m.hp} / ${m.max}`; $('b-hp').style.width=(m.hp/m.max*100)+'%';
+  $('h-tg').textContent=`${m.tg} / ${m.tgMax}`; $('b-tg').style.width=(m.tg/m.tgMax*100)+'%';
+  $('h-cell').textContent=`[L0] (${m.i},${m.j})`;
+  const tags=[]; if(m.stun)tags.push(['暈眩 '+m.stun,1]); if(m.root)tags.push(['定身 '+m.root,1]); if(m.tg===0)tags.push(['BREAK',1]);
+  if(m.tg>0)tags.push(['直接傷害 -80%',0]);
+  const inGas=B.gas.has(m.i+','+m.j)||[...B.gas].some(k=>{const [i,j]=k.split(',').map(Number);return md(i,j,m.i,m.j)<=1;});
+  if(inGas)tags.push(['氫氧氣雲中',1]);
+  $('h-tags').innerHTML=tags.map(([t,h])=>`<span class="tag${h?' hot':''}">${t}</span>`).join('');
+}
+
+/* ---------- deck UI ---------- */
+function selectUnit(k){ if(!B.units[k].alive)return; B.sel=k; B.mode=null; clearTargets(); renderDeck(); }
+function renderDeck(){
+  if(!B||$('deck').hidden&&B.phase==='field')return;
+  const U=B.units;
+  $('ucards').innerHTML=['ryan','claire'].map(k=>{const u=U[k];
+    const st=[]; if(k==='claire'&&u.buff2)st.push('高碳鋼強化'); if(k==='claire'&&B.over)st.push('神經超載');
+    if(k==='ryan'&&B.forbidUsed)st.push('灰瞳透支');
+    return `<button class="ucard${B.sel===k?' sel':''}${u.alive?'':' dead'}" data-u="${k}">
+      <div class="r1"><b>${u.name}</b><span class="ap">${[0,1,2,3,4,5].slice(0,Math.max(4,u.ap)).map(n=>`<i class="${n<u.ap?'f':''}"></i>`).join('')}</span></div>
+      <div class="r1 mono" style="font-size:11px;color:var(--ash)"><span>HP ${u.hp}/${u.max}</span><span>移動 ${u.mv} 格</span></div>
+      <div class="bar"><i style="width:${u.hp/u.max*100}%"></i></div>
+      <div class="st">${st.join(' · ')}</div></button>`;}).join('');
+  $('ucards').querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>selectUnit(b.dataset.u));
+  $('els').innerHTML=Object.entries(B.pool).map(([k,v])=>`<span class="el${v?'':' zero'}" title="${EL[k]}">${ELF[k]} ×${v}</span>`).join('');
+  const n=B.anchors.length;
+  $('anc').innerHTML=`<span>錨點 ${n}/4</span><span class="shape">${n?SHAPE[n]:'—'}</span>${n?'<button class="btn" id="recall" style="padding:3px 8px;font-size:12px">一鍵回收</button>':''}`;
+  const rc=$('recall'); if(rc) rc.onclick=()=>{B.anchors=[];rebuildAnchors();log('回收全部錨點。');};
+  renderActions();
+}
+function A(label,sub,fn,{dis=false,on=false,cls=''}={}){return {label,sub,fn,dis,on,cls};}
+function renderActions(){
+  const u=B.units[B.sel], P=B.phase==='player', list=[];
+  $('acts-h').textContent=`${u.name}的行動`;
+  if(u.alive&&P){
+    const mvCost=(u.key==='claire'&&save.mods.frame==='F2'&&!u.freeMove)?0:1;
+    list.push(A('移動',`${mvCost} AP · ${u.mv} 格`,()=>enterMode('move'),{dis:u.ap<mvCost,on:B.mode==='move'}));
+    if(u.key==='ryan'){
+      list.push(A('分解','1 AP · 相鄰資源',()=>enterMode('decompose'),{dis:u.ap<1,on:B.mode==='decompose'}));
+      list.push(A('刻下錨點','1 AP · 腳下',()=>{placeAnchor(u.i,u.j);spend(u,1);},{dis:u.ap<1||B.anchors.length>=4||hasAnchor(u.i,u.j)}));
+      save.equip.forEach(id=>{const r=RBY[id]; const ok=canCast(r);
+        list.push(A(`#${r.id} ${r.name}`,`${SHAPE[r.n]} · ${r.el.map(e=>ELF[e]).join('+')} · ${r.ap} AP`,()=>cast(r),{dis:!ok,cls:'rc'+(ok?' ready':'')}));});
+      list.push(A('禁忌：超載逆構','#R15 · 0 AP · 320 真實傷＋BREAK',()=>forbid(),{dis:B.forbidUsed,cls:'forbid'}));
+    }else{
+      list.push(A('鐵拳','1 AP · 相鄰',()=>enterMode('punch'),{dis:u.ap<1,on:B.mode==='punch'}));
+      const w=save.mods.weapon, ut=save.mods.util, co=save.mods.core;
+      if(w==='W1')list.push(A('震盪重錘','1 AP · 削甲 35＋擊退',()=>enterMode('pile'),{dis:u.ap<1,on:B.mode==='pile'}));
+      if(w==='W2')list.push(A('打火石點火','1 AP · 射程 4 · 引爆氣雲',()=>enterMode('gun'),{dis:u.ap<1,on:B.mode==='gun'}));
+      if(w==='W3')list.push(A('解剖斬擊','1 AP · 對定身／破甲必暴擊',()=>enterMode('blade'),{dis:u.ap<1,on:B.mode==='blade'}));
+      if(ut==='U1')list.push(A('遠程釘樁','1 AP · 4 格內錨點',()=>enterMode('stake'),{dis:u.ap<1||B.anchors.length>=4,on:B.mode==='stake'}));
+      if(ut==='U2')list.push(A('隔空取物','1 AP · 吸取 4 格內資源',()=>magnet(),{dis:u.ap<1}));
+      if(ut==='U3')list.push(A('瞬間急凍','1 AP · 相鄰定身＋產水',()=>enterMode('freeze'),{dis:u.ap<1,on:B.mode==='freeze'}));
+      if(co==='C1')list.push(A('蒸氣洩壓','0 AP · 全隊回復 30',()=>vent(),{dis:u.ventUsed}));
+    }
+  }
+  if(P) list.push(A('結束回合','敵方行動',()=>endTurn(),{cls:'end'}));
+  const box=$('abtns'); box.innerHTML='';
+  list.forEach(a=>{const b=document.createElement('button');b.className='ab '+a.cls+(a.on?' on':'');b.disabled=a.dis;
+    b.innerHTML=`${a.label}<small>${a.sub}</small>`;b.onclick=a.fn;box.appendChild(b);});
+}
+function hasAnchor(i,j){return B.anchors.some(a=>a.i===i&&a.j===j);}
+function placeAnchor(i,j){ if(B.anchors.length>=4){B.anchors.shift();} if(!hasAnchor(i,j))B.anchors.push({i,j}); rebuildAnchors(); floatAt(W(i,j),'錨點','#ffd27a'); }
+function spend(u,n){ u.ap=Math.max(0,u.ap-n); if(u.key==='claire'&&B.over&&n>0&&B.mode!=='move'){damageUnit(u,10);} renderDeck(); }
+function canCast(r){
+  const u=B.units.ryan; if(!u.alive||u.ap<r.ap||B.anchors.length<r.n||r.ch>1) return false;
+  return payPlan(r)!==null;
+}
+// 3 點以上的陣：陣內網格的物質可以就地使用（不必先吸入物質槽）
+const TILE_EL={water:'H2O',scrap:'Fe',si:'Si',oil:'C',acid:'Acid',al:'Al'};
+function payPlan(r){
+  const need={}; r.el.forEach(e=>need[e]=(need[e]||0)+1);
+  const cells=r.n>=3?cellsOfShape(B.anchors.slice(-r.n)):[];
+  const plan={};
+  for(const [e,n] of Object.entries(need)){
+    const fromPool=Math.min(n,B.pool[e]||0); let rest=n-fromPool;
+    if(rest>0){ const onsite=cells.filter(([i,j])=>TILE_EL[B.tiles[i][j]]===e).length; if(onsite>=rest) rest=0; }
+    if(rest>0) return null; plan[e]=fromPool;
+  }
+  return plan;
+}
+/* ---------- targeting modes ---------- */
+function clearTargets(){ if(!B.ovl)return; B.targets=new Map(); for(let i=0;i<N;i++)for(let j=0;j<N;j++)B.ovl[i][j].material.opacity=0; }
+function setTargets(cells,color){ clearTargets(); cells.forEach(([i,j,data])=>{B.targets.set(i+','+j,data||true);const m=B.ovl[i][j].material;m.color.setHex(color);m.opacity=.45;}); }
+function enterMode(mode){
+  const u=B.units[B.sel]; if(B.mode===mode){B.mode=null;clearTargets();renderDeck();return;}
+  B.mode=mode; let cells=[];
+  if(mode==='move'){ cells=[...reach(u,u.mv).values()].map(c=>[c.i,c.j]); setTargets(cells,0x4fb3a1); }
+  if(mode==='decompose'){ for(let a=-1;a<=1;a++)for(let b=-1;b<=1;b++){const i=u.i+a,j=u.j+b;if(inb(i,j)&&Math.abs(a)+Math.abs(b)<=1&&['scrap','si','oil','acid','al','water'].includes(B.tiles[i][j]))cells.push([i,j]);} setTargets(cells,0xe8892b);
+    if(!cells.length){log('萊恩身邊沒有可分解的資源，先走到廢鐵、碎石、油桶或積水旁。');B.mode=null;} }
+  if(['punch','pile','blade','freeze'].includes(mode)){ const m=B.mech; if(md(u.i,u.j,m.i,m.j)===1) cells=[[m.i,m.j]]; setTargets(cells,0xc8473b);
+    if(!cells.length){log('要先走到機甲旁邊（相鄰一格）。');B.mode=null;} }
+  if(mode==='gun'){ const m=B.mech; if(md(u.i,u.j,m.i,m.j)<=4)cells.push([m.i,m.j]); B.gas.forEach(k=>{const [i,j]=k.split(',').map(Number);if(md(u.i,u.j,i,j)<=4)cells.push([i,j]);}); setTargets(cells,0xe8892b); }
+  if(mode==='stake'){ for(let i=0;i<N;i++)for(let j=0;j<N;j++)if(md(u.i,u.j,i,j)<=4&&!hasAnchor(i,j)&&B.tiles[i][j]!=='wall'&&!(B.mech.i===i&&B.mech.j===j))cells.push([i,j]); setTargets(cells,0xffd27a); }
+  renderDeck();
+}
+function onCanvasClick(e){
+  const r=$('gl').getBoundingClientRect();
+  R3.mouse.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);
+  R3.ray.setFromCamera(R3.mouse,R3.camera);
+  const hits=R3.ray.intersectObjects(R3.world.children,true).filter(h=>h.object.userData.cell);
+  if(B.phase==='field'){ const h=hits.find(h=>h.object.userData.cell); if(h){const p=h.point;fieldTarget=new THREE.Vector3(Math.max(-4,Math.min(4,p.x)),0,Math.max(-4,Math.min(4,p.z)));} return; }
+  if(B.phase!=='player'||B.busy) return;
+  // mech click => cell
+  let cell=null;
+  const mh=R3.ray.intersectObject(B.mech.mesh,true); if(mh.length&&B.mech.alive) cell=[B.mech.i,B.mech.j];
+  if(!cell){ const h=hits[0]; if(h) cell=h.object.userData.cell; }
+  if(!cell) return;
+  // unit select by click
+  if(!B.mode){ for(const k of ['ryan','claire']){const u=B.units[k];if(u.alive&&u.i===cell[0]&&u.j===cell[1]){selectUnit(k);return;}} return; }
+  const key=cell[0]+','+cell[1]; if(!B.targets.has(key)) return;
+  doAction(B.mode,cell[0],cell[1]);
+}
+function doAction(mode,i,j){
+  const u=B.units[B.sel], m=B.mech; B.mode=null; clearTargets();
+  const crit=()=>B.mode;
+  const mult=(save.mods.core==='C3'?1.5:1)*(B.over?1.3:1)*(u.buff2?2:1);
+  if(mode==='move'){
+    const cost=(u.key==='claire'&&save.mods.frame==='F2'&&!u.freeMove)?0:1; if(cost===0)u.freeMove=true;
+    u.i=i;u.j=j;placeUnits(false);u.ap-=cost;
+  }
+  if(mode==='decompose'){
+    const t=B.tiles[i][j]; const gain={scrap:['Fe',2],si:['Si',2],oil:['C',2],acid:['Acid',2],al:['Al',1],water:['H2O',1]}[t];
+    B.pool[gain[0]]+=gain[1]; B.tiles[i][j]='floor'; refreshTile(i,j);
+    floatAt(W(i,j),`+${ELF[gain[0]]}×${gain[1]}`,'#bfe3dc'); placeAnchor(i,j); spend(u,1);
+    log(`萊恩分解${{scrap:'廢鐵甲',si:'碎石堆',oil:'油桶',acid:'強酸罐',al:'鋁合金件',water:'積水'}[t]}，取得 ${ELF[gain[0]]}×${gain[1]}，原地刻下錨點。`);
+  }
+  if(mode==='punch'){ const tg=Math.round(20*(u.buff2?2:1)); damageMech(Math.round(u.atk*mult),{tg}); u.buff2=false; spend(u,1); }
+  if(mode==='pile'){ damageMech(Math.round(u.atk*mult),{tg:Math.round(35*(u.buff2?2:1))}); u.buff2=false;
+    const di=Math.sign(m.i-u.i),dj=Math.sign(m.j-u.j),ni=m.i+di,nj=m.j+dj; if(m.alive&&inb(ni,nj)&&!occupied(ni,nj,m)){m.i=ni;m.j=nj;placeUnits(false);floatAt(W(ni,nj),'擊退','#c9a24a');} spend(u,1); }
+  if(mode==='blade'){ const c=(m.root||m.stun||m.tg===0)?2:1; damageMech(Math.round(u.atk*mult*c),{tg:Math.round(15*(u.buff2?2:1))}); if(c>1)floatAt(W(m.i,m.j),'暴擊','#ffd27a'); B.pool.Fe+=2; log('解剖斬擊從裝甲上削落 Fe×2。'); u.buff2=false; spend(u,1); }
+  if(mode==='freeze'){ m.root=Math.max(m.root,1); for(let a=-1;a<=1;a++)for(let b=-1;b<=1;b++){const x=m.i+a,y=m.j+b;if(inb(x,y)&&B.tiles[x][y]==='floor'){B.tiles[x][y]='water';refreshTile(x,y);}}
+    floatAt(W(m.i,m.j),'急凍定身','#9fd4ff'); log('液態氮急凍：機甲定身 1 回合，周圍化為融水。'); spend(u,1); }
+  if(mode==='stake'){ placeAnchor(i,j); spend(u,1); }
+  if(mode==='gun'){
+    if(B.gas.has(i+','+j)) ignite('克蕾雅的火銃');
+    else damageMech(Math.round(u.atk*.8*mult),{tg:10});
+    spend(u,1);
+  }
+  updateHud(); renderDeck(); afterAct();
+}
+function afterAct(){
+  const U=B.units; if(!U.ryan.alive&&!U.claire.alive) return defeat();
+  if(B.mech.alive&&U.ryan.ap===0&&U.claire.ap===0) guide('回合結束','兩人的 AP 都用完了，按「結束回合」。');
+}
+function ignite(src){
+  if(!B.gas.size)return;
+  const cells=[...B.gas].map(k=>k.split(',').map(Number));
+  log(`${src}點燃了氫氧氣雲！`); banner('氫氧氣爆','2H₂ + O₂ → 2H₂O');
+  if(mechNear(cells,1)) damageMech(380,{true:true,tg:100});
+  ['ryan','claire'].forEach(k=>{const u=B.units[k];if(u.alive&&cells.some(([i,j])=>i===u.i&&j===u.j))damageUnit(u,60);});
+  B.gas.clear(); rebuildGas(); flashScreen();
+}
+function flashScreen(){const c=$('gl');c.style.transition='filter .1s';c.style.filter='brightness(2.2)';setTimeout(()=>{c.style.filter='';},140);}
+function magnet(){
+  const u=B.units.claire; let got=[];
+  for(let i=0;i<N;i++)for(let j=0;j<N;j++){ if(md(u.i,u.j,i,j)<=4){const t=B.tiles[i][j];
+    if(t==='scrap'){B.pool.Fe+=2;got.push('Fe×2');B.tiles[i][j]='floor';refreshTile(i,j);}
+    if(t==='si'){B.pool.Si+=2;got.push('Si×2');B.tiles[i][j]='floor';refreshTile(i,j);}}}
+  placeAnchor(u.i,u.j); log(got.length?`電磁吸盤收回 ${got.join('、')}。`:'4 格內沒有廢鐵或碎石。'); spend(u,1);
+}
+function vent(){ const c=B.units.claire; c.ventUsed=true; ['ryan','claire'].forEach(k=>{const u=B.units[k];if(u.alive){u.hp=Math.min(u.max,u.hp+30);floatAt(u.mesh.position.clone(),'+30','#7fe0b0');}}); renderDeck(); }
+function forbid(){
+  const r=B.units.ryan; if(!r.alive||B.forbidUsed)return; B.forbidUsed=true;
+  $('battle').classList.add('grey'); banner('超載逆構','灰瞳迴路透支'); log('禁忌發動：萊恩 HP 上限 -25%，戰後神經負荷上限降到 75。');
+  r.max=Math.round(r.max*.75); r.hp=Math.min(r.hp,r.max);
+  setTimeout(()=>{$('battle').classList.remove('grey'); damageMech(320,{true:true,tg:100}); renderDeck();},900);
+  save.cap=75; persist();
+}
+function cast(r){
+  if(!canCast(r))return;
+  const u=B.units.ryan, m=B.mech;
+  const pts=B.anchors.slice(-r.n), cells=cellsOfShape(pts);
+  const plan=payPlan(r); Object.entries(plan).forEach(([e,n])=>B.pool[e]-=n);
+  u.ap-=r.ap;
+  B.anchors=B.anchors.slice(0,B.anchors.length-r.n); rebuildAnchors();
+  // pulse cells
+  cells.forEach(([i,j])=>{const o=B.ovl[i][j].material;o.color.setHex(0xffd27a);o.opacity=.6;}); setTimeout(clearTargets,600);
+  const near3=pts.some(p=>md(p.i,p.j,m.i,m.j)<=3);
+  let msg='';
+  switch(r.id){
+    case 'R01': if(near3){damageMech(75,{tg:20});msg='石英矛刺中機甲。';}else msg='錨點 3 格內沒有目標。';break;
+    case 'R02': B.units.claire.buff2=true; msg='克蕾雅的下一擊強化為高碳鋼重刃。';break;
+    case 'R03': ['ryan','claire'].forEach(k=>{const x=B.units[k];if(x.alive){x.hp=Math.min(x.max,x.hp+50);}}); msg='蒸氣煙幕：全隊回復 50 HP。';break;
+    case 'R04': if(near3){damageMech(45,{tg:65});msg='強酸飛沫腐蝕外裝甲。';}else msg='錨點 3 格內沒有目標。';break;
+    case 'R05': cells.forEach(([i,j])=>{if(!occupied(i,j)&&B.tiles[i][j]!=='wall'){B.tiles[i][j]='wall';refreshTile(i,j);}}); msg='石牆拔地而起，擋住機甲的去路。';break;
+    case 'R06': if(mechNear(cells,1)){damageMech(95,{tg:15});m.stun=Math.max(m.stun,1);msg='電弧鐵絲網：機甲麻痺 1 回合。';}else msg='電網沒有碰到機甲。';break;
+    case 'R07': if(mechIn(cells)){damageMech(110,{tg:10});} if([...B.gas].some(k=>cells.some(c=>c.join()===k)))ignite('火牆'); msg='凝固汽油火牆燃起。';break;
+    case 'R08': if(mechIn(cells)){damageMech(80,{tg:20});m.root=Math.max(m.root,2);msg='黑鐵鎖鏈破土而出，機甲定身 2 回合。';}else msg='機甲不在三角陣內。';break;
+    case 'R09': { let n=0; cells.forEach(([i,j])=>{if(B.tiles[i][j]==='water'){B.tiles[i][j]='floor';refreshTile(i,j);B.gas.add(i+','+j);n++;}});
+      if(n){rebuildGas(); if(mechIn(cells))m.root=Math.max(m.root,1); msg=`陣內 ${n} 格積水電解為氫氧氣雲。用火銃或火牆引爆它！`; guide('引爆','切到克蕾雅，用「打火石點火」射擊紫色氣雲，或用 #R07 火牆。');}
+      else msg='三角陣內沒有積水，電解失敗。'; break;}
+    case 'R10': if(mechIn(cells)){damageMech(60,{true:true,tg:100});msg='鋁熱反應 2500°C：外裝甲蒸發。';}else msg='機甲不在三角陣內。';break;
+    case 'R11': if(mechIn(cells)){damageMech(20,{tg:50});m.root=Math.max(m.root,2);msg='地面液化成流沙，機甲陷入定身。';}else msg='機甲不在三角陣內。';break;
+    case 'R12': if(mechIn(cells)){damageMech(160,{true:true});msg='王水毒霧腐蝕機甲。';}else msg='機甲不在三角陣內。';break;
+    case 'R13': ['ryan','claire'].forEach(k=>{const x=B.units[k];if(x.alive)x.hp=x.max;}); msg='法拉第穹頂：全隊回滿 HP。';break;
+    case 'R14': if(mechIn(cells)){damageMech(240,{true:true});msg='真空內爆。';}else msg='機甲不在四方陣內。';break;
+  }
+  banner(`#${r.id}`,r.name); log(msg); updateHud(); renderDeck(); afterAct();
+}
+/* ---------- enemy turn ---------- */
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function endTurn(){
+  if(B.phase!=='player')return; B.phase='enemy'; B.mode=null; clearTargets(); renderDeck();
+  banner('敵方回合'); await sleep(900);
+  const m=B.mech;
+  if(m.alive){
+    if(m.stun>0){ m.stun--; floatAt(W(m.i,m.j),'暈眩中','#c9a24a'); log('機甲暈眩，無法行動。'); await sleep(700); }
+    else{
+      // stomp anchors
+      if(!m.root&&B.anchors.length){
+        const r=reach(m,2); let best=null;
+        B.anchors.forEach(a=>{const c=r.get(a.i+','+a.j); if(c&&(!best||c.d<best.d))best=c;});
+        if(best){ m.i=best.i;m.j=best.j;placeUnits(false); await sleep(500);
+          B.anchors=B.anchors.filter(a=>!(a.i===best.i&&a.j===best.j)); rebuildAnchors();
+          floatAt(W(m.i,m.j),'踩碎錨點','#c8473b'); log('機甲察覺陣法，衝過去踩碎了一枚錨點。'); await sleep(500);}
+        else await approach(m);
+      } else if(!m.root) await approach(m);
+      // attack
+      const U=['ryan','claire'].map(k=>B.units[k]).filter(u=>u.alive);
+      const adj=U.find(u=>md(u.i,u.j,m.i,m.j)===1);
+      if(adj){ m.mesh.position.y=.25; await sleep(150); m.mesh.position.y=0; damageUnit(adj,55); log(`機甲重踏 ${adj.name}。`); }
+      else{ const tgt=U.filter(u=>md(u.i,u.j,m.i,m.j)<=4).sort((a,b)=>md(a.i,a.j,m.i,m.j)-md(b.i,b.j,m.i,m.j))[0];
+        if(tgt){ const blocked=lineBlocked(m,tgt); if(blocked){log('蒸氣砲被石牆擋下。');floatAt(W(m.i,m.j),'砲擊被擋','#a7b0b3');} else {damageUnit(tgt,40);log(`機甲的蒸氣砲擊中 ${tgt.name}。`);} } }
+      await sleep(600);
+    }
+    if(m.root>0) m.root--;
+  }
+  const U=B.units; if(!U.ryan.alive&&!U.claire.alive) return defeat();
+  if(!m.alive) return;
+  B.turn++; B.phase='player';
+  U.ryan.ap=U.ryan.alive?4:0; U.claire.ap=U.claire.alive?4:0; U.claire.freeMove=false; U.claire.ventUsed=false;
+  if(!U[B.sel].alive) B.sel=U.ryan.alive?'ryan':'claire';
+  banner(`第 ${B.turn} 回合`);
+  guide(`第 ${B.turn} 回合`, B.gas.size?'氣雲還在場上，克蕾雅的火銃射程 4 格，點燃它。':B.anchors.length?'錨點留著會被機甲踩碎，盡量在同一回合連線發動。':'定身後的機甲踩不到錨點。先用 #R08 或急凍把它固定，再慢慢佈陣。');
+  updateHud(); renderDeck();
+}
+async function approach(m){
+  const U=['ryan','claire'].map(k=>B.units[k]).filter(u=>u.alive); if(!U.length)return;
+  const r=reach(m,2); let best=null;
+  r.forEach(c=>{const d=Math.min(...U.map(u=>md(u.i,u.j,c.i,c.j))); if(d>=1&&(!best||d<best.dd||(d===best.dd&&c.d<best.d)))best={...c,dd:d};});
+  const cur=Math.min(...U.map(u=>md(u.i,u.j,m.i,m.j)));
+  if(best&&best.dd<cur){ m.i=best.i;m.j=best.j;placeUnits(false); await sleep(500); }
+}
+function lineBlocked(a,b){ const cells=cellsOfShape([{i:a.i,j:a.j},{i:b.i,j:b.j}]); return cells.some(([i,j])=>B.tiles[i][j]==='wall'); }
+function defeat(){
+  B.phase='done';
+  $('ov').innerHTML=`<div class="overlay"><div class="card"><h3>小隊潰滅</h3><p>重裝機甲還站在機庫中央。換一套配裝再試一次：#R08 鐵枷能先把它定住，石牆可以擋下蒸氣砲。</p>
+   <div class="row"><button class="btn primary" id="ov-retry">重新挑戰</button><button class="btn" id="ov-base">回整備基地</button></div></div></div>`;
+  $('ov-retry').onclick=()=>{$('ov').innerHTML='';startBattle(B.onWin);};
+  $('ov-base').onclick=()=>{$('ov').innerHTML='';const f=B.onWin;openBase(f);};
+}
+/* =========================================================
+   FLOW
+   ========================================================= */
+function chapterEnd(){
+  save.cleared=true; persist(); show('title');
+  $('ov').innerHTML=`<div class="overlay"><div class="card"><span class="t-eyebrow">Chapter 1 Complete</span><h3>第一章　完</h3>
+   <p>五百名礦工的記憶回到了他們身上。音叉浮現的駐波刻度，指向北方的極寒要塞「白銀之顎」。</p>
+   <p class="note">第二章（高低差、滑冰與凍僵）製作中。#R16、#R17 將在第二章解鎖。</p>
+   <div class="row"><button class="btn primary" id="ce-t">回到標題</button><button class="btn" id="ce-b">再戰機庫</button></div></div></div>`;
+  $('ce-t').onclick=()=>{$('ov').innerHTML='';};
+  $('ce-b').onclick=()=>{$('ov').innerHTML='';openBase(()=>playScene(SCENES.ch1b,chapterEnd));};
+}
+function newGame(){
+  playScene(SCENES.prologue.concat(SCENES.ch1a),()=>{
+    openBase(()=>playScene(SCENES.ch1b,chapterEnd));
+  });
+}
+$('m-new').onclick=newGame;
+$('m-base').onclick=()=>openBase(()=>playScene(SCENES.ch1b,chapterEnd));
+$('m-battle').onclick=()=>startBattle(()=>playScene(SCENES.ch1b,chapterEnd));
+show('title');
+</script>
