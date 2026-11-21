@@ -14,8 +14,22 @@ from cutout import cut
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-def frames_from(path, n):
-    im = cut(path, tol=34, tol2=20, minarea=200)
+def prep(path, crop=None):
+    """裁掉地平線以下（標籤文字、影子），可再指定裁切框；回傳暫存檔路徑。"""
+    im = Image.open(path).convert('RGB')
+    if crop: im = im.crop(crop)
+    a = np.asarray(im).astype(int); H, W, _ = a.shape
+    bg = np.median(a[:6].reshape(-1, 3), 0)
+    lum = a.mean(2); sat = a.max(2) - a.min(2)
+    line = (lum < bg.mean() - 14) & (sat < 22)
+    cut_y = H
+    for y in range(int(H * .55), H):
+        if line[y].mean() > .35 and line[max(0, y - 4)].mean() < .12 and line[min(H - 1, y + 4)].mean() < .12: cut_y = y; break
+    im = im.crop((0, 0, W, cut_y))
+    tmp = '/tmp/_sprite_prep.png'; im.save(tmp); return tmp
+
+def frames_from(path, n, tol=(34, 20)):
+    im = cut(path, tol=tol[0], tol2=tol[1], minarea=200)
     a = np.asarray(im)[:, :, 3] > 100
     lab, k = ndimage.label(ndimage.binary_dilation(a, iterations=6))
     objs = [(sl, (lab[sl] == i + 1).sum()) for i, sl in enumerate(ndimage.find_objects(lab))]
@@ -75,8 +89,9 @@ def feet_center(f):
     cols = np.where(a[int(H * .55):].any(0))[0]
     return (cols.min() + cols.max()) / 2 if len(cols) else f.width / 2
 
-def sheet(name, path, names, height=80):
-    _, fr = frames_from(path, len(names))
+def sheet(name, path, names, height=80, crop=None, flip=(), tol=(34, 20)):
+    _, fr = frames_from(prep(path, crop), len(names), tol)
+    fr = [f.transpose(Image.FLIP_LEFT_RIGHT) if k in flip else f for k, f in enumerate(fr)]
     assert len(fr) == len(names), f'找到 {len(fr)} 個姿勢，預期 {len(names)}'
     px = pixelize(fr, height)
     cx = [feet_center(f) for f in px]
