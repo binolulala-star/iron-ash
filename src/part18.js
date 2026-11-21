@@ -209,7 +209,7 @@ function buildFortress(){
     const f=new THREE.PointLight(0xff9a40,1.4,7);f.position.set(x,1.4,z);E.world.add(f);flicker(f,1.4,.5,4+x);fbHalo(x,z,1.8,0xff9a40,.4);});
   [[3,4],[42,3],[42,34],[15,34]].forEach(([x,z])=>fbSnowPile(x,z,1.2));
   fbBox(5,20.4,1.8,.5,.45,mat2('plank',.8,.3));
-  if(P.flags.boss){[[18,20],[20,21.4],[25,19],[27,21]].forEach(([x,z],k)=>{const s=hrChar(k%2?'erik':'guard',1.75);s.holder.position.set(x,0,z);s.face(k%2?1:-1);E.world.add(s.holder);});}
+  if(P.flags.boss){[[18,20],[20,21.4],[25,19],[27,21]].forEach(([x,z],k)=>{const s=hrChar(k%2?'soldier':'guard',1.75);s.holder.position.set(x,0,z);s.face(k%2?1:-1);E.world.add(s.holder);});}
 }
 
 /* ---------------- 冰封記憶庫 ---------------- */

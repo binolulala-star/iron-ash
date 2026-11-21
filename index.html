@@ -3995,7 +3995,7 @@ function buildFortress(){
     const f=new THREE.PointLight(0xff9a40,1.4,7);f.position.set(x,1.4,z);E.world.add(f);flicker(f,1.4,.5,4+x);fbHalo(x,z,1.8,0xff9a40,.4);});
   [[3,4],[42,3],[42,34],[15,34]].forEach(([x,z])=>fbSnowPile(x,z,1.2));
   fbBox(5,20.4,1.8,.5,.45,mat2('plank',.8,.3));
-  if(P.flags.boss){[[18,20],[20,21.4],[25,19],[27,21]].forEach(([x,z],k)=>{const s=hrChar(k%2?'erik':'guard',1.75);s.holder.position.set(x,0,z);s.face(k%2?1:-1);E.world.add(s.holder);});}
+  if(P.flags.boss){[[18,20],[20,21.4],[25,19],[27,21]].forEach(([x,z],k)=>{const s=hrChar(k%2?'soldier':'guard',1.75);s.holder.position.set(x,0,z);s.face(k%2?1:-1);E.world.add(s.holder);});}
 }
 
 /* ---------------- 冰封記憶庫 ---------------- */
@@ -5494,7 +5494,7 @@ Object.entries(CH_ART).forEach(([kind,meta])=>{const img=new Image();img.onload=
 let chHurt=new Set();
 {const o=damageUnit;damageUnit=function(u,amt){if(u&&u.spr)chHurt.add(u.spr);const r=o(u,amt);setTimeout(()=>u&&u.spr&&chHurt.delete(u.spr),400);return r;};}
 function chTick(dt,t){E.sprites.forEach(s=>{if(!s.painted)return;if(s.mat.emissiveMap!==s.mat.map){s.mat.emissiveMap=s.mat.map;s.mat.needsUpdate=true;}
-  if(E.mode==='battle'&&!CH_ART[s.kind].foe&&s.hop>.9&&!s.busy&&!s.chAtk&&!chHurt.has(s)&&!s.pose){s.chAtk=.38;s.pose=CHT[s.kind].atk;}
+  if(E.mode==='battle'&&!CH_ART[s.kind].foe&&CHT[s.kind].atk&&s.hop>.9&&!s.busy&&!s.chAtk&&!chHurt.has(s)&&!s.pose){s.chAtk=.38;s.pose=CHT[s.kind].atk;}
   if(s.chAtk){s.chAtk-=dt;if(s.chAtk<=0){s.chAtk=0;if(s.pose===CHT[s.kind].atk&&!s.busy)s.pose=null;}}
   s.mesh.scale.y=s.walking||s.pose?1:1+Math.sin(t*2.2+s.t)*.012;});}
 E.fxs.push(chTick);
@@ -5511,6 +5511,19 @@ function backRowCam(){if(!B)return;const tall=B.enemies.some(e=>e.alive&&e.j<=1&
   else innerWidth<600?look(0,13.6,15.6,0,.3,-1.1):look(0,9.9,11.6,0,.35,-1.25);}
 {const o=startBattle;startBattle=function(cfg){const r=o(cfg);backRowCam();return r;};}
 {const b=$('cam-0'),o=b.onclick;b.onclick=e=>{o&&o(e);backRowCam();};}
+/* named NPCs (idle, walkA, walkB) */
+Object.assign(CH_ART,{vera:{cw:62,ch:98,body:98,fr:['idle','walkA','walkB']},howard:{cw:62,ch:98,body:98,fr:['idle','walkA','walkB']},marta:{cw:58,ch:98,body:98,fr:['idle','walkA','walkB']},
+ tim:{cw:62,ch:98,body:98,fr:['idle','walkA','walkB']},hans:{cw:64,ch:98,body:98,fr:['idle','walkA','walkB']},lia:{cw:74,ch:98,body:98,fr:['idle','walkA','walkB']},
+ locke:{cw:66,ch:98,body:98,fr:['idle','walkA','walkB']},orrick:{cw:66,ch:98,body:98,fr:['idle','walkA','walkB']},erik:{cw:58,ch:98,body:98,fr:['idle','walkA','walkB']},
+ hunter:{cw:62,ch:98,body:98,fr:['idle','walkA','walkB']}});
+['vera','howard','marta','tim','hans','lia','locke','orrick','erik','hunter'].forEach(kind=>{const meta=CH_ART[kind],img=new Image();img.onload=()=>{const c={};meta.fr.forEach((n,k)=>c[n]=chCanvas(img,meta,k));
+  const T={};Object.entries(c).forEach(([n,cv])=>T[n]=tex(cv));T.hurt=tex(chTilt(c.idle,-.16,-3));T.wind=tex(chTilt(c.walkB,-.08,-2));T.win=T.idle;Object.values(T).forEach(t=>t.__ch=1);CHT[kind]=T;
+  E.sprites.forEach(s=>{if(s.kind===kind||s.chKind===kind){s.kind=kind;chApply(s);}});};img.src='env/ch_'+kind+'.webp';});
+/* Hans was drawn with the miner sprite; give him his own */
+{const o=charSprite;charSprite=function(k){const s=o(k);if(k==='hans'){s.kind='hans';s.chKind='hans';if(chReady('hans')){s.painted=false;chApply(s);}}return s;};}
+/* generic fortress soldiers borrowed Erik's sprite: keep them generic */
+TOWN_KIND.soldier='soldier';
+{const o=hrChar;hrChar=function(kind,h){if(kind==='soldier'){const r=CHT.erik;delete CHT.erik;const s=o('erik',h);if(r)CHT.erik=r;s.kind='soldier';return s;}return o(kind,h);};}
 
 </script>
 

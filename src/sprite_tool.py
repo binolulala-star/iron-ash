@@ -14,6 +14,22 @@ from cutout import cut
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+def longest_run(row):
+    best = cur = 0
+    for v in row:
+        cur = cur + 1 if v else 0
+        best = max(best, cur)
+    return best
+
+def ground_row(a, start=.55):
+    """地面線：一整條橫跨大半寬度、不間斷的非背景像素列。"""
+    H, W = a.shape[:2]
+    bgl = np.median(a[:6].reshape(-1, 3), 0).mean()
+    diff = np.abs(a.mean(2) - bgl) > 8
+    for y in range(int(H * start), H):
+        if longest_run(diff[y]) > W * .55: return y
+    return H
+
 def prep(path, crop=None):
     """裁掉地平線以下（標籤文字、影子），可再指定裁切框；回傳暫存檔路徑。"""
     im = Image.open(path).convert('RGB')
@@ -22,9 +38,7 @@ def prep(path, crop=None):
     bg = np.median(a[:6].reshape(-1, 3), 0)
     lum = a.mean(2); sat = a.max(2) - a.min(2)
     line = (lum < bg.mean() - 14) & (sat < 22)
-    cut_y = H
-    for y in range(int(H * .55), H):
-        if line[y].mean() > .35 and line[max(0, y - 4)].mean() < .12 and line[min(H - 1, y + 4)].mean() < .12: cut_y = y; break
+    cut_y = ground_row(a)
     im = im.crop((0, 0, W, cut_y))
     tmp = '/tmp/_sprite_prep.png'; im.save(tmp); return tmp
 
@@ -89,8 +103,39 @@ def feet_center(f):
     cols = np.where(a[int(H * .55):].any(0))[0]
     return (cols.min() + cols.max()) / 2 if len(cols) else f.width / 2
 
+def frames_by_columns(path, n, tol, crop=None):
+    """姿勢被地面線連在一起時：裁到地面線為止，再用姿勢之間的空白欄位切開。"""
+    src = Image.open(path).convert('RGB')
+    x0, y0, x1, y1 = crop or (0, 0, *src.size)
+    a = np.asarray(src.crop((x0, y0, x1, y1))).astype(int)
+    base = ground_row(a)
+    tmp = '/tmp/_sprite_cols.png'; src.crop((x0, y0, x1, y0 + base)).save(tmp)
+    im = cut(tmp, tol=tol[0], tol2=tol[1], minarea=200)
+    al = np.asarray(im)[:, :, 3] > 100
+    occ = al[:max(1, base - 14)].any(0)
+    runs, st = [], None
+    for x, v in enumerate(list(occ) + [False]):
+        if v and st is None: st = x
+        if not v and st is not None:
+            if runs and st - runs[-1][1] < 10: runs[-1][1] = x
+            else: runs.append([st, x])
+            st = None
+    runs = sorted(sorted(runs, key=lambda r: -(r[1] - r[0]))[:n])
+    out = []
+    for r0, r1 in runs:
+        f = np.asarray(im).copy()[:, max(0, r0 - 4):r1 + 4]
+        lab, k = ndimage.label(f[:, :, 3] > 100)
+        if k > 1:
+            sz = ndimage.sum(np.ones(lab.shape), lab, range(1, k + 1))
+            keep = [i + 1 for i, v in enumerate(sz) if v >= sz.max() * .03]
+            f[:, :, 3] = np.where(np.isin(lab, keep), f[:, :, 3], 0)
+        out.append(Image.fromarray(f))
+    return out
+
 def sheet(name, path, names, height=80, crop=None, flip=(), tol=(34, 20)):
     _, fr = frames_from(prep(path, crop), len(names), tol)
+    if len(fr) < len(names):
+        fr = frames_by_columns(path, len(names), tol, crop)
     fr = [f.transpose(Image.FLIP_LEFT_RIGHT) if k in flip else f for k, f in enumerate(fr)]
     assert len(fr) == len(names), f'找到 {len(fr)} 個姿勢，預期 {len(names)}'
     px = pixelize(fr, height)
