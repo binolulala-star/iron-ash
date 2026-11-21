@@ -216,6 +216,7 @@ async def main():
             await ev("resetParty();enterChapter2();startBattle(battleC2('b1'))"); await wt(4500); await skip_story()
             ok('第二章戰鬥開始（寒氣地形）', await ev("!!B&&!!B.cfg.cold"))
             await shot('12_battle_c2')
+            ok('戰鬥介面沒有遮住任何角色', await ev("hudSeeThru(),!document.querySelector('#battle .see-thru')"))
             await ev("startBattle(battleC2('boss'))"); await wt(5000); await skip_story()
             ok('第二章 Boss 戰開始', await ev("!!B&&B.enemies.some(e=>e.type==='colossus')"))
             await shot('13_boss2')
