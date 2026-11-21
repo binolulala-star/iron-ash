@@ -195,7 +195,7 @@ head=head.replace('<button class="tab" role="tab" id="tab-w" aria-selected="fals
 assert 'tab-g' in head
 head=head.replace('<div class="field-ctl" id="field-ctl">','<div class="camctl frame" id="camctl"><small>視角</small><button id="cam-l" title="向左旋轉 (Q)" aria-label="向左旋轉視角">⟲</button><button id="cam-r" title="向右旋轉 (E)" aria-label="向右旋轉視角">⟳</button><button id="cam-0" title="重置視角" aria-label="重置視角" style="font-size:12px">⌂</button><button id="th-mode" type="button">演出：全部</button><button class="snd" type="button">♪</button></div>\n  <div class="field-ctl" id="field-ctl">')
 assert 'cam-l' in head
-js=''.join(open(os.path.join(ROOT,'src',f'part{i}.js')).read()+'\n' for i in (1,2,3,5,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30))
+js=''.join(open(os.path.join(ROOT,'src',f'part{i}.js')).read()+'\n' for i in (1,2,3,5,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31))
 out=head+scripts+'<script>\n'+js+'</script>\n'
 out=out.replace('<div class="st-box frame" id="st-box">','<div class="st-stand" id="st-stand"><img id="st-stand-img" alt=""></div>\n  <div class="st-box frame" id="st-box">',1)
 assert 'st-stand-img' in out
