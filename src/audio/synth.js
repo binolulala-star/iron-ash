@@ -100,12 +100,11 @@ setInterval(()=>{if(!$('explore').hidden&&E.mode==='explore')saveRun('map');},80
 /* ======================= HOOKS ======================= */
 const MAP_SONG={town:'town',sewer:'sewer',yard:'yard'},SET_SONG={title:'title',reactor:'title',train:'yard',hangar:'yard',aftermath:'title',dawn:'dawn'};
 {const o=show;show=function(id){o(id);if(id==='title'){song('title');refreshContinue();}if(id==='base')song('camp');};}
-{const o=enterMap;enterMap=function(id,opts={}){o(id,opts);song(MAP_SONG[MAPS[id].theme]||'town');saveRun('map');
-  if(!P.flags.tut_move){P.flags.tut_move=1;setTimeout(()=>toast('WASD／方向鍵或點擊地面移動，靠近 ◆ 按 E 調查。右上角危險度滿了就會遇敵。'),600);}};}
+HOOK.after('enterMap',id=>{song(MAP_SONG[MAPS[id].theme]||'town');saveRun('map');
+  if(!P.flags.tut_move){P.flags.tut_move=1;setTimeout(()=>toast('WASD／方向鍵或點擊地面移動，靠近 ◆ 按 E 調查。右上角危險度滿了就會遇敵。'),600);}});
 {const o=backToMap;backToMap=function(){o();song(MAP_SONG[X.M.theme]);saveRun('map');};}
-{const o=buildSet;buildSet=function(n){o(n);if(SET_SONG[n])song(SET_SONG[n]);};}
-{const o=startBattle;startBattle=function(cfg){o(cfg);song(cfg.boss?'boss':'battle');
-  if(cfg.explore&&!P.flags.tut_enc){P.flags.tut_enc=1;guide('第一次遭遇戰','小型戰鬥可以按「撤退」逃跑（70%）。打贏能拿經驗值、元素與道具，偶爾掉落飾品。');}};}
+HOOK.after('buildSet',n=>{if(SET_SONG[n])song(SET_SONG[n]);});
+HOOK.after('startBattle',cfg=>{if(cfg.explore&&!P.flags.tut_enc){P.flags.tut_enc=1;guide('第一次遭遇戰','小型戰鬥可以按「撤退」逃跑（70%）。打贏能拿經驗值、元素與道具，偶爾掉落飾品。');}});
 {const o=victory;victory=function(){jingle();o();};}
 {const o=damageEnemy;damageEnemy=function(e,amt,opt={}){if(e&&e.alive&&!opt.quiet)sfx('hit');o(e,amt,opt);};}
 {const o=damageUnit;damageUnit=function(u,amt){if(u&&u.alive)sfx('hurt');o(u,amt);};}

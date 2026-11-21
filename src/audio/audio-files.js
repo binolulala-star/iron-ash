@@ -80,7 +80,7 @@ const RSND={R01:'crystal',R02:'fire',R03:'steam',R04:'sizzle',R05:'rumble',R06:'
 {const o=openMenu;openMenu=function(tab){if(!menuOpen())sfx('menu_open');else sfx('ui');return o(tab);};}
 {const o=closeMenu;closeMenu=function(){sfx('menu_close');return o();};}
 {const o=pumpTips;pumpTips=function(){const was=tipOpen;o();if(!was&&tipOpen)sfx('tip');};}
-{const o=enterMap;enterMap=function(...a){sfx('door');return o(...a);};}
+HOOK.before('enterMap',()=>sfx('door'));
 {const o=slideFrom;slideFrom=function(...a){sfx('slide');return o(...a);};}
 if(typeof addLoot==='function'){const o=addLoot;addLoot=function(id){const r=o(id);sfx('chest');return r;};}
 /* footsteps */

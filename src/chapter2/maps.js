@@ -43,7 +43,7 @@ function fbSnowPile(x,z,r){const s=new THREE.Mesh(new THREE.SphereGeometry(r,10,
 function steamPlume(x,y,z,n=10,col=0xe8eef4){const ps=[];for(let k=0;k<n;k++){const s=new THREE.Mesh(new THREE.SphereGeometry(.3,6,4),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.35,depthWrite:false}));s.userData.ph=k/n;E.world.add(s);ps.push(s);}
   E.fxs.push((dt,t)=>{ps.forEach(s=>{if(!s.parent)return;const q=(t*.18+s.userData.ph)%1;s.position.set(x+Math.sin(q*6+s.userData.ph*9)*.5+q*1.4,y+q*5,z);s.scale.setScalar(.8+q*3);s.material.opacity=.38*(1-q);});});}
 /* snow instead of rain on chapter-2 maps */
-{const o=buildFree;buildFree=function(M){o(M);if(!M.snow)return;if(X.rain)X.rain.visible=false;
+HOOK.after('buildFree',M=>{if(!M.snow)return;if(X.rain)X.rain.visible=false;
   const n=M.snow===2?500:900,g=new THREE.BufferGeometry(),p=new Float32Array(n*3);for(let q=0;q<n;q++){p[q*3]=(rnd()-.5)*30;p[q*3+1]=rnd()*9;p[q*3+2]=(rnd()-.5)*26;}
   g.setAttribute('position',new THREE.BufferAttribute(p,3));const pts=new THREE.Points(g,new THREE.PointsMaterial({color:M.snowCol||0xf4f8ff,size:M.snow===2?.06:.08,transparent:true,opacity:.9,depthWrite:false}));E.world.add(pts);X.rain=pts;
   E.fxs.push((dt,t)=>{if(!pts.parent)return false;const a=g.attributes.position.array;for(let q=0;q<n;q++){a[q*3+1]-=dt*(.8+(q%5)*.15);a[q*3]+=Math.sin(t*.7+q)*dt*.3+dt*.25;if(a[q*3+1]<0){a[q*3+1]=9;a[q*3]=(rnd()-.5)*30;}}g.attributes.position.needsUpdate=true;});
@@ -51,7 +51,7 @@ function steamPlume(x,y,z,n=10,col=0xe8eef4){const ps=[];for(let k=0;k<n;k++){co
     for(let k=0;k<4;k++){const c=new THREE.Mesh(new THREE.OctahedronGeometry(.22+k*.06),new THREE.MeshStandardMaterial({color:0xbfeaff,transparent:true,opacity:.85,emissive:ev.glow||0x4a3a10,roughness:.05}));c.scale.y=1.8;c.position.set((k-1.5)*.24,.4+k*.05,(k%2)*.2-.1);c.rotation.z=(k-1.5)*.2;gr.add(c);}
     const l=new THREE.PointLight(ev.light||0xffc060,1.2,4);l.position.y=.8;gr.add(l);gr.position.set(x,0,z);gr.visible=!ev.hidden;E.world.add(gr);ev.obj=gr;
     E.fxs.push((dt,t)=>{l.intensity=1+Math.sin(t*3)*.4;});
-    const mk=new THREE.Mesh(new THREE.OctahedronGeometry(.12),new THREE.MeshBasicMaterial({color:0xffd27a}));mk.position.set(x,1.7,z);mk.visible=!ev.hidden&&!ev.done;E.world.add(mk);ev.mk=mk;});};}
+    const mk=new THREE.Mesh(new THREE.OctahedronGeometry(.12),new THREE.MeshBasicMaterial({color:0xffd27a}));mk.position.set(x,1.7,z);mk.visible=!ev.hidden&&!ev.done;E.world.add(mk);ev.mk=mk;});});
 Object.assign(MAP_SONG,{snow:'town',glacier:'yard',fortress:'yard',vault:'sewer'});
 
 /* ---------------- 霜港鎮 ---------------- */

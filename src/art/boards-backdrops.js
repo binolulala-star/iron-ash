@@ -68,7 +68,7 @@ function paintTrain(){const z0=TR.z0;
   bench.forEach(([x,z])=>fbProp('pr_bench2',x,z,1.25,{r:0}));fbProp('pr_cardtable',19.6,4,1.05,{r:0});
   fbProp('pr_luggage',5,TR.z1-.5,.9,{r:.35});fbProp('pr_stove',16.6,TR.z1-.45,1.2,{r:.35,glow:.6});fbProp('pr_supply',30.4,TR.z0+.6,1,{r:0});
   [5.6,17.6,29.2].forEach(x=>{const g=fbProp('pr_lantern',x,TR.z0+.3,.9,{r:0});g.position.y=1.15;g.children[1].visible=false;});}
-{const o=buildFree;buildFree=function(M){o(M);if(M===MAPS.train)paintTrain();if(M===MAPS.yard)paintYard();};}
+HOOK.after('buildFree',M=>{if(M===MAPS.train)paintTrain();if(M===MAPS.yard)paintYard();});
 
 /* yard: hangar gate + containers */
 ENV_KIND.container=null;

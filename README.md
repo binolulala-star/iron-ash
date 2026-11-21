@@ -6,13 +6,15 @@ HD-2D 戰棋鍊金 RPG 試作版：序幕＋第一章＋第二章。單一 HTML 
 
 | 路徑 | 內容 |
 |---|---|
-| `src/part*.js` | 遊戲程式，依 `src/build.py` 裡的順序串接 |
+| `src/engine/` `world/` `chapter2/` `systems/` `art/` `audio/` | 遊戲程式，依 `src/manifest.txt` 的順序串接（架構說明見 `docs/ARCHITECTURE.md`） |
 | `src/build.py` | 建置：把 `v2-hd2d.html`（版面與樣式）和各 part 組成 `index.html` |
 | `src/cutout.py` | 立繪去背工具 |
 | `portraits/` | 角色立繪（webp） |
 | `env/` | 場景材質、地標、物件、劇情背景（webp） |
 | `index.html` | 建置產物，也就是發布出去的頁面 |
 | `tests/smoke.py` | 冒煙測試 |
+| `tools/wrapreport.py` | 架構健康報告 |
+| `docs/` | 架構說明、美術規範（`docs/ART_GUIDE.md`） |
 | `tests/baseline/` | 測試的基準截圖 |
 | `tests/vendor/three/` | 測試用的 Three.js 本機副本（不需連網） |
 | `music/` | 正式音樂（放進去就會取代程式合成的曲子，見下方） |

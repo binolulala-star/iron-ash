@@ -256,8 +256,8 @@ function questVisuals(id){
   if(id==='glacier'){pawTrail(35.6,26.8,20.8,30.8);}
   if(id==='frostport'&&P.flags.egg_snowman)snowmanFall(false);
   addQuestMarks();}
-{const o=buildFree;buildFree=function(M){o(M);const id=Object.keys(MAPS).find(k=>MAPS[k]===M);questVisuals(id);};}
-{const o=buildTown;buildTown=function(M){const r=o(M);questVisuals('town');return r;};}
+HOOK.after('buildFree',M=>questVisuals(Object.keys(MAPS).find(k=>MAPS[k]===M)));
+HOOK.after('buildTown',()=>questVisuals('town'));
 /* chapter-2 replay resets its own quests (the cat collection carries over) */
 {const o=startCh2;startCh2=function(){o();['q_coal','q_dog','q_letter','q_tags','tagA','tagB','dogSaved','snowN','egg_snowman','egg_mail'].forEach(k=>delete P.flags[k]);};}
 

@@ -62,11 +62,11 @@ function motes(k,box){const d=MOTES[k];if(!d||save.postQ!=='high')return;dustFie
   return r(...a);};}
 
 /* hooks: pick the grade, collect flickering lights, add motes */
-{const o=buildFree;buildFree=function(M){o(M);const id=Object.keys(MAPS).find(k=>MAPS[k]===M);grade(id);collectLights();
-  const sz=M.size||[40,34];motes(id,[0,.2,0,sz[0],3.4,sz[1]]);};}
-{const o=buildTown;buildTown=function(M){const r=o(M);grade('town');collectLights();motes('town',[0,.3,0,64,4,40]);return r;};}
-{const o=startBattle;startBattle=function(cfg){o(cfg);setTilt(E.tilt,E.blurRaw||1.6);grade(cfg.theme);collectLights();motes(cfg.theme,[-7,.2,-7,7,3.6,7]);};}
-{const o=buildSet;buildSet=function(n){o(n);grade(n);collectLights();E.blur=(E.blurRaw||2)*.7;POST.band=.22;resize();POST.band=save.postQ==='high'?.1:.16;};}
+HOOK.after('buildFree',M=>{const id=Object.keys(MAPS).find(k=>MAPS[k]===M);grade(id);collectLights();
+  const sz=M.size||[40,34];motes(id,[0,.2,0,sz[0],3.4,sz[1]]);});
+HOOK.after('buildTown',()=>{grade('town');collectLights();motes('town',[0,.3,0,64,4,40]);});
+HOOK.after('startBattle',cfg=>{setTilt(E.tilt,E.blurRaw||1.6);grade(cfg.theme);collectLights();motes(cfg.theme,[-7,.2,-7,7,3.6,7]);});
+HOOK.after('buildSet',n=>{grade(n);collectLights();E.blur=(E.blurRaw||2)*.7;POST.band=.22;resize();POST.band=save.postQ==='high'?.1:.16;});
 
 /* quality toggle (battle side panel + explore HUD) */
 function applyQ(){POST.blurMul=save.postQ==='high'?1.3:1;POST.band=save.postQ==='high'?.12:.16;setTilt(E.tilt,E.blurRaw||E.blur);

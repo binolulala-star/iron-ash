@@ -53,7 +53,7 @@ function backRowCam(){if(!B)return;const tall=B.enemies.some(e=>e.alive&&e.j<=1&
   if(N===9){if(big)innerWidth<600?look(0,15.4,16.4,0,1.2,-1.9):look(0,13.4,13.8,0,1,-1.15);return;}
   if(big)innerWidth<600?look(0,14.4,15.2,0,1.1,-1.6):look(0,10.6,11.2,0,1.05,-1.7);
   else innerWidth<600?look(0,13.6,15.6,0,.3,-1.1):look(0,9.9,11.6,0,.35,-1.25);}
-{const o=startBattle;startBattle=function(cfg){const r=o(cfg);backRowCam();return r;};}
+HOOK.after('startBattle',()=>backRowCam());
 {const b=$('cam-0'),o=b.onclick;b.onclick=e=>{o&&o(e);backRowCam();};}
 /* named NPCs (idle, walkA, walkB) */
 Object.assign(CH_ART,{vera:{cw:62,ch:98,body:98,fr:['idle','walkA','walkB']},howard:{cw:62,ch:98,body:98,fr:['idle','walkA','walkB']},marta:{cw:58,ch:98,body:98,fr:['idle','walkA','walkB']},

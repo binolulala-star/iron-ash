@@ -84,13 +84,13 @@ Object.assign(MAP_SONG,{snow:'snowtown',glacier:'glacier',fortress:'fortress',va
     if(S.snare&&(i===4||i===12))noise(t,.14,.1,D,'bandpass',1500);if(S.snare&&i%4===0)tone(t,110,.16,'sine',.25,D,45);
     s++;t+=dt;}
   o(S);};}
-{const o=startBattle;startBattle=function(cfg){o(cfg);song(cfg.bigBoss?'boss2':cfg.boss?'boss':cfg.side?'side':CHAPTER===2?'battle2':'battle');};}
+HOOK.after('startBattle',cfg=>song(cfg.bigBoss?'boss2':cfg.boss?'boss':cfg.side?'side':CHAPTER===2?'battle2':'battle'));
 
 /* ---------- collection (persists across slots) ---------- */
 save.dex=save.dex||{en:{},seen:{},gear:{},el:{}};
 function dexSync(){let ch=false;(P.owned||[]).forEach(k=>{if(!save.dex.gear[k]){save.dex.gear[k]=1;ch=true;}});
   Object.keys(P.stash||{}).forEach(k=>{if(P.stash[k]>0&&!save.dex.el[k]){save.dex.el[k]=1;ch=true;}});if(ch)persist();}
-{const o=startBattle;startBattle=function(cfg){(cfg.enemies||[]).forEach(([k])=>save.dex.seen[k]=1);persist();o(cfg);};}
+HOOK.before('startBattle',cfg=>{(cfg.enemies||[]).forEach(([k])=>save.dex.seen[k]=1);persist();});
 {const o=victory;victory=function(){if(B)B.enemies.forEach(e=>save.dex.en[e.type]=(save.dex.en[e.type]||0)+1);persist();o();dexSync();};}
 {const o=addLoot;addLoot=function(id){const r=o(id);if(GEAR[id]){save.dex.gear[id]=1;persist();}return r;};}
 const EN_DESC={miner:'被「體檢」掏空情緒的礦工。不會痛，也不會停。只能制伏。',hound:'憲兵隊的蒸氣犬。嗅得到鍊金錨點，會衝過去踩碎。',

@@ -254,7 +254,7 @@ function battleC2(id){
   };
   const c=C[id];return Object.assign({cold:true,explore:false},c);
 }
-{const o=startBattle;startBattle=function(cfg){o(cfg);if(cfg.bigBoss){song('boss');banner('第二章',cfg.title);}};}
+HOOK.after('startBattle',cfg=>{if(cfg.bigBoss)banner('第二章',cfg.title);});
 /* auto events that start a fixed battle */
 {const o=runEvent;runEvent=function(ev){
   if(ev.battle){X.target=null;X.keys={};$('ex-act').hidden=true;const go=()=>{fx('flash');setTimeout(()=>startBattle(ev.battle()),500);};

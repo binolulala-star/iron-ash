@@ -36,14 +36,14 @@ function pumpTips(){if(tipOpen||!TIPQ.length)return;if(tipBlocked()){setTimeout(
 document.addEventListener('keydown',e=>{if(!tipOpen)return;if(e.key==='Enter'||e.key===' '||e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();const b=$('tip-ok');b&&b.click();}},true);
 
 /* triggers */
-{const o=startBattle;startBattle=function(cfg){o(cfg);P.flags.bcount=(P.flags.bcount||0)+1;const n=P.flags.bcount;
+HOOK.after('startBattle',cfg=>{P.flags.bcount=(P.flags.bcount||0)+1;const n=P.flags.bcount;
   const ks=n===1?['turn','claire']:n===2?['decompose','anchor']:n===3?['armor','items']:[];
   if(n>3)ks.push('turn','decompose','anchor');
   if(B.cfg.hgt&&B.cfg.hgt.length)ks.push('height');
   if(B.tiles&&B.tiles.some(r=>r.includes('ice')))ks.push('ice');
   if(B.cfg.cold)ks.push('cold');
-  setTimeout(()=>tip(...ks),900);};}
-{const o=enterMap;enterMap=function(...a){const r=o(...a);setTimeout(()=>tip('explore','menu'),1800);return r;};}
+  setTimeout(()=>tip(...ks),900);});
+HOOK.after('enterMap',()=>setTimeout(()=>tip('explore','menu'),1800));
 {const o=openShop;openShop=function(...a){const r=o(...a);tip('shop');return r;};}
 {const o=qStart;qStart=function(id){o(id);setTimeout(()=>tip('quest'),1200);};}
 {const o=cast;cast=function(r){const res=o(r);if(r&&r.id==='R09')setTimeout(()=>tip('combo'),1500);return res;};}

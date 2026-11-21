@@ -810,6 +810,15 @@ function drawFace(who,en){
   img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(portraitSVG(who,en));
 }
 
+/* ======================= HOOKS: extension points instead of stacked wrappers =======================
+   HOOK.after('startBattle', cfg=>{...})   runs after the function, in registration (file) order
+   HOOK.before('enterMap', id=>{...})      runs before it
+   The hooked functions are listed in engine/hooks-install.js (last file in the manifest). */
+const HOOK={b:{},a:{},
+  before(n,f){(this.b[n]||(this.b[n]=[])).push(f);},
+  after(n,f){(this.a[n]||(this.a[n]=[])).push(f);},
+  run(kind,n,args){(this[kind][n]||[]).forEach(f=>{try{f(...args);}catch(e){console.error('hook '+n,e);}});}};
+
 /* ======================= SCRIPT ======================= */
 const NAMES={ryan:'萊恩',claire:'克蕾雅',vera:'薇拉（水銀）',howard:'霍華德教授',marta:'礦工之妻・瑪塔',tim:'男孩・提姆',miner:'礦工',hans:'礦工・漢斯',guard:'憲兵隊長'};
 const SCENES={
@@ -1870,12 +1879,11 @@ setInterval(()=>{if(!$('explore').hidden&&E.mode==='explore')saveRun('map');},80
 /* ======================= HOOKS ======================= */
 const MAP_SONG={town:'town',sewer:'sewer',yard:'yard'},SET_SONG={title:'title',reactor:'title',train:'yard',hangar:'yard',aftermath:'title',dawn:'dawn'};
 {const o=show;show=function(id){o(id);if(id==='title'){song('title');refreshContinue();}if(id==='base')song('camp');};}
-{const o=enterMap;enterMap=function(id,opts={}){o(id,opts);song(MAP_SONG[MAPS[id].theme]||'town');saveRun('map');
-  if(!P.flags.tut_move){P.flags.tut_move=1;setTimeout(()=>toast('WASD／方向鍵或點擊地面移動，靠近 ◆ 按 E 調查。右上角危險度滿了就會遇敵。'),600);}};}
+HOOK.after('enterMap',id=>{song(MAP_SONG[MAPS[id].theme]||'town');saveRun('map');
+  if(!P.flags.tut_move){P.flags.tut_move=1;setTimeout(()=>toast('WASD／方向鍵或點擊地面移動，靠近 ◆ 按 E 調查。右上角危險度滿了就會遇敵。'),600);}});
 {const o=backToMap;backToMap=function(){o();song(MAP_SONG[X.M.theme]);saveRun('map');};}
-{const o=buildSet;buildSet=function(n){o(n);if(SET_SONG[n])song(SET_SONG[n]);};}
-{const o=startBattle;startBattle=function(cfg){o(cfg);song(cfg.boss?'boss':'battle');
-  if(cfg.explore&&!P.flags.tut_enc){P.flags.tut_enc=1;guide('第一次遭遇戰','小型戰鬥可以按「撤退」逃跑（70%）。打贏能拿經驗值、元素與道具，偶爾掉落飾品。');}};}
+HOOK.after('buildSet',n=>{if(SET_SONG[n])song(SET_SONG[n]);});
+HOOK.after('startBattle',cfg=>{if(cfg.explore&&!P.flags.tut_enc){P.flags.tut_enc=1;guide('第一次遭遇戰','小型戰鬥可以按「撤退」逃跑（70%）。打贏能拿經驗值、元素與道具，偶爾掉落飾品。');}});
 {const o=victory;victory=function(){jingle();o();};}
 {const o=damageEnemy;damageEnemy=function(e,amt,opt={}){if(e&&e.alive&&!opt.quiet)sfx('hit');o(e,amt,opt);};}
 {const o=damageUnit;damageUnit=function(u,amt){if(u&&u.alive)sfx('hurt');o(u,amt);};}
@@ -3830,7 +3838,7 @@ function fbSnowPile(x,z,r){const s=new THREE.Mesh(new THREE.SphereGeometry(r,10,
 function steamPlume(x,y,z,n=10,col=0xe8eef4){const ps=[];for(let k=0;k<n;k++){const s=new THREE.Mesh(new THREE.SphereGeometry(.3,6,4),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.35,depthWrite:false}));s.userData.ph=k/n;E.world.add(s);ps.push(s);}
   E.fxs.push((dt,t)=>{ps.forEach(s=>{if(!s.parent)return;const q=(t*.18+s.userData.ph)%1;s.position.set(x+Math.sin(q*6+s.userData.ph*9)*.5+q*1.4,y+q*5,z);s.scale.setScalar(.8+q*3);s.material.opacity=.38*(1-q);});});}
 /* snow instead of rain on chapter-2 maps */
-{const o=buildFree;buildFree=function(M){o(M);if(!M.snow)return;if(X.rain)X.rain.visible=false;
+HOOK.after('buildFree',M=>{if(!M.snow)return;if(X.rain)X.rain.visible=false;
   const n=M.snow===2?500:900,g=new THREE.BufferGeometry(),p=new Float32Array(n*3);for(let q=0;q<n;q++){p[q*3]=(rnd()-.5)*30;p[q*3+1]=rnd()*9;p[q*3+2]=(rnd()-.5)*26;}
   g.setAttribute('position',new THREE.BufferAttribute(p,3));const pts=new THREE.Points(g,new THREE.PointsMaterial({color:M.snowCol||0xf4f8ff,size:M.snow===2?.06:.08,transparent:true,opacity:.9,depthWrite:false}));E.world.add(pts);X.rain=pts;
   E.fxs.push((dt,t)=>{if(!pts.parent)return false;const a=g.attributes.position.array;for(let q=0;q<n;q++){a[q*3+1]-=dt*(.8+(q%5)*.15);a[q*3]+=Math.sin(t*.7+q)*dt*.3+dt*.25;if(a[q*3+1]<0){a[q*3+1]=9;a[q*3]=(rnd()-.5)*30;}}g.attributes.position.needsUpdate=true;});
@@ -3838,7 +3846,7 @@ function steamPlume(x,y,z,n=10,col=0xe8eef4){const ps=[];for(let k=0;k<n;k++){co
     for(let k=0;k<4;k++){const c=new THREE.Mesh(new THREE.OctahedronGeometry(.22+k*.06),new THREE.MeshStandardMaterial({color:0xbfeaff,transparent:true,opacity:.85,emissive:ev.glow||0x4a3a10,roughness:.05}));c.scale.y=1.8;c.position.set((k-1.5)*.24,.4+k*.05,(k%2)*.2-.1);c.rotation.z=(k-1.5)*.2;gr.add(c);}
     const l=new THREE.PointLight(ev.light||0xffc060,1.2,4);l.position.y=.8;gr.add(l);gr.position.set(x,0,z);gr.visible=!ev.hidden;E.world.add(gr);ev.obj=gr;
     E.fxs.push((dt,t)=>{l.intensity=1+Math.sin(t*3)*.4;});
-    const mk=new THREE.Mesh(new THREE.OctahedronGeometry(.12),new THREE.MeshBasicMaterial({color:0xffd27a}));mk.position.set(x,1.7,z);mk.visible=!ev.hidden&&!ev.done;E.world.add(mk);ev.mk=mk;});};}
+    const mk=new THREE.Mesh(new THREE.OctahedronGeometry(.12),new THREE.MeshBasicMaterial({color:0xffd27a}));mk.position.set(x,1.7,z);mk.visible=!ev.hidden&&!ev.done;E.world.add(mk);ev.mk=mk;});});
 Object.assign(MAP_SONG,{snow:'town',glacier:'yard',fortress:'yard',vault:'sewer'});
 
 /* ---------------- 霜港鎮 ---------------- */
@@ -4299,7 +4307,7 @@ function battleC2(id){
   };
   const c=C[id];return Object.assign({cold:true,explore:false},c);
 }
-{const o=startBattle;startBattle=function(cfg){o(cfg);if(cfg.bigBoss){song('boss');banner('第二章',cfg.title);}};}
+HOOK.after('startBattle',cfg=>{if(cfg.bigBoss)banner('第二章',cfg.title);});
 /* auto events that start a fixed battle */
 {const o=runEvent;runEvent=function(ev){
   if(ev.battle){X.target=null;X.keys={};$('ex-act').hidden=true;const go=()=>{fx('flash');setTimeout(()=>startBattle(ev.battle()),500);};
@@ -4479,10 +4487,10 @@ const MAP_PROPS={
  town:[['pr_minecart',44,11.4,1.4],['pr_drum',59.4,21.8,1.15],['pr_vendor',36.6,25.6,1.9],['pr_bench',35.6,29.2,1.05],['pr_tools',49.4,21,1.1],['pr_drum',8.6,22.4,1.15],
    ['pr_lamp2',20.6,26.8,2.6,{glow:.8}],['pr_lamp2',44,26.9,2.6,{glow:.8}],['pr_minecart',56.6,7.4,1.4],['pr_bench',14.2,26.4,1.05]],
 };
-{const o=buildFree;buildFree=function(M){o(M);const id=Object.keys(MAPS).find(k=>MAPS[k]===M),L=MAP_PROPS[id];if(!L)return;
+HOOK.after('buildFree',M=>{const id=Object.keys(MAPS).find(k=>MAPS[k]===M),L=MAP_PROPS[id];if(!L)return;
   const before=FB.circ.length;L.forEach(([n,x,z,h,opt])=>fbProp(n,x,z,h,Object.assign({r:h>2?.25:.38},opt||{})));
-  if(X.colCache&&FB.circ.length>before)X.colCache.circ=X.colCache.circ.concat(FB.circ.slice(before));X.col=M.colliders?M.colliders():X.col;};}
-{const o=buildTown;buildTown=function(M){const r=o(M);(MAP_PROPS.town||[]).forEach(([n,x,z,h,opt])=>fbProp(n,x,z,h,opt||{}));return r;};}
+  if(X.colCache&&FB.circ.length>before)X.colCache.circ=X.colCache.circ.concat(FB.circ.slice(before));X.col=M.colliders?M.colliders():X.col;});
+HOOK.after('buildTown',()=>(MAP_PROPS.town||[]).forEach(([n,x,z,h,opt])=>fbProp(n,x,z,h,opt||{})));
 
 /* ======================= PAINTED MATERIALS, PASS 2: roofs, side walls, ground, landmarks ======================= */
 Object.assign(PROP_AR,{pr_sandbag:1.72,pr_rack:.98,pr_search:.56,pr_cannon:1.86,pr_cart:1.18,pr_flag:.51,pr_stall:1.12,pr_mailbox:.6,pr_snowbench:1.28,pr_woodpile:1.6,pr_snowman:.82,pr_fish:.71,
@@ -4824,8 +4832,8 @@ function questVisuals(id){
   if(id==='glacier'){pawTrail(35.6,26.8,20.8,30.8);}
   if(id==='frostport'&&P.flags.egg_snowman)snowmanFall(false);
   addQuestMarks();}
-{const o=buildFree;buildFree=function(M){o(M);const id=Object.keys(MAPS).find(k=>MAPS[k]===M);questVisuals(id);};}
-{const o=buildTown;buildTown=function(M){const r=o(M);questVisuals('town');return r;};}
+HOOK.after('buildFree',M=>questVisuals(Object.keys(MAPS).find(k=>MAPS[k]===M)));
+HOOK.after('buildTown',()=>questVisuals('town'));
 /* chapter-2 replay resets its own quests (the cat collection carries over) */
 {const o=startCh2;startCh2=function(){o();['q_coal','q_dog','q_letter','q_tags','tagA','tagB','dogSaved','snowN','egg_snowman','egg_mail'].forEach(k=>delete P.flags[k]);};}
 
@@ -4920,13 +4928,13 @@ Object.assign(MAP_SONG,{snow:'snowtown',glacier:'glacier',fortress:'fortress',va
     if(S.snare&&(i===4||i===12))noise(t,.14,.1,D,'bandpass',1500);if(S.snare&&i%4===0)tone(t,110,.16,'sine',.25,D,45);
     s++;t+=dt;}
   o(S);};}
-{const o=startBattle;startBattle=function(cfg){o(cfg);song(cfg.bigBoss?'boss2':cfg.boss?'boss':cfg.side?'side':CHAPTER===2?'battle2':'battle');};}
+HOOK.after('startBattle',cfg=>song(cfg.bigBoss?'boss2':cfg.boss?'boss':cfg.side?'side':CHAPTER===2?'battle2':'battle'));
 
 /* ---------- collection (persists across slots) ---------- */
 save.dex=save.dex||{en:{},seen:{},gear:{},el:{}};
 function dexSync(){let ch=false;(P.owned||[]).forEach(k=>{if(!save.dex.gear[k]){save.dex.gear[k]=1;ch=true;}});
   Object.keys(P.stash||{}).forEach(k=>{if(P.stash[k]>0&&!save.dex.el[k]){save.dex.el[k]=1;ch=true;}});if(ch)persist();}
-{const o=startBattle;startBattle=function(cfg){(cfg.enemies||[]).forEach(([k])=>save.dex.seen[k]=1);persist();o(cfg);};}
+HOOK.before('startBattle',cfg=>{(cfg.enemies||[]).forEach(([k])=>save.dex.seen[k]=1);persist();});
 {const o=victory;victory=function(){if(B)B.enemies.forEach(e=>save.dex.en[e.type]=(save.dex.en[e.type]||0)+1);persist();o();dexSync();};}
 {const o=addLoot;addLoot=function(id){const r=o(id);if(GEAR[id]){save.dex.gear[id]=1;persist();}return r;};}
 const EN_DESC={miner:'被「體檢」掏空情緒的礦工。不會痛，也不會停。只能制伏。',hound:'憲兵隊的蒸氣犬。嗅得到鍊金錨點，會衝過去踩碎。',
@@ -5040,7 +5048,7 @@ function paintTrain(){const z0=TR.z0;
   bench.forEach(([x,z])=>fbProp('pr_bench2',x,z,1.25,{r:0}));fbProp('pr_cardtable',19.6,4,1.05,{r:0});
   fbProp('pr_luggage',5,TR.z1-.5,.9,{r:.35});fbProp('pr_stove',16.6,TR.z1-.45,1.2,{r:.35,glow:.6});fbProp('pr_supply',30.4,TR.z0+.6,1,{r:0});
   [5.6,17.6,29.2].forEach(x=>{const g=fbProp('pr_lantern',x,TR.z0+.3,.9,{r:0});g.position.y=1.15;g.children[1].visible=false;});}
-{const o=buildFree;buildFree=function(M){o(M);if(M===MAPS.train)paintTrain();if(M===MAPS.yard)paintYard();};}
+HOOK.after('buildFree',M=>{if(M===MAPS.train)paintTrain();if(M===MAPS.yard)paintYard();});
 
 /* yard: hangar gate + containers */
 ENV_KIND.container=null;
@@ -5155,11 +5163,11 @@ function motes(k,box){const d=MOTES[k];if(!d||save.postQ!=='high')return;dustFie
   return r(...a);};}
 
 /* hooks: pick the grade, collect flickering lights, add motes */
-{const o=buildFree;buildFree=function(M){o(M);const id=Object.keys(MAPS).find(k=>MAPS[k]===M);grade(id);collectLights();
-  const sz=M.size||[40,34];motes(id,[0,.2,0,sz[0],3.4,sz[1]]);};}
-{const o=buildTown;buildTown=function(M){const r=o(M);grade('town');collectLights();motes('town',[0,.3,0,64,4,40]);return r;};}
-{const o=startBattle;startBattle=function(cfg){o(cfg);setTilt(E.tilt,E.blurRaw||1.6);grade(cfg.theme);collectLights();motes(cfg.theme,[-7,.2,-7,7,3.6,7]);};}
-{const o=buildSet;buildSet=function(n){o(n);grade(n);collectLights();E.blur=(E.blurRaw||2)*.7;POST.band=.22;resize();POST.band=save.postQ==='high'?.1:.16;};}
+HOOK.after('buildFree',M=>{const id=Object.keys(MAPS).find(k=>MAPS[k]===M);grade(id);collectLights();
+  const sz=M.size||[40,34];motes(id,[0,.2,0,sz[0],3.4,sz[1]]);});
+HOOK.after('buildTown',()=>{grade('town');collectLights();motes('town',[0,.3,0,64,4,40]);});
+HOOK.after('startBattle',cfg=>{setTilt(E.tilt,E.blurRaw||1.6);grade(cfg.theme);collectLights();motes(cfg.theme,[-7,.2,-7,7,3.6,7]);});
+HOOK.after('buildSet',n=>{grade(n);collectLights();E.blur=(E.blurRaw||2)*.7;POST.band=.22;resize();POST.band=save.postQ==='high'?.1:.16;});
 
 /* quality toggle (battle side panel + explore HUD) */
 function applyQ(){POST.blurMul=save.postQ==='high'?1.3:1;POST.band=save.postQ==='high'?.12:.16;setTilt(E.tilt,E.blurRaw||E.blur);
@@ -5195,7 +5203,7 @@ function vnSpeak(who,e){const el=VN.el,sl=VN.slots;
   if(!img.src.endsWith(src)&&img.getAttribute('src')!==src){img.src=src;box.classList.remove('swap');void box.offsetWidth;box.classList.add('swap');}
   box.classList.add('on','act');(side==='left'?el.R:el.L).classList.remove('act');
   box.classList.toggle('sil',src.startsWith('data:'));VN.last=who;}
-{const o=buildSet;buildSet=function(name){o(name);if(VN_SETS[name])vnOn(name);else vnOff();};}
+HOOK.after('buildSet',name=>{if(VN_SETS[name])vnOn(name);else vnOff();});
 {const o=show;show=function(id){o(id);if(id!=='story')vnOff();};}
 {const o=drawFace;drawFace=function(who,e){if(!VN.on)return o(who,e);$('st-face').hidden=true;$('st-stand').classList.remove('on');standWho=null;vnSpeak(who,e);};}
 {const o=playScene;playScene=function(list,onEnd,opts={}){if(opts.keep)vnOff();return o(list,onEnd,opts);};}
@@ -5260,14 +5268,14 @@ function pumpTips(){if(tipOpen||!TIPQ.length)return;if(tipBlocked()){setTimeout(
 document.addEventListener('keydown',e=>{if(!tipOpen)return;if(e.key==='Enter'||e.key===' '||e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();const b=$('tip-ok');b&&b.click();}},true);
 
 /* triggers */
-{const o=startBattle;startBattle=function(cfg){o(cfg);P.flags.bcount=(P.flags.bcount||0)+1;const n=P.flags.bcount;
+HOOK.after('startBattle',cfg=>{P.flags.bcount=(P.flags.bcount||0)+1;const n=P.flags.bcount;
   const ks=n===1?['turn','claire']:n===2?['decompose','anchor']:n===3?['armor','items']:[];
   if(n>3)ks.push('turn','decompose','anchor');
   if(B.cfg.hgt&&B.cfg.hgt.length)ks.push('height');
   if(B.tiles&&B.tiles.some(r=>r.includes('ice')))ks.push('ice');
   if(B.cfg.cold)ks.push('cold');
-  setTimeout(()=>tip(...ks),900);};}
-{const o=enterMap;enterMap=function(...a){const r=o(...a);setTimeout(()=>tip('explore','menu'),1800);return r;};}
+  setTimeout(()=>tip(...ks),900);});
+HOOK.after('enterMap',()=>setTimeout(()=>tip('explore','menu'),1800));
 {const o=openShop;openShop=function(...a){const r=o(...a);tip('shop');return r;};}
 {const o=qStart;qStart=function(id){o(id);setTimeout(()=>tip('quest'),1200);};}
 {const o=cast;cast=function(r){const res=o(r);if(r&&r.id==='R09')setTimeout(()=>tip('combo'),1500);return res;};}
@@ -5510,7 +5518,7 @@ function backRowCam(){if(!B)return;const tall=B.enemies.some(e=>e.alive&&e.j<=1&
   if(N===9){if(big)innerWidth<600?look(0,15.4,16.4,0,1.2,-1.9):look(0,13.4,13.8,0,1,-1.15);return;}
   if(big)innerWidth<600?look(0,14.4,15.2,0,1.1,-1.6):look(0,10.6,11.2,0,1.05,-1.7);
   else innerWidth<600?look(0,13.6,15.6,0,.3,-1.1):look(0,9.9,11.6,0,.35,-1.25);}
-{const o=startBattle;startBattle=function(cfg){const r=o(cfg);backRowCam();return r;};}
+HOOK.after('startBattle',()=>backRowCam());
 {const b=$('cam-0'),o=b.onclick;b.onclick=e=>{o&&o(e);backRowCam();};}
 /* named NPCs (idle, walkA, walkB) */
 Object.assign(CH_ART,{vera:{cw:62,ch:98,body:98,fr:['idle','walkA','walkB']},howard:{cw:62,ch:98,body:98,fr:['idle','walkA','walkB']},marta:{cw:58,ch:98,body:98,fr:['idle','walkA','walkB']},
@@ -5617,7 +5625,7 @@ const RSND={R01:'crystal',R02:'fire',R03:'steam',R04:'sizzle',R05:'rumble',R06:'
 {const o=openMenu;openMenu=function(tab){if(!menuOpen())sfx('menu_open');else sfx('ui');return o(tab);};}
 {const o=closeMenu;closeMenu=function(){sfx('menu_close');return o();};}
 {const o=pumpTips;pumpTips=function(){const was=tipOpen;o();if(!was&&tipOpen)sfx('tip');};}
-{const o=enterMap;enterMap=function(...a){sfx('door');return o(...a);};}
+HOOK.before('enterMap',()=>sfx('door'));
 {const o=slideFrom;slideFrom=function(...a){sfx('slide');return o(...a);};}
 if(typeof addLoot==='function'){const o=addLoot;addLoot=function(id){const r=o(id);sfx('chest');return r;};}
 /* footsteps */
@@ -5626,6 +5634,13 @@ let stepT=0;
 function stepTick(dt){if(E.mode!=='explore'||!X.lead||!X.lead.walking||!$('story').hidden){stepT=0;return;}
   stepT-=dt;if(stepT<=0){stepT=.34;sfx(X.id==='train'?'step_wood':SNOWY.includes(X.id)?'step_snow':'step_stone');}}
 E.fxs.push(stepTick);{const o=clearWorld;clearWorld=function(...a){const r=o(...a);if(!E.fxs.includes(stepTick))E.fxs.push(stepTick);return r;};}
+
+/* ======================= HOOKS INSTALL (must stay last in the manifest) ======================= */
+{const o=startBattle;startBattle=function(...a){HOOK.run('b','startBattle',a);const r=o(...a);HOOK.run('a','startBattle',a);return r;};}
+{const o=buildFree;buildFree=function(...a){HOOK.run('b','buildFree',a);const r=o(...a);HOOK.run('a','buildFree',a);return r;};}
+{const o=buildTown;buildTown=function(...a){HOOK.run('b','buildTown',a);const r=o(...a);HOOK.run('a','buildTown',a);return r;};}
+{const o=buildSet;buildSet=function(...a){HOOK.run('b','buildSet',a);const r=o(...a);HOOK.run('a','buildSet',a);return r;};}
+{const o=enterMap;enterMap=function(...a){HOOK.run('b','enterMap',a);const r=o(...a);HOOK.run('a','enterMap',a);return r;};}
 
 </script>
 

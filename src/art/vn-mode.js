@@ -21,7 +21,7 @@ function vnSpeak(who,e){const el=VN.el,sl=VN.slots;
   if(!img.src.endsWith(src)&&img.getAttribute('src')!==src){img.src=src;box.classList.remove('swap');void box.offsetWidth;box.classList.add('swap');}
   box.classList.add('on','act');(side==='left'?el.R:el.L).classList.remove('act');
   box.classList.toggle('sil',src.startsWith('data:'));VN.last=who;}
-{const o=buildSet;buildSet=function(name){o(name);if(VN_SETS[name])vnOn(name);else vnOff();};}
+HOOK.after('buildSet',name=>{if(VN_SETS[name])vnOn(name);else vnOff();});
 {const o=show;show=function(id){o(id);if(id!=='story')vnOff();};}
 {const o=drawFace;drawFace=function(who,e){if(!VN.on)return o(who,e);$('st-face').hidden=true;$('st-stand').classList.remove('on');standWho=null;vnSpeak(who,e);};}
 {const o=playScene;playScene=function(list,onEnd,opts={}){if(opts.keep)vnOff();return o(list,onEnd,opts);};}

@@ -16,7 +16,7 @@ const MAP_PROPS={
  town:[['pr_minecart',44,11.4,1.4],['pr_drum',59.4,21.8,1.15],['pr_vendor',36.6,25.6,1.9],['pr_bench',35.6,29.2,1.05],['pr_tools',49.4,21,1.1],['pr_drum',8.6,22.4,1.15],
    ['pr_lamp2',20.6,26.8,2.6,{glow:.8}],['pr_lamp2',44,26.9,2.6,{glow:.8}],['pr_minecart',56.6,7.4,1.4],['pr_bench',14.2,26.4,1.05]],
 };
-{const o=buildFree;buildFree=function(M){o(M);const id=Object.keys(MAPS).find(k=>MAPS[k]===M),L=MAP_PROPS[id];if(!L)return;
+HOOK.after('buildFree',M=>{const id=Object.keys(MAPS).find(k=>MAPS[k]===M),L=MAP_PROPS[id];if(!L)return;
   const before=FB.circ.length;L.forEach(([n,x,z,h,opt])=>fbProp(n,x,z,h,Object.assign({r:h>2?.25:.38},opt||{})));
-  if(X.colCache&&FB.circ.length>before)X.colCache.circ=X.colCache.circ.concat(FB.circ.slice(before));X.col=M.colliders?M.colliders():X.col;};}
-{const o=buildTown;buildTown=function(M){const r=o(M);(MAP_PROPS.town||[]).forEach(([n,x,z,h,opt])=>fbProp(n,x,z,h,opt||{}));return r;};}
+  if(X.colCache&&FB.circ.length>before)X.colCache.circ=X.colCache.circ.concat(FB.circ.slice(before));X.col=M.colliders?M.colliders():X.col;});
+HOOK.after('buildTown',()=>(MAP_PROPS.town||[]).forEach(([n,x,z,h,opt])=>fbProp(n,x,z,h,opt||{})));
