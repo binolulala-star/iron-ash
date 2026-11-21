@@ -73,7 +73,7 @@ async def main():
             ok(name + f'（{time.time()-t0:.0f}s）', not new, '; '.join(new[:2]))
 
         await pg.goto('http://local/'); await wt(3500)
-        await ev("try{localStorage.clear()}catch(e){};refreshContinue&&refreshContinue();TH.mode='off'")
+        await ev("try{localStorage.clear()}catch(e){};refreshContinue&&refreshContinue();TH.mode='off';save.tipsOff=true")
 
         # 1. 標題
         async def s_title():
@@ -127,6 +127,38 @@ async def main():
             ok('敵人圖鑑開啟', await ev("!!document.querySelector('.dex-grid')"))
             await ev("dexTab='q';$('qj-x').click()"); await wt(300)
         await step('手帳／圖鑑', s_journal)
+
+        # 5b. 系統選單（Esc）
+        async def s_menu():
+            await pg.keyboard.press('Escape'); await wt(500)
+            ok('Esc 打開系統選單', await ev("menuOpen()"))
+            await shot('06b_menu')
+            await pg.click('#mi-set'); await wt(400)
+            ok('設定頁有 6 個項目', await ev("document.querySelectorAll('.set-row').length") == 6)
+            await pg.click('[data-set="戰鬥速度"][data-v="2"]'); await wt(300)
+            ok('設定「戰鬥速度」生效', await ev("save.bspd") == 2)
+            await ev("save.bspd=1;persist()")
+            await shot('06c_settings')
+            await pg.keyboard.press('Escape'); await wt(300)
+            await pg.click('#mi-guide'); await wt(400)
+            ok('遊戲指南列出所有說明', await ev("document.querySelectorAll('.gd details').length") == await ev("TIP_ORDER.length"))
+            await pg.keyboard.press('Escape'); await wt(300); await pg.keyboard.press('Escape'); await wt(400)
+            ok('Esc 關閉選單', not await ev("menuOpen()"))
+            ok('探索畫面上沒有舊的音效／畫質／背包按鈕', await ev("[...document.querySelectorAll('#explore .ex-tools>.snd,#postq-x,#ex-bag')].every(b=>getComputedStyle(b).display==='none')"))
+        await step('系統選單', s_menu)
+
+        # 5c. 新手提示卡
+        async def s_tips():
+            await ev("save.tipsOff=false;save.tipsSeen={};P.flags.bcount=0;startBattle(battleSkirmish(['hound'],'town'))"); await wt(5000)
+            ok('第一場戰鬥跳出提示卡', await ev("!!document.querySelector('.tip-ov')"))
+            await shot('06d_tip')
+            for _ in range(4):
+                if not await ev("!!document.querySelector('.tip-ov')"): break
+                await pg.click('#tip-ok'); await wt(300)
+            ok('提示卡可以逐張關閉', not await ev("!!document.querySelector('.tip-ov')"))
+            ok('看過的提示有記錄', await ev("!!save.tipsSeen.turn&&!!save.tipsSeen.claire"))
+            await ev("save.tipsOff=true;victory()"); await wt(1200); await ev("$('ov').innerHTML='';P.flags.town_in=1;enterMap('town',{pos:[32,24]})"); await wt(2500); await skip_story()
+        await step('新手提示', s_tips)
 
         # 6. 一般戰鬥：走完一個敵方回合並勝利
         async def s_battle():
