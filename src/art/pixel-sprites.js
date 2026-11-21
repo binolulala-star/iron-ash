@@ -23,7 +23,7 @@ Object.entries(CH_ART).forEach(([kind,meta])=>{const img=new Image();img.onload=
   E.sprites.forEach(s=>{if(s.kind===kind)chApply(s);});chWalkSheet(kind);};img.src='env/ch_'+kind+'.webp';});
 /* optional dedicated 4-frame walk cycle: env/ch_<kind>_walk.webp (contact L, passing, contact R, passing).
    Each frame is fitted bottom-centred into the main sheet's cell so scale and feet line stay identical. */
-const CH_WALK={claire:{cw:68,ch:102,body:100}};   // kind -> walk sheet cell size (from sprite_tool)
+const CH_WALK={claire:{cw:68,ch:102,body:100},ryan:{cw:78,ch:100,body:100}};   // kind -> walk sheet cell size (from sprite_tool)
 function chWalkSheet(kind){const W=CH_WALK[kind];if(!W||typeof ASSETS==='undefined'||!ASSETS.includes('env/ch_'+kind+'_walk.webp'))return;
   const img=new Image();img.onload=()=>{const M=CH_ART[kind],T=CHT[kind],k=M.body/W.body;
     for(let n=0;n<4;n++){const c=cvs(M.cw,M.ch),g=c.getContext('2d');g.imageSmoothingEnabled=false;const w=Math.round(W.cw*k),h=Math.round(W.ch*k);
