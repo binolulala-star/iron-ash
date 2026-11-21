@@ -1,6 +1,7 @@
 # 建置順序：由上到下串接成 index.html。順序有意義（後面的檔案會包裝前面的函式），新增檔案請加在適當位置。
 engine/core.js
 engine/hooks.js
+engine/loading.js
 engine/story.js
 engine/explore.js
 engine/growth.js
@@ -33,4 +34,5 @@ systems/menu-tutorial.js
 art/battle-vfx.js
 art/pixel-sprites.js
 audio/audio-files.js
+systems/perf.js
 engine/hooks-install.js

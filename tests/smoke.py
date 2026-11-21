@@ -73,11 +73,13 @@ async def main():
             ok(name + f'（{time.time()-t0:.0f}s）', not new, '; '.join(new[:2]))
 
         await pg.goto('http://local/'); await wt(3500)
-        await ev("try{localStorage.clear()}catch(e){};refreshContinue&&refreshContinue();TH.mode='off';save.tipsOff=true")
+        await ev("try{localStorage.clear()}catch(e){};refreshContinue&&refreshContinue();TH.mode='off';save.tipsOff=true;save.gfx='high';applyGfx('high')")
 
         # 1. 標題
         async def s_title():
             await shot('01_title')
+            ok('讀取畫面完成並移除', await ev("LOAD.ready&&!$('loader')"), await ev("LOAD.done+'/'+LOAD.total"))
+            ok('所有素材都載入了', await ev("LOAD.done===LOAD.total&&LOAD.total>100"))
             ok('文件為標準模式（有 DOCTYPE）', await ev("document.compatMode") == 'CSS1Compat')
             vs = await visible_screens()
             ok('標題畫面只顯示一個畫面', vs == ['title'], f'目前可見：{vs}')

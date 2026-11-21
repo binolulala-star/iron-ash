@@ -456,7 +456,7 @@ body.in-theater .hud-top,body.in-theater #deck,body.in-theater .camctl,body.in-t
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
 <script>
 "use strict";
-const MUSIC_FILES={},SFX_FILES={};
+const MUSIC_FILES={},SFX_FILES={},ASSETS=["env/bg_dawn.webp", "env/bg_hospital.webp", "env/bg_reactor.webp", "env/bg_snowtrain.webp", "env/ch_claire.webp", "env/ch_colossus.webp", "env/ch_crystal.webp", "env/ch_erik.webp", "env/ch_folkA.webp", "env/ch_folkB.webp", "env/ch_folkC.webp", "env/ch_frostguard.webp", "env/ch_guard.webp", "env/ch_hans.webp", "env/ch_hound.webp", "env/ch_howard.webp", "env/ch_hunter.webp", "env/ch_keeper.webp", "env/ch_lia.webp", "env/ch_locke.webp", "env/ch_marta.webp", "env/ch_mech.webp", "env/ch_miner.webp", "env/ch_mp.webp", "env/ch_orrick.webp", "env/ch_ryan.webp", "env/ch_soldier.webp", "env/ch_sweeper.webp", "env/ch_tim.webp", "env/ch_turret.webp", "env/ch_vera.webp", "env/ch_wolf.webp", "env/cr_cat.webp", "env/cr_dog.webp", "env/fp_house1.webp", "env/fp_row.webp", "env/fp_snow.webp", "env/fp_stone.webp", "env/fp_store.webp", "env/fp_tavern.webp", "env/ft_barracks.webp", "env/ft_clinic.webp", "env/ft_floor.webp", "env/ft_kitchen.webp", "env/ft_office.webp", "env/ft_wall.webp", "env/gl_cabin.webp", "env/lm_cargowall.webp", "env/lm_clock.webp", "env/lm_hangargate.webp", "env/lm_hangarin.webp", "env/lm_mine.webp", "env/lm_shed.webp", "env/lm_tank.webp", "env/lm_tower.webp", "env/lm_train.webp", "env/lm_trainwall.webp", "env/lm_vault.webp", "env/oh_brick.webp", "env/oh_cobble.webp", "env/oh_hall.webp", "env/oh_house.webp", "env/oh_shack.webp", "env/oh_station.webp", "env/oh_store.webp", "env/oh_tavern.webp", "env/oh_ware.webp", "env/oh_works.webp", "env/pr_acidbarrel.webp", "env/pr_barrel.webp", "env/pr_barrow.webp", "env/pr_bench.webp", "env/pr_bench2.webp", "env/pr_board.webp", "env/pr_brokencrate.webp", "env/pr_cannon.webp", "env/pr_cardtable.webp", "env/pr_cart.webp", "env/pr_crates.webp", "env/pr_crates2.webp", "env/pr_drum.webp", "env/pr_fish.webp", "env/pr_flag.webp", "env/pr_grate.webp", "env/pr_lamp.webp", "env/pr_lamp2.webp", "env/pr_lantern.webp", "env/pr_laundry.webp", "env/pr_luggage.webp", "env/pr_mailbox.webp", "env/pr_minecart.webp", "env/pr_pipe.webp", "env/pr_pump.webp", "env/pr_rack.webp", "env/pr_sandbag.webp", "env/pr_scrap.webp", "env/pr_search.webp", "env/pr_sign.webp", "env/pr_sled.webp", "env/pr_snowbench.webp", "env/pr_snowman.webp", "env/pr_stall.webp", "env/pr_stove.webp", "env/pr_supply.webp", "env/pr_toolbox.webp", "env/pr_tools.webp", "env/pr_valve.webp", "env/pr_valve2.webp", "env/pr_vendor.webp", "env/pr_woodpile.webp", "env/tx_acid.webp", "env/tx_brick.webp", "env/tx_concrete.webp", "env/tx_container.webp", "env/tx_embank.webp", "env/tx_frostwall.webp", "env/tx_hangar.webp", "env/tx_icecliff.webp", "env/tx_lake.webp", "env/tx_mud.webp", "env/tx_plank.webp", "env/tx_plaster.webp", "env/tx_rustroof.webp", "env/tx_sewerfloor.webp", "env/tx_sewerwall.webp", "env/tx_slate.webp", "env/tx_snowfield.webp", "env/tx_snowroof.webp", "env/tx_timber.webp", "env/tx_trainfloor.webp", "portraits/claire_angry.webp", "portraits/claire_grin.webp", "portraits/claire_hurt.webp", "portraits/claire_neutral.webp", "portraits/claire_teary.webp", "portraits/claireh_soft.webp", "portraits/erik_cry.webp", "portraits/erik_neutral.webp", "portraits/folkw_hurt.webp", "portraits/glan_smirk.webp", "portraits/guard_scared.webp", "portraits/guard_stern.webp", "portraits/hans_smile.webp", "portraits/hans_teary.webp", "portraits/howard_hurt.webp", "portraits/howard_smile.webp", "portraits/hunter_hurt.webp", "portraits/hunter_neutral.webp", "portraits/lia_grin.webp", "portraits/lia_teary.webp", "portraits/lia_worried.webp", "portraits/locke_cold.webp", "portraits/locke_smile.webp", "portraits/marta_happy.webp", "portraits/marta_worried.webp", "portraits/miner_smile.webp", "portraits/orrick_angry.webp", "portraits/orrick_cold.webp", "portraits/orrick_smile.webp", "portraits/ryan_ash.webp", "portraits/ryan_cold.webp", "portraits/ryan_gaze.webp", "portraits/ryan_roar.webp", "portraits/ryan_smirk.webp", "portraits/tim_cry.webp", "portraits/tim_laugh.webp", "portraits/tim_neutral.webp", "portraits/vera_angry.webp", "portraits/vera_cold.webp", "portraits/vera_smile.webp"];
 const $=id=>document.getElementById(id);
 /* ======================= DATA ======================= */
 const EL={Si:'土石',Fe:'純鐵',H2O:'水',C:'碳油',Acid:'強酸',Al:'鋁',Mg:'鎂',NaCl:'鹽',P:'磷',Org:'有機物'};
@@ -818,6 +818,45 @@ const HOOK={b:{},a:{},
   before(n,f){(this.b[n]||(this.b[n]=[])).push(f);},
   after(n,f){(this.a[n]||(this.a[n]=[])).push(f);},
   run(kind,n,args){(this[kind][n]||[]).forEach(f=>{try{f(...args);}catch(e){console.error('hook '+n,e);}});}};
+
+/* ======================= LOADING SCREEN: preload every painted asset with progress =======================
+   ASSETS is injected by build.py (env/*.webp, portraits/*.webp). Critical files (characters, portraits,
+   story backdrops) gate the title; the rest keep loading behind it. */
+const LOAD={done:0,total:ASSETS.length,crit:0,critTotal:0,ready:false,t0:performance.now(),imgs:{}};
+{const ov=document.createElement('div');ov.id='loader';
+  ov.innerHTML=`<div class="ld-in"><span class="ld-eye">THE LAW OF IRON &amp; ASH</span><h1>鐵與灰的等價律</h1>
+    <div class="ld-bar" role="progressbar" aria-label="載入進度" aria-valuemin="0" aria-valuemax="100"><i id="ld-fill"></i></div>
+    <div class="ld-row"><span id="ld-txt">準備素材…</span><span id="ld-pct">0%</span></div>
+    <p class="ld-tip" id="ld-tip"></p><button class="btn" id="ld-skip" hidden>網路較慢，先開始遊戲</button></div>`;
+  document.body.appendChild(ov);
+  const st=document.createElement('style');st.textContent=`
+#loader{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:24px max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px));
+  background:radial-gradient(ellipse at 50% 60%,#1a1e30 0%,#0a0d16 70%);color:var(--parch);transition:opacity .6s ease}
+#loader.out{opacity:0;pointer-events:none}
+.ld-in{width:min(440px,100%);text-align:center}
+.ld-eye{font-family:var(--pixel);font-size:11px;letter-spacing:.2em;color:var(--gild-dim)}
+#loader h1{margin:6px 0 26px;font-family:var(--display);font-size:clamp(30px,6vw,44px);font-weight:700;color:var(--parch);text-shadow:0 0 24px rgba(200,164,86,.25)}
+.ld-bar{height:6px;border:1px solid var(--gild-dim);background:#0f1628;overflow:hidden}
+#ld-fill{display:block;height:100%;width:0;background:linear-gradient(90deg,#8a6a2a,var(--gild));transition:width .2s ease}
+.ld-row{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--pixel);font-size:12px;color:var(--mist)}
+.ld-tip{min-height:3em;margin:22px 0 0;font-size:13px;line-height:1.6;color:var(--mist)}
+#ld-skip{margin-top:10px}
+@media (prefers-reduced-motion:reduce){#loader{transition:none}}`;document.body.appendChild(st);}
+const LD_TIPS=['萊恩把元素分解出來，刻下錨點；錨點的數量決定陣形。','把敵人的外裝甲打到 0 就會 BREAK，暈眩一回合。','從高處往下打，每高一層傷害 +25%。',
+  '北境的寒氣會讓克蕾雅的機械鎧結霜，記得靠近蒸氣閥。','按 Esc 打開選單，設定、存檔、遊戲指南都在裡面。','地圖角落好像有一隻黑貓……'];
+{let k=Math.floor(Math.random()*LD_TIPS.length);const tip=()=>{const e=$('ld-tip');if(e)e.textContent='提示：'+LD_TIPS[k++%LD_TIPS.length];};tip();LOAD.tipT=setInterval(tip,3800);}
+function ldCrit(u){return /\/ch_|portraits\/|\/bg_/.test(u);}
+function ldDraw(){const p=LOAD.total?Math.round(LOAD.done/LOAD.total*100):100;const f=$('ld-fill');if(f)f.style.width=p+'%';
+  const t=$('ld-pct');if(t)t.textContent=p+'%';const x=$('ld-txt');if(x)x.textContent=`載入素材 ${LOAD.done}/${LOAD.total}`;
+  const bar=document.querySelector('.ld-bar');if(bar)bar.setAttribute('aria-valuenow',p);}
+function ldFinish(){if(LOAD.ready)return;LOAD.ready=true;clearInterval(LOAD.tipT);const ov=$('loader');if(!ov)return;
+  const wait=Math.max(0,600-(performance.now()-LOAD.t0));setTimeout(()=>{ov.classList.add('out');setTimeout(()=>ov.remove(),700);},wait);}
+{const q=ASSETS.slice().sort((a,b)=>ldCrit(b)-ldCrit(a));LOAD.critTotal=q.filter(ldCrit).length;let i=0;
+  const next=()=>{if(i>=q.length)return;const u=q[i++],im=new Image();im.decoding='async';
+    const fin=()=>{LOAD.done++;if(ldCrit(u))LOAD.crit++;ldDraw();if(LOAD.done>=LOAD.total)ldFinish();next();};
+    im.onload=fin;im.onerror=fin;im.src=u;LOAD.imgs[u]=im;};
+  for(let k=0;k<6;k++)next();if(!q.length)ldFinish();
+  setTimeout(()=>{if(!LOAD.ready){const b=$('ld-skip');if(b){b.hidden=false;b.onclick=ldFinish;}}},8000);}
 
 /* ======================= SCRIPT ======================= */
 const NAMES={ryan:'萊恩',claire:'克蕾雅',vera:'薇拉（水銀）',howard:'霍華德教授',marta:'礦工之妻・瑪塔',tim:'男孩・提姆',miner:'礦工',hans:'礦工・漢斯',guard:'憲兵隊長'};
@@ -5634,6 +5673,35 @@ let stepT=0;
 function stepTick(dt){if(E.mode!=='explore'||!X.lead||!X.lead.walking||!$('story').hidden){stepT=0;return;}
   stepT-=dt;if(stepT<=0){stepT=.34;sfx(X.id==='train'?'step_wood':SNOWY.includes(X.id)?'step_snow':'step_stone');}}
 E.fxs.push(stepTick);{const o=clearWorld;clearWorld=function(...a){const r=o(...a);if(!E.fxs.includes(stepTick))E.fxs.push(stepTick);return r;};}
+
+/* ======================= GRAPHICS LEVELS + AUTOMATIC DOWNGRADE =======================
+   high: full post-processing, up to 2× pixel ratio      std: lighter post, up to 1.5×
+   low : no bloom, no shadows, 1× (0.85× on high-DPI)    auto: start from a device guess, step down while FPS stays low */
+save.gfx=save.gfx||'auto';
+const GFX_NAME={auto:'自動',high:'高',std:'標準',low:'省電'};
+let GFX_LV=save.gfx==='auto'?(save.gfxAuto||guessGfx()):save.gfx;
+function guessGfx(){const mob=/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent)||matchMedia('(pointer:coarse)').matches;
+  const mem=navigator.deviceMemory||8,cpu=navigator.hardwareConcurrency||8;return mob||mem<=4||cpu<=4?'std':'high';}
+function applyGfx(lv){GFX_LV=lv;const dpr=window.devicePixelRatio||1;
+  save.postQ=lv==='high'?'high':'std';
+  const pr=lv==='high'?Math.min(2,dpr):lv==='std'?Math.min(1.5,dpr):(dpr>1.5?.85:1);
+  E.renderer.setPixelRatio(pr);if(E.composer.setPixelRatio)E.composer.setPixelRatio(pr);
+  const sh=lv!=='low';if(E.renderer.shadowMap.enabled!==sh){E.renderer.shadowMap.enabled=sh;E.scene.traverse(o=>{if(o.material){[].concat(o.material).forEach(m=>m.needsUpdate=true);}});}
+  E.bloom.enabled=lv!=='low';
+  applyQ&&applyQ();resize();}
+/* FPS watch: only while actually playing (explore / battle), 4-second windows */
+const PERF={frames:0,t:0,low:0,warned:false};
+function perfTick(dt){if(save.gfx!=='auto'||document.hidden||!(E.mode==='explore'||E.mode==='battle')||(typeof LOAD!=='undefined'&&!LOAD.ready)){PERF.frames=0;PERF.t=0;return;}
+  PERF.frames++;PERF.t+=dt;if(PERF.t<4)return;const fps=PERF.frames/PERF.t;PERF.frames=0;PERF.t=0;PERF.last=Math.round(fps);
+  if(fps<42&&GFX_LV!=='low'){PERF.low++;if(PERF.low>=2){PERF.low=0;const nl=GFX_LV==='high'?'std':'low';save.gfxAuto=nl;persist();applyGfx(nl);
+      toast(`畫面不夠流暢（約 ${Math.round(fps)} FPS），已自動把畫質調成「${GFX_NAME[nl]}」。可以在 選單 → 設定 調整。`);}}
+  else PERF.low=0;}
+/* measure with real time, since battle speed scales the engine clock */
+{let last=performance.now();const loop=()=>{const n=performance.now(),dt=Math.min(.5,(n-last)/1000);last=n;perfTick(dt);requestAnimationFrame(loop);};requestAnimationFrame(loop);}
+/* settings row: replace the two-way 畫質 switch */
+{const i=SETTINGS.findIndex(s=>s[0]==='畫質');const row=['畫質',()=>[['auto','自動'],['high','高'],['std','標準'],['low','省電']],()=>save.gfx,v=>{save.gfx=v;persist();applyGfx(v==='auto'?(save.gfxAuto||guessGfx()):v);}];
+  if(i>=0)SETTINGS[i]=row;else SETTINGS.splice(1,0,row);}
+applyGfx(GFX_LV);
 
 /* ======================= HOOKS INSTALL (must stay last in the manifest) ======================= */
 {const o=startBattle;startBattle=function(...a){HOOK.run('b','startBattle',a);const r=o(...a);HOOK.run('a','startBattle',a);return r;};}

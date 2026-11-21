@@ -198,6 +198,12 @@ assert 'cam-l' in head
 MANIFEST=[l.strip() for l in open(os.path.join(ROOT,'src','manifest.txt'),encoding='utf-8') if l.strip() and not l.startswith('#')]
 js=''.join(open(os.path.join(ROOT,'src',p),encoding='utf-8').read()+chr(10) for p in MANIFEST)
 import json
+def _assets():
+    out=[]
+    for d in ('env','portraits'):
+        for f in sorted(os.listdir(os.path.join(ROOT,d))):
+            if f.endswith('.webp'):out.append(d+'/'+f)
+    return out
 def _aud(d):
     p=os.path.join(ROOT,d);m={}
     for f in sorted(os.listdir(p)) if os.path.isdir(p) else []:
@@ -206,7 +212,7 @@ def _aud(d):
     lp=os.path.join(p,'loops.json')
     if os.path.exists(lp):m.update({k+'_loop':v for k,v in json.load(open(lp)).items()})
     return m
-js=js.replace('"use strict";','"use strict";\nconst MUSIC_FILES='+json.dumps(_aud('music'))+',SFX_FILES='+json.dumps(_aud('sfx'))+';',1)
+js=js.replace('"use strict";','"use strict";\nconst MUSIC_FILES='+json.dumps(_aud('music'))+',SFX_FILES='+json.dumps(_aud('sfx'))+',ASSETS='+json.dumps(_assets())+';',1)
 assert 'MUSIC_FILES=' in js
 out=head+scripts+'<script>\n'+js+'</script>\n'
 out=out.replace('<div class="st-box frame" id="st-box">','<div class="st-stand" id="st-stand"><img id="st-stand-img" alt=""></div>\n  <div class="st-box frame" id="st-box">',1)
