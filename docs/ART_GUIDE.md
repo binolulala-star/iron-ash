@@ -67,6 +67,14 @@
 
 主角要加第 4 個姿勢「攻擊」；拿道具的角色加一句 **Only ONE [道具] in his right hand in every pose.**
 
+### 主角四格走路（獨立一張，env/ch_<名字>_walk.webp）
+
+附上參考圖（待機＋攻擊兩格），再貼：
+
+> Pixel art game sprite sheet in the style of Octopath Traveler HD-2D, chunky readable pixels, limited color palette, clean dark outline. Use the attached image as the character reference: identical face, hair, outfit, colors and proportions. Full body, slight top-down three-quarter view, EVERY pose faces to the RIGHT. A 4-frame WALK CYCLE arranged left to right in a single row with wide empty space between them, same scale, all feet at the same height: 1) CONTACT A — left leg stepping far forward with the heel down, right leg stretched behind on its toes; right arm swings forward, left arm back. 2) PASSING A — left foot flat under the body carrying the weight, right knee lifted and passing beside it; arms close to the body; body slightly higher. 3) CONTACT B — the exact opposite of pose 1: right leg forward heel down, left leg behind; left arm forward, right arm back. 4) PASSING B — the exact opposite of pose 2: right foot under the body, left knee lifted. Poses 1 and 3 must be clearly opposite stances, and so must poses 2 and 4. Plain flat light grey background. NO ground line, NO floor, NO shadows, NO text, NO labels, NO numbers.
+
+遊戲會用「1→2→3→4」循環播放；沒有這張圖時，退回舊的「待機／走A／待機／走B」。
+
 ### 敵人
 
 同上的開頭，改成 **Two poses: 1) idle, 2) attacking to the right.**，並**刪掉走路那段**。

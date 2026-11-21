@@ -5515,7 +5515,7 @@ const CHT={};   // kind -> {idle,walkA,walkB,atk,hurt,win} textures once loaded
 function chCanvas(img,meta,k){const c=cvs(meta.cw,meta.ch),g=c.getContext('2d');g.imageSmoothingEnabled=false;g.drawImage(img,k*meta.cw,0,meta.cw,meta.ch,0,0,meta.cw,meta.ch);return c;}
 function chTilt(src,rot,dx=0){const c=cvs(src.width,src.height),g=c.getContext('2d');g.imageSmoothingEnabled=false;g.translate(src.width/2+dx,src.height);g.rotate(rot);g.drawImage(src,-src.width/2,-src.height);return c;}
 function chReady(kind){return !!CHT[kind];}
-function chSet(kind){const T=CHT[kind];return{idle:[T.idle,T.idle],walk:T.walkA?[T.walkA,T.idle,T.walkB,T.idle]:[T.idle,T.idle]};}
+function chSet(kind){const T=CHT[kind];return{idle:[T.idle,T.idle],walk:T.w1?[T.w1,T.w2,T.w3,T.w4]:T.walkA?[T.walkA,T.idle,T.walkB,T.idle]:[T.idle,T.idle]};}
 /* swap a live sprite over to the painted frames (keeps its height) */
 function chApply(s){if(!s||s.painted||!s.kind||!chUse(s.kind))return;const set=chSet(s.kind),T=CHT[s.kind],M=CH_ART[s.kind];
   const h=s.plane.geometry.parameters.height*(M.foe?1:1.06)*(M.scale||1)*M.ch/M.body,asp=M.cw/M.ch;s.plane.geometry.dispose();s.plane.geometry=new THREE.PlaneGeometry(h*asp,h);s.plane.position.y=h/2;
@@ -5524,7 +5524,16 @@ function chApply(s){if(!s||s.painted||!s.kind||!chUse(s.kind))return;const set=c
 Object.entries(CH_ART).forEach(([kind,meta])=>{const img=new Image();img.onload=()=>{const names=meta.fr||CH_FR,c={};names.forEach((n,k)=>c[n]=chCanvas(img,meta,k));
   const T={};Object.entries(c).forEach(([n,cv])=>T[n]=tex(cv));T.hurt=tex(chTilt(c.idle,-.16,-3));T.wind=tex(chTilt(c.walkB||c.idle,-.08,-2));T.win=T.idle;
   Object.values(T).forEach(t=>t.__ch=1);CHT[kind]=T;
-  E.sprites.forEach(s=>{if(s.kind===kind)chApply(s);});};img.src='env/ch_'+kind+'.webp';});
+  E.sprites.forEach(s=>{if(s.kind===kind)chApply(s);});chWalkSheet(kind);};img.src='env/ch_'+kind+'.webp';});
+/* optional dedicated 4-frame walk cycle: env/ch_<kind>_walk.webp (contact L, passing, contact R, passing).
+   Each frame is fitted bottom-centred into the main sheet's cell so scale and feet line stay identical. */
+const CH_WALK={};   // kind -> {cw,ch,body}, filled in by the asset pipeline
+function chWalkSheet(kind){const W=CH_WALK[kind];if(!W||typeof ASSETS==='undefined'||!ASSETS.includes('env/ch_'+kind+'_walk.webp'))return;
+  const img=new Image();img.onload=()=>{const M=CH_ART[kind],T=CHT[kind],k=M.body/W.body;
+    for(let n=0;n<4;n++){const c=cvs(M.cw,M.ch),g=c.getContext('2d');g.imageSmoothingEnabled=false;const w=Math.round(W.cw*k),h=Math.round(W.ch*k);
+      g.drawImage(img,n*W.cw,0,W.cw,W.ch,Math.round((M.cw-w)/2),M.ch-h,w,h);const t=tex(c);t.__ch=1;T['w'+(n+1)]=t;}
+    E.sprites.forEach(s=>{if(s.kind===kind&&s.painted){const set=chSet(kind);s.walkF=set.walk;if(s.walking)s.setFrames(set.walk);}});};
+  img.src='env/ch_'+kind+'_walk.webp';}
 
 {const o=makeSprite;makeSprite=function(frames,hgt,opts={}){const s=o(frames,hgt,opts);if(s.kind&&CH_ART[s.kind]&&chReady(s.kind))chApply(s);return s;};}
 /* hrChar sets walkF after makeSprite; re-apply so walking uses the painted cycle */
