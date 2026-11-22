@@ -309,8 +309,12 @@ function townTick(dt,t){
   let moved=0;
   if(dx||dz){const L=Math.hypot(dx,dz),sp=(K.Shift?5.2:3.6)*dt,mx=dx/L*sp,mz=dz/L*sp;let ok=false;
     if(freeStand(X.pos.x+mx,X.pos.z)){X.pos.x+=mx;ok=true;}if(freeStand(X.pos.x,X.pos.z+mz)){X.pos.z+=mz;ok=true;}
-    if(!ok&&X.target)X.target=null;moved=Math.hypot(mx,mz)*(ok?1:0);const sx=scrX(mx,mz);if(Math.abs(sx)>.002)X.lead.face(sx);}
-  X.lead.holder.position.copy(X.pos);X.lead.setWalk(moved>0);
+    if(!ok&&X.target)X.target=null;moved=Math.hypot(mx,mz)*(ok?1:0);const sx=scrX(mx,mz);if(Math.abs(sx)>.002&&!X.stuck)X.lead.face(sx);}
+  /* pushing into a bench or a corner makes the two-axis slide jitter on the spot: judge walking by real progress over a short window */
+  const pg=X.prog||(X.prog={t:0,p:X.pos.clone()});pg.t+=dt;
+  if(!(dx||dz)){X.stuck=false;pg.t=0;pg.p.copy(X.pos);}
+  else if(pg.t>.25){const want=(K.Shift?5.2:3.6)*pg.t;X.stuck=X.pos.distanceTo(pg.p)<want*.3;if(X.stuck&&X.target)X.target=null;pg.t=0;pg.p.copy(X.pos);}
+  X.lead.holder.position.copy(X.pos);X.lead.setWalk(moved>0&&!X.stuck);
   // follower walks along the leader's trail
   const tr=X.trail;if(!tr.length||X.pos.distanceTo(tr[tr.length-1])>.12)tr.push(X.pos.clone());if(tr.length>40)tr.shift();
   let acc=0,goal=null;for(let k=tr.length-1;k>0;k--){acc+=tr[k].distanceTo(tr[k-1]);if(acc>1){goal=tr[k-1];break;}}
