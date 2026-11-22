@@ -36,4 +36,5 @@ art/pixel-sprites.js
 audio/audio-files.js
 systems/perf.js
 systems/battle-layout.js
+systems/title-layout.js
 engine/hooks-install.js
