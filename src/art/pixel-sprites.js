@@ -17,10 +17,11 @@ function chApply(s){if(!s||s.painted||!s.kind||!chUse(s.kind))return;const set=c
   const h=s.plane.geometry.parameters.height*(M.foe?1:1.06)*(M.scale||1)*M.ch/M.body,asp=M.cw/M.ch;s.plane.geometry.dispose();s.plane.geometry=new THREE.PlaneGeometry(h*asp,h);s.plane.position.y=h/2;
   s.idleF=set.idle;s.walkF=set.walk;const sf=s.setFrames;sf(s.walking?set.walk:set.idle);
   s.setFrames=f=>{if(f&&f.every(t=>t&&t.__ch))sf(f);};if(!s.walking)s.speed=1.6;s.painted=true;s.pose=null;s.mat.emissive.setHex(0x6a6a70);s.mat.emissiveMap=s.frames[0];s.mat.needsUpdate=true;}
-Object.entries(CH_ART).forEach(([kind,meta])=>{const img=new Image();img.onload=()=>{const names=meta.fr||CH_FR,c={};names.forEach((n,k)=>c[n]=chCanvas(img,meta,k));
+function chLoad(kind,meta){const img=new Image();img.onload=()=>{const names=meta.fr||CH_FR,c={};names.forEach((n,k)=>c[n]=chCanvas(img,meta,k));
   const T={};Object.entries(c).forEach(([n,cv])=>T[n]=tex(cv));T.hurt=tex(chTilt(c.idle,-.16,-3));T.wind=tex(chTilt(c.walkB||c.idle,-.08,-2));T.win=T.idle;
   Object.values(T).forEach(t=>t.__ch=1);CHT[kind]=T;
-  E.sprites.forEach(s=>{if(s.kind===kind)chApply(s);});chWalkSheet(kind);};img.src='env/ch_'+kind+'.webp';});
+  E.sprites.forEach(s=>{if(s.kind===kind)chApply(s);});chWalkSheet(kind);};img.src='env/ch_'+kind+'.webp';}
+Object.entries(CH_ART).forEach(([kind,meta])=>chLoad(kind,meta));
 /* optional dedicated 4-frame walk cycle: env/ch_<kind>_walk.webp (contact L, passing, contact R, passing).
    Each frame is fitted bottom-centred into the main sheet's cell so scale and feet line stay identical. */
 const CH_WALK={claire:{cw:68,ch:102,body:100},ryan:{cw:78,ch:100,body:100}};   // kind -> walk sheet cell size (from sprite_tool)

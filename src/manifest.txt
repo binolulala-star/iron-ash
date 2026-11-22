@@ -34,6 +34,8 @@ art/vn-mode.js
 systems/menu-tutorial.js
 art/battle-vfx.js
 art/pixel-sprites.js
+chapter3/battle-rules.js
+chapter3/proto.js
 audio/audio-files.js
 systems/perf.js
 systems/battle-layout.js

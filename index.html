@@ -456,7 +456,7 @@ body.in-theater .hud-top,body.in-theater #deck,body.in-theater .camctl,body.in-t
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
 <script>
 "use strict";
-const MUSIC_FILES={},SFX_FILES={},ASSETS=["env/bg_dawn.webp", "env/bg_hospital.webp", "env/bg_reactor.webp", "env/bg_snowtrain.webp", "env/ch_claire.webp", "env/ch_claire_walk.webp", "env/ch_colossus.webp", "env/ch_crystal.webp", "env/ch_erik.webp", "env/ch_folkA.webp", "env/ch_folkB.webp", "env/ch_folkC.webp", "env/ch_frostguard.webp", "env/ch_guard.webp", "env/ch_hans.webp", "env/ch_hound.webp", "env/ch_howard.webp", "env/ch_hunter.webp", "env/ch_keeper.webp", "env/ch_lia.webp", "env/ch_locke.webp", "env/ch_marta.webp", "env/ch_mech.webp", "env/ch_miner.webp", "env/ch_mp.webp", "env/ch_orrick.webp", "env/ch_ryan.webp", "env/ch_ryan_walk.webp", "env/ch_soldier.webp", "env/ch_sweeper.webp", "env/ch_tim.webp", "env/ch_turret.webp", "env/ch_vera.webp", "env/ch_wolf.webp", "env/cr_cat.webp", "env/cr_dog.webp", "env/fp_house1.webp", "env/fp_row.webp", "env/fp_snow.webp", "env/fp_stone.webp", "env/fp_store.webp", "env/fp_tavern.webp", "env/ft_barracks.webp", "env/ft_clinic.webp", "env/ft_floor.webp", "env/ft_kitchen.webp", "env/ft_office.webp", "env/ft_wall.webp", "env/gl_cabin.webp", "env/lm_cargowall.webp", "env/lm_clock.webp", "env/lm_hangargate.webp", "env/lm_hangarin.webp", "env/lm_mine.webp", "env/lm_shed.webp", "env/lm_tank.webp", "env/lm_tower.webp", "env/lm_train.webp", "env/lm_trainwall.webp", "env/lm_vault.webp", "env/oh_brick.webp", "env/oh_cobble.webp", "env/oh_hall.webp", "env/oh_house.webp", "env/oh_shack.webp", "env/oh_station.webp", "env/oh_store.webp", "env/oh_tavern.webp", "env/oh_ware.webp", "env/oh_works.webp", "env/pr_acidbarrel.webp", "env/pr_barrel.webp", "env/pr_barrow.webp", "env/pr_bench.webp", "env/pr_bench2.webp", "env/pr_board.webp", "env/pr_brokencrate.webp", "env/pr_cannon.webp", "env/pr_cardtable.webp", "env/pr_cart.webp", "env/pr_crates.webp", "env/pr_crates2.webp", "env/pr_drum.webp", "env/pr_fish.webp", "env/pr_flag.webp", "env/pr_grate.webp", "env/pr_lamp.webp", "env/pr_lamp2.webp", "env/pr_lantern.webp", "env/pr_laundry.webp", "env/pr_luggage.webp", "env/pr_mailbox.webp", "env/pr_minecart.webp", "env/pr_pipe.webp", "env/pr_pump.webp", "env/pr_rack.webp", "env/pr_sandbag.webp", "env/pr_scrap.webp", "env/pr_search.webp", "env/pr_sign.webp", "env/pr_sled.webp", "env/pr_snowbench.webp", "env/pr_snowman.webp", "env/pr_stall.webp", "env/pr_stove.webp", "env/pr_supply.webp", "env/pr_toolbox.webp", "env/pr_tools.webp", "env/pr_valve.webp", "env/pr_valve2.webp", "env/pr_vendor.webp", "env/pr_woodpile.webp", "env/tx_acid.webp", "env/tx_brick.webp", "env/tx_concrete.webp", "env/tx_container.webp", "env/tx_embank.webp", "env/tx_frostwall.webp", "env/tx_hangar.webp", "env/tx_icecliff.webp", "env/tx_lake.webp", "env/tx_mud.webp", "env/tx_plank.webp", "env/tx_plaster.webp", "env/tx_rustroof.webp", "env/tx_sewerfloor.webp", "env/tx_sewerwall.webp", "env/tx_slate.webp", "env/tx_snowfield.webp", "env/tx_snowroof.webp", "env/tx_timber.webp", "env/tx_trainfloor.webp", "portraits/claire_angry.webp", "portraits/claire_grin.webp", "portraits/claire_hurt.webp", "portraits/claire_neutral.webp", "portraits/claire_teary.webp", "portraits/claireh_soft.webp", "portraits/erik_cry.webp", "portraits/erik_neutral.webp", "portraits/folkw_hurt.webp", "portraits/glan_smirk.webp", "portraits/guard_scared.webp", "portraits/guard_stern.webp", "portraits/hans_smile.webp", "portraits/hans_teary.webp", "portraits/howard_hurt.webp", "portraits/howard_smile.webp", "portraits/hunter_hurt.webp", "portraits/hunter_neutral.webp", "portraits/lia_grin.webp", "portraits/lia_teary.webp", "portraits/lia_worried.webp", "portraits/locke_cold.webp", "portraits/locke_smile.webp", "portraits/marta_happy.webp", "portraits/marta_worried.webp", "portraits/miner_smile.webp", "portraits/orrick_angry.webp", "portraits/orrick_cold.webp", "portraits/orrick_smile.webp", "portraits/ryan_ash.webp", "portraits/ryan_cold.webp", "portraits/ryan_gaze.webp", "portraits/ryan_roar.webp", "portraits/ryan_smirk.webp", "portraits/tim_cry.webp", "portraits/tim_laugh.webp", "portraits/tim_neutral.webp", "portraits/vera_angry.webp", "portraits/vera_cold.webp", "portraits/vera_smile.webp"];
+const MUSIC_FILES={},SFX_FILES={},ASSETS=["env/bg_dawn.webp", "env/bg_hospital.webp", "env/bg_reactor.webp", "env/bg_snowtrain.webp", "env/ch_claire.webp", "env/ch_claire_walk.webp", "env/ch_coil.webp", "env/ch_colossus.webp", "env/ch_crystal.webp", "env/ch_erik.webp", "env/ch_folkA.webp", "env/ch_folkB.webp", "env/ch_folkC.webp", "env/ch_frostguard.webp", "env/ch_gendarme.webp", "env/ch_golem.webp", "env/ch_guard.webp", "env/ch_hans.webp", "env/ch_hound.webp", "env/ch_howard.webp", "env/ch_hunter.webp", "env/ch_keeper.webp", "env/ch_lia.webp", "env/ch_locke.webp", "env/ch_marta.webp", "env/ch_mech.webp", "env/ch_miner.webp", "env/ch_mp.webp", "env/ch_orrick.webp", "env/ch_ryan.webp", "env/ch_ryan_walk.webp", "env/ch_soldier.webp", "env/ch_stormkite.webp", "env/ch_sweeper.webp", "env/ch_tim.webp", "env/ch_turret.webp", "env/ch_vera.webp", "env/ch_wolf.webp", "env/cr_cat.webp", "env/cr_dog.webp", "env/fp_house1.webp", "env/fp_row.webp", "env/fp_snow.webp", "env/fp_stone.webp", "env/fp_store.webp", "env/fp_tavern.webp", "env/ft_barracks.webp", "env/ft_clinic.webp", "env/ft_floor.webp", "env/ft_kitchen.webp", "env/ft_office.webp", "env/ft_wall.webp", "env/gl_cabin.webp", "env/lm_cargowall.webp", "env/lm_clock.webp", "env/lm_hangargate.webp", "env/lm_hangarin.webp", "env/lm_mine.webp", "env/lm_shed.webp", "env/lm_tank.webp", "env/lm_tower.webp", "env/lm_train.webp", "env/lm_trainwall.webp", "env/lm_vault.webp", "env/oh_brick.webp", "env/oh_cobble.webp", "env/oh_hall.webp", "env/oh_house.webp", "env/oh_shack.webp", "env/oh_station.webp", "env/oh_store.webp", "env/oh_tavern.webp", "env/oh_ware.webp", "env/oh_works.webp", "env/pr_acidbarrel.webp", "env/pr_barrel.webp", "env/pr_barrow.webp", "env/pr_bench.webp", "env/pr_bench2.webp", "env/pr_board.webp", "env/pr_brokencrate.webp", "env/pr_cannon.webp", "env/pr_cardtable.webp", "env/pr_cart.webp", "env/pr_crates.webp", "env/pr_crates2.webp", "env/pr_drum.webp", "env/pr_fish.webp", "env/pr_flag.webp", "env/pr_grate.webp", "env/pr_lamp.webp", "env/pr_lamp2.webp", "env/pr_lantern.webp", "env/pr_laundry.webp", "env/pr_luggage.webp", "env/pr_mailbox.webp", "env/pr_minecart.webp", "env/pr_pipe.webp", "env/pr_pump.webp", "env/pr_rack.webp", "env/pr_sandbag.webp", "env/pr_scrap.webp", "env/pr_search.webp", "env/pr_sign.webp", "env/pr_sled.webp", "env/pr_snowbench.webp", "env/pr_snowman.webp", "env/pr_stall.webp", "env/pr_stove.webp", "env/pr_supply.webp", "env/pr_toolbox.webp", "env/pr_tools.webp", "env/pr_valve.webp", "env/pr_valve2.webp", "env/pr_vendor.webp", "env/pr_woodpile.webp", "env/tx_acid.webp", "env/tx_brick.webp", "env/tx_concrete.webp", "env/tx_container.webp", "env/tx_embank.webp", "env/tx_frostwall.webp", "env/tx_hangar.webp", "env/tx_icecliff.webp", "env/tx_lake.webp", "env/tx_mud.webp", "env/tx_plank.webp", "env/tx_plaster.webp", "env/tx_rustroof.webp", "env/tx_sewerfloor.webp", "env/tx_sewerwall.webp", "env/tx_slate.webp", "env/tx_snowfield.webp", "env/tx_snowroof.webp", "env/tx_timber.webp", "env/tx_trainfloor.webp", "portraits/claire_angry.webp", "portraits/claire_grin.webp", "portraits/claire_hurt.webp", "portraits/claire_neutral.webp", "portraits/claire_teary.webp", "portraits/claireh_soft.webp", "portraits/erik_cry.webp", "portraits/erik_neutral.webp", "portraits/folkw_hurt.webp", "portraits/glan_smirk.webp", "portraits/guard_scared.webp", "portraits/guard_stern.webp", "portraits/hans_smile.webp", "portraits/hans_teary.webp", "portraits/howard_hurt.webp", "portraits/howard_smile.webp", "portraits/hunter_hurt.webp", "portraits/hunter_neutral.webp", "portraits/lia_grin.webp", "portraits/lia_teary.webp", "portraits/lia_worried.webp", "portraits/locke_cold.webp", "portraits/locke_smile.webp", "portraits/marta_happy.webp", "portraits/marta_worried.webp", "portraits/miner_smile.webp", "portraits/orrick_angry.webp", "portraits/orrick_cold.webp", "portraits/orrick_smile.webp", "portraits/ryan_ash.webp", "portraits/ryan_cold.webp", "portraits/ryan_gaze.webp", "portraits/ryan_roar.webp", "portraits/ryan_smirk.webp", "portraits/tim_cry.webp", "portraits/tim_laugh.webp", "portraits/tim_neutral.webp", "portraits/vera_angry.webp", "portraits/vera_cold.webp", "portraits/vera_smile.webp"];
 const $=id=>document.getElementById(id);
 /* ======================= DATA ======================= */
 const EL={Si:'土石',Fe:'純鐵',H2O:'水',C:'碳油',Acid:'強酸',Al:'鋁',Mg:'鎂',NaCl:'鹽',P:'磷',Org:'有機物'};
@@ -5535,10 +5535,11 @@ function chApply(s){if(!s||s.painted||!s.kind||!chUse(s.kind))return;const set=c
   const h=s.plane.geometry.parameters.height*(M.foe?1:1.06)*(M.scale||1)*M.ch/M.body,asp=M.cw/M.ch;s.plane.geometry.dispose();s.plane.geometry=new THREE.PlaneGeometry(h*asp,h);s.plane.position.y=h/2;
   s.idleF=set.idle;s.walkF=set.walk;const sf=s.setFrames;sf(s.walking?set.walk:set.idle);
   s.setFrames=f=>{if(f&&f.every(t=>t&&t.__ch))sf(f);};if(!s.walking)s.speed=1.6;s.painted=true;s.pose=null;s.mat.emissive.setHex(0x6a6a70);s.mat.emissiveMap=s.frames[0];s.mat.needsUpdate=true;}
-Object.entries(CH_ART).forEach(([kind,meta])=>{const img=new Image();img.onload=()=>{const names=meta.fr||CH_FR,c={};names.forEach((n,k)=>c[n]=chCanvas(img,meta,k));
+function chLoad(kind,meta){const img=new Image();img.onload=()=>{const names=meta.fr||CH_FR,c={};names.forEach((n,k)=>c[n]=chCanvas(img,meta,k));
   const T={};Object.entries(c).forEach(([n,cv])=>T[n]=tex(cv));T.hurt=tex(chTilt(c.idle,-.16,-3));T.wind=tex(chTilt(c.walkB||c.idle,-.08,-2));T.win=T.idle;
   Object.values(T).forEach(t=>t.__ch=1);CHT[kind]=T;
-  E.sprites.forEach(s=>{if(s.kind===kind)chApply(s);});chWalkSheet(kind);};img.src='env/ch_'+kind+'.webp';});
+  E.sprites.forEach(s=>{if(s.kind===kind)chApply(s);});chWalkSheet(kind);};img.src='env/ch_'+kind+'.webp';}
+Object.entries(CH_ART).forEach(([kind,meta])=>chLoad(kind,meta));
 /* optional dedicated 4-frame walk cycle: env/ch_<kind>_walk.webp (contact L, passing, contact R, passing).
    Each frame is fitted bottom-centred into the main sheet's cell so scale and feet line stay identical. */
 const CH_WALK={claire:{cw:68,ch:102,body:100},ryan:{cw:78,ch:100,body:100}};   // kind -> walk sheet cell size (from sprite_tool)
@@ -5603,6 +5604,179 @@ const MAPK={guard:'mp',miner:'minermap'};
   const T={};Object.entries(c).forEach(([n,cv])=>T[n]=tex(cv));T.hurt=tex(chTilt(c.idle,-.16,-3));T.wind=tex(chTilt(c.walkB||c.idle,-.08,-2));T.win=T.idle;delete T.atk;Object.values(T).forEach(t=>t.__ch=1);CHT[kind]=T;
   E.sprites.forEach(s=>{if(s.chKind===kind||(!s.painted&&s.kind===kind&&E.mode!=='battle')){s.kind=kind;s.painted=false;chApply(s);}});};img.src='env/ch_'+(meta.src||kind)+'.webp';});
 {const o=hrChar;hrChar=function(kind,h){const s=o(kind,h);const k=MAPK[kind]||kind;if(k!==kind||kind==='soldier'){s.chKind=k;if(chReady(k)){s.kind=k;s.painted=false;chApply(s);}}return s;};}
+
+/* ======================= CHAPTER 3 — BATTLE SYSTEMS (wind · magnet pylons · floating platforms) =======================
+   B.cfg.wind  = {seq:[[di,dj],…], every:3, edge:'fall'|'wall'}  → after every enemy phase, units on open ground drift 1 cell downwind
+   tiles 'pylon'                                                  → each new turn, metal units within 2 cells are pulled 1 cell (or pushed, after Ryan flips it)
+   B.cfg.lift  = [[i,j,phase],…]                                  → platforms cycle height 0→1→2→1… one step per turn; riders go with them */
+
+/* ---- new foes: painted sheets (env/ch_<type>.webp) + hand-drawn fallbacks ---- */
+Object.assign(CH_ART,{stormkite:{cw:172,ch:72,body:58,fr:['idle','atk'],foe:1},gendarme:{cw:78,ch:102,body:102,fr:['idle','atk'],foe:1},
+ golem:{cw:158,ch:142,body:142,fr:['idle','atk'],foe:1,scale:1.15},coil:{cw:202,ch:162,body:162,fr:['idle','atk'],foe:1,scale:1.4}});
+['stormkite','gendarme','golem','coil'].forEach(k=>chLoad(k,CH_ART[k]));
+Object.assign(ENEMY,{
+ stormkite:{name:'風暴鳶',hp:70,tg:15,atk:22,mv:5,h:1.05,float:true,speed:3,fly:true,drop:['H2O',1],frames:()=>[tex(sweeperCanvas(0)),tex(sweeperCanvas(1))]},
+ gendarme:{name:'靜默憲兵',hp:140,tg:60,atk:26,mv:3,h:1.5,metal:true,drop:['Fe',1],frames:()=>[tex(humanCanvas('guard',0)),tex(humanCanvas('guard',1))]},
+ golem:{name:'磁鐵礦魔像',hp:260,tg:120,atk:36,mv:2,h:2.2,metal:true,heavy:true,speed:1.2,drop:['Fe',2],frames:()=>[tex(mechCanvas(0,false)),tex(mechCanvas(1,false))]},
+ coil:{name:'雷暴線圈',hp:1100,tg:160,atk:50,rng:5,ratk:44,mv:1,h:2.8,metal:true,heavy:true,speed:1.1,frames:()=>[tex(mechCanvas(0,true)),tex(mechCanvas(1,true))]},
+});
+Object.assign(VERB,{stormkite:['乘著強風俯衝，抓向'],gendarme:['揮下電擊警棍，打中'],golem:['掄起磁石巨拳砸向'],coil:['放出雷擊，劈中']});
+Object.assign(EXP_OF,{stormkite:28,gendarme:44,golem:70,coil:360});
+Object.assign(DROPS,{stormkite:[['bandage',.3]],gendarme:[['bandage',.35],['coffee',.15]],golem:[['capsule',.4]],coil:[['coffee',1]]});
+Object.assign(TH_H2,{stormkite:1.6,gendarme:2.5,golem:3.4,coil:4.2});
+
+const isMetal=x=>x&&(x.key==='claire'||(x.d&&x.d.metal));
+const isHeavy=x=>x&&x.d&&x.d.heavy;
+const c3Units=()=>['ryan','claire'].map(k=>B.units[k]).filter(u=>u.alive).concat(alive());
+const c3Pos=x=>x.spr?x.spr.holder.position.clone():W(x.i,x.j);
+/* pylons block movement like walls */
+{const o=occupied;occupied=function(i,j,ign){return o(i,j,ign)||(B&&B.tiles[i]&&B.tiles[i][j]==='pylon');};}
+
+/* ---- pylon prop ---- */
+{const o=refreshTile;refreshTile=function(i,j){o(i,j);if(!B||B.tiles[i][j]!=='pylon')return;const key=i+','+j;if(B.props[key])E.world.remove(B.props[key]);
+  const rep=B.pol&&B.pol[key]>0,col=rep?0xff7a5a:0x5ab8ff,g=new THREE.Group();
+  const base=new THREE.Mesh(new THREE.CylinderGeometry(.3,.36,.16,10),texMat('rust',1,1,{metalness:.7}));base.position.y=.08;
+  const post=new THREE.Mesh(new THREE.CylinderGeometry(.13,.16,1.05,10),new THREE.MeshStandardMaterial({color:0x3a4048,metalness:.8,roughness:.35}));post.position.y=.6;
+  const ring=new THREE.Mesh(new THREE.TorusGeometry(.24,.05,8,20),new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:1.4}));ring.rotation.x=Math.PI/2;ring.position.y=.95;
+  const ring2=ring.clone();ring2.position.y=.62;ring2.scale.setScalar(.8);
+  [base,post].forEach(m=>{m.castShadow=true;});g.add(base,post,ring,ring2);g.userData.pylon=ring;
+  g.position.set(i-OFF,hAt(i,j)*HSTEP,j-OFF);g.traverse(m=>m.userData.cell=[i,j]);E.world.add(g);B.props[key]=g;};}
+
+/* ---- shared mover: one cell along (di,dj); returns what happened ---- */
+function c3Shove(x,di,dj,why){
+  const ni=x.i+di,nj=x.j+dj,unit=isUnit(x);
+  if(!inb(ni,nj)){
+    if(B.cfg.wind&&B.cfg.wind.edge==='fall'){
+      if(unit){damageUnit(x,35);floatAt(c3Pos(x),'抓住纜繩！','#ffd27a');log(`${x.name}差點被${why}吹下平台，抓住了纜繩。`);}
+      else if(!x.boss){floatAt(c3Pos(x),'墜落','#ffd27a');log(`${x.name}被${why}吹出平台，消失在雲海裡。`);damageEnemy(x,x.hp,{raw:true});}
+      E.shake=.5;return 'edge';}
+    return 'stop';}
+  if(occupied(ni,nj,x)){const wall=B.tiles[ni][nj]==='wall'||B.tiles[ni][nj]==='pylon';
+    if(wall){if(unit)damageUnit(x,10);else damageEnemy(x,15,{raw:true});floatAt(c3Pos(x),'撞擊','#c8a456');}return 'stop';}
+  const dh=hAt(ni,nj)-hAt(x.i,x.j);if(dh>0)return 'stop';
+  x.i=ni;x.j=nj;if(dh<0)fallHit(x,-dh);return 'moved';}
+
+/* ---- wind ---- */
+const WIND_NAME=d=>d[0]>0?'→':d[0]<0?'←':d[1]>0?'↓':'↑';
+function windDir(){const w=B.cfg.wind;return w.seq[(B.windIdx||0)%w.seq.length];}
+function windSheltered(x,d){const ui=x.i-d[0],uj=x.j-d[1];if(!inb(ui,uj))return false;
+  return B.tiles[ui][uj]==='wall'||B.tiles[ui][uj]==='pylon'||hAt(ui,uj)>hAt(x.i,x.j);}
+function windImmune(x){return isHeavy(x)||(x.d&&x.d.fly)||(x.calm>0)||(x.root>0);}
+async function windTick(){const d=windDir();
+  const list=c3Units().filter(x=>!windImmune(x)).sort((a,b)=>(b.i*d[0]+b.j*d[1])-(a.i*d[0]+a.j*d[1]));   // downwind first, so a row slides as one
+  let moved=0;for(const x of list){if(!x.alive)continue;if(windSheltered(x,d)){floatAt(c3Pos(x),'風影','#bfe8ff');continue;}
+    const r=c3Shove(x,d[0],d[1],'強風');if(r==='moved')moved++;}
+  if(list.length){placeUnits(false);windGust(d);log(`強風${WIND_NAME(d)}：${moved?moved+' 個單位被吹動':'所有人都穩住了'}。`);await sleep(420);}
+  const w=B.cfg.wind;if(w.every&&B.turn%w.every===0){B.windIdx=(B.windIdx||0)+1;banner('風向改變',`現在吹向 ${WIND_NAME(windDir())}`);}
+  else if(w.every&&(B.turn+1)%w.every===0){const nx=w.seq[((B.windIdx||0)+1)%w.seq.length];floatAt(W(OFF,OFF),'下回合風向 '+WIND_NAME(nx),'#bfe8ff');log(`風勢在變，下回合會改吹 ${WIND_NAME(nx)}。`);}
+  windHud();}
+function windHud(){const el=$('env-s');if(!el||!B||!B.cfg.wind)return;let w=$('wind-ind');if(!w){w=document.createElement('span');w.id='wind-ind';w.style.cssText='margin-left:8px;color:#bfe8ff;font-weight:600';el.after(w);}
+  const ev=B.cfg.wind.every,left=ev?ev-(B.turn%ev):0;w.textContent=`風向 ${WIND_NAME(windDir())}`+(ev?`（${left} 回合後轉向）`:'');}
+/* streaks drifting across the board so the wind is visible at a glance */
+function windStreaks(){if(B.windFx)return;const g=new THREE.Group(),mat=new THREE.MeshBasicMaterial({color:0xe8f4ff,transparent:true,opacity:.28,depthWrite:false});
+  for(let k=0;k<26;k++){const m=new THREE.Mesh(new THREE.PlaneGeometry(.9+Math.random()*.8,.035),mat);m.rotation.x=-Math.PI/2;m.position.set((Math.random()-.5)*N,.25+Math.random()*1.4,(Math.random()-.5)*N);m.userData.v=1.6+Math.random()*1.8;g.add(m);}
+  E.world.add(g);B.windFx=g;
+  E.fxs.push(function windFxTick(dt){if(!B||B.windFx!==g)return false;const d=windDir(),half=N/2+1;g.children.forEach(m=>{m.rotation.z=d[0]?0:Math.PI/2;
+    m.position.x+=d[0]*m.userData.v*dt;m.position.z+=d[1]*m.userData.v*dt;if(m.position.x>half)m.position.x=-half;if(m.position.x<-half)m.position.x=half;if(m.position.z>half)m.position.z=-half;if(m.position.z<-half)m.position.z=half;});return true;});}
+function windGust(d){c3Units().forEach(x=>burst(c3Pos(x),0xe8f4ff,6,.8));}
+
+/* ---- magnet pylons ---- */
+function pylons(){const out=[];for(let i=0;i<N;i++)for(let j=0;j<N;j++)if(B.tiles[i][j]==='pylon')out.push([i,j]);return out;}
+function stepToward(x,ti,tj,sign){const dx=ti-x.i,dz=tj-x.j;if(!dx&&!dz)return [0,0];const ax=Math.abs(dx)>=Math.abs(dz);return ax?[Math.sign(dx)*sign,0]:[0,Math.sign(dz)*sign];}
+async function pylonTick(pulse){const PY=pylons();if(!PY.length)return;B.pol=B.pol||{};let n=0;
+  for(const [pi,pj] of PY){const key=pi+','+pj,rep=B.pol[key]>0;if(pulse&&pulse!==key)continue;
+    const hit=c3Units().filter(x=>isMetal(x)&&md(x.i,x.j,pi,pj)<=2&&!(x.d&&x.d.fly));
+    hit.sort((a,b)=>rep?md(a.i,a.j,pi,pj)-md(b.i,b.j,pi,pj):md(a.i,a.j,pi,pj)-md(b.i,b.j,pi,pj));
+    for(const x of hit){if(!rep&&md(x.i,x.j,pi,pj)===1)continue;const [di,dj]=stepToward(x,pi,pj,rep?-1:1);if(!di&&!dj)continue;
+      if(c3Shove(x,di,dj,'磁力')==='moved'){n++;floatAt(c3Pos(x),rep?'磁力推開':'磁力吸引',rep?'#ff9a7a':'#8fd0ff');}}
+    if(!pulse&&B.pol[key]>0){B.pol[key]--;if(!B.pol[key]){refreshTile(pi,pj);floatAt(W(pi,pj),'恢復吸引','#8fd0ff');}}}
+  if(n){placeUnits(false);await sleep(380);}}
+/* Ryan: strike the pylon with the tuning fork to flip it to repel for 2 turns (and fire one push right away) */
+{const o=renderActions;renderActions=function(){o();if(!B||B.phase!=='player')return;const u=B.units[B.sel];if(!u||u.key!=='ryan'||!u.alive)return;
+  const near=pylons().find(([i,j])=>md(u.i,u.j,i,j)===1);if(!near)return;const key=near.join(','),ok=u.ap>=1&&!(B.pol&&B.pol[key]>0);
+  const b=document.createElement('button');b.className='ab rc'+(ok?' ready':'');b.disabled=!ok;b.innerHTML=`共振反轉<small>1 AP · 旁邊的磁柱改成斥力 2 回合</small>`;
+  b.onclick=async()=>{if(!ok)return;spend(u,1);B.pol=B.pol||{};B.pol[key]=2;refreshTile(near[0],near[1]);burst(W(near[0],near[1]),0xff9a7a,30,1.6);E.shake=.4;
+    log('萊恩用音叉敲響磁柱——磁極翻轉成斥力。');await pylonTick(key);updateHud();renderDeck();renderActions();};
+  const box=$('abtns'),end=box.querySelector('.ab.end');box.insertBefore(b,end||null);};}
+
+/* ---- floating platforms ---- */
+const LIFT=[0,1,2,1];
+function liftH(phase,turn){return LIFT[(turn+phase)%LIFT.length];}
+function liftMarks(){if(B.liftMarks)B.liftMarks.forEach(m=>E.world.remove(m));B.liftMarks=[];
+  (B.cfg.lift||[]).forEach(([i,j,ph])=>{const now=hAt(i,j),nx=liftH(ph,B.turn+1);if(nx===now)return;const up=nx>now;
+    const m=new THREE.Mesh(new THREE.ConeGeometry(.12,.22,4),new THREE.MeshBasicMaterial({color:up?0x9be39b:0xffb070,transparent:true,opacity:.85}));
+    m.position.copy(W(i,j));m.position.y+=.12;m.rotation.x=up?0:Math.PI;m.position.x+=.34;m.position.z+=.34;E.world.add(m);B.liftMarks.push(m);});}
+async function liftTick(){const L=B.cfg.lift||[];if(!L.length)return;
+  L.forEach(([i,j,ph])=>{B.hgt[i][j]=liftH(ph,B.turn);refreshTile(i,j);});placeUnits(false);liftMarks();await sleep(300);}
+
+/* ---- turn order: enemy phase ends → wind → platforms move → pylons pull ---- */
+{const o=endTurn;endTurn=async function(){const t0=B?B.turn:0;const r=await o();
+  if(B&&B.turn>t0&&B.phase==='player'&&(B.cfg.wind||B.cfg.lift||B.cfg.ch3)){
+    if(B.cfg.wind)await windTick();if(B.cfg.lift)await liftTick();await pylonTick();
+    const U=B.units;if(!U.ryan.alive&&!U.claire.alive)return defeat();
+    if(B.phase==='done')return r;
+    updateHud();renderDeck();renderActions();}
+  return r;};}
+HOOK.after('startBattle',cfg=>{const wi=$('wind-ind');if(wi)wi.remove();if(!cfg.wind&&!cfg.lift&&!cfg.ch3)return;B.windIdx=0;B.pol={};
+  if(cfg.lift)cfg.lift.forEach(([i,j,ph])=>{B.hgt[i][j]=liftH(ph,1);refreshTile(i,j);});
+  pylons().forEach(([i,j])=>refreshTile(i,j));placeUnits(true);if(pylons().length)E.fxs.push(pylonGlow);
+  if(cfg.wind){windStreaks();windHud();}if(cfg.lift)liftMarks();
+  if(cfg.envT){$('env-t').textContent=cfg.envT;$('env-s').textContent=cfg.envS||'';windHud();}});
+{const o=updateHud;updateHud=function(...a){const r=o(...a);if(B&&B.cfg.wind)windHud();return r;};}
+/* pulse the pylon rings */
+function pylonGlow(dt){if(B&&B.props)Object.values(B.props).forEach(p=>{const r=p.userData&&p.userData.pylon;if(r)r.material.emissiveIntensity=1.1+Math.sin(performance.now()/260)*.5;});return !!B;}
+
+/* ======================= CHAPTER 3 — mechanic playtest (title menu → 第三章 機制試玩) =======================
+   Three small battles, one per new mechanic, with a Lv 7 party carrying chapter-2 notes. Placeholder art where
+   the final sheets are not in yet. Nothing here touches save slots; equip loadout is restored on the way out. */
+function battleC3(id){
+  const C={
+   wind:{theme:'fortress',N:7,title:'試玩一・飛艇碼頭的強風',envT:'第三章 · 風暴外緣・飛艇碼頭',envS:'試玩：強風',
+     wind:{seq:[[1,0],[0,-1],[-1,0],[0,1]],every:3,edge:'fall'},
+     enemies:[['stormkite',2,0],['stormkite',4,1],['guard',5,2]],
+     res:[['wall',1,3],['wall',4,4],['wall',2,5],['scrap',0,5],['oil',6,6],['si',3,2]],colTex:'fstone',
+     guide:'畫面上的白色氣流是風向（右上角也有標示）。每個敵方回合結束，站在空地上的人都會順風被吹 1 格；牆或高台的正後方是「風影格」，吹不動。風把敵人吹出平台邊緣就直接墜落。風暴鳶乘風飛行，不受影響。每 3 回合風向會轉一次。'},
+   magnet:{theme:'fortress',N:7,title:'試玩二・磁軌礦坑的磁柱',envT:'第三章 · 磁軌礦坑',envS:'試玩：磁力格',
+     enemies:[['golem',1,1],['golem',5,1],['gendarme',3,0]],
+     res:[['pylon',3,2],['pylon',1,4],['pylon',5,4],['scrap',0,6],['oil',6,6],['si',3,5]],colTex:'fstone',
+     guide:'藍色光環的是磁柱。每回合開始，磁柱 2 格內的金屬單位會被吸過去 1 格：魔像、憲兵，還有克蕾雅的機械臂。萊恩站在磁柱旁邊可以用「共振反轉」把它改成斥力（紅色）2 回合，當場把周圍的金屬推開。魔像太重，強風吹不動，但磁力拉得動。'},
+   lift:{theme:'fortress',N:7,title:'試玩三・避雷塔的浮空平台',envT:'第三章 · 避雷塔中段',envS:'試玩：浮空平台＋強風',
+     wind:{seq:[[0,-1],[-1,0],[0,1],[1,0]],every:3,edge:'fall'},
+     lift:[[1,2,0],[2,2,1],[4,2,2],[5,2,3],[3,4,1],[0,5,2],[6,5,0]],
+     enemies:[['gendarme',1,0],['gendarme',5,0],['turret',3,0]],
+     res:[['wall',3,1],['scrap',0,6],['oil',6,6],['si',3,6]],colTex:'fstone',
+     guide:'會升降的是浮空平台，高度在 0、1、2 層之間循環。格子角落的箭頭是下一回合的方向：綠色上升、橘色下降。站在上面會跟著移動；從高處攻擊傷害 +25%，被風從高處吹下去會摔傷。這場同時有強風。'},
+  };
+  const c=C[id];return Object.assign({ch3:true,explore:false},c);
+}
+const C3P={equip:null,mods:null};
+function c3ProtoStart(id){
+  C3P.equip=save.equip.slice();C3P.mods=Object.assign({},save.mods);
+  if(typeof SLOT!=='undefined')SLOT=0;
+  resetParty();P.lv={ryan:{lv:7,exp:0},claire:{lv:7,exp:0}};P.owned=['amulet','bracer','fork'];P.gear={ryan:'fork',claire:'bracer'};
+  P.items={bandage:3,coffee:2,capsule:1};P.stash={Fe:2,C:1,H2O:1,Si:1};syncMax();healParty(1);enterChapter2();ch2Equip();
+  const c=battleC3(id);c.onWin=c3ProtoEnd;startBattle(c);}
+function c3ProtoEnd(){if(C3P.equip){save.equip=C3P.equip;save.mods=C3P.mods;persist();C3P.equip=null;}
+  show('title');setTimeout(c3ProtoMenu,300);}
+function c3ProtoMenu(){
+  $('ov').innerHTML=`<div class="overlay"><div class="card frame"><span class="t-eyebrow">CHAPTER 3 · PLAYTEST</span><h3>第三章　機制試玩</h3>
+   <p>三場小戰鬥，每場只教一個新機制。角色固定 Lv 7，部分敵人還是暫代圖。打完會回到這裡，不會動到你的存檔。</p>
+   <div class="row" style="flex-direction:column;align-items:stretch;gap:8px">
+    <button class="btn primary" data-c3="wind">一・強風（飛艇碼頭）</button>
+    <button class="btn" data-c3="magnet">二・磁力格（磁軌礦坑）</button>
+    <button class="btn" data-c3="lift">三・浮空平台（避雷塔）</button>
+    <button class="btn" id="c3-x">關閉</button></div></div></div>`;
+  $('ov').querySelectorAll('[data-c3]').forEach(b=>b.onclick=()=>{$('ov').innerHTML='';c3ProtoStart(b.dataset.c3);});
+  $('c3-x').onclick=()=>{$('ov').innerHTML='';};}
+/* losing a playtest battle: retry or leave, never the chapter-1 base/rest options */
+{const o=defeat;defeat=function(){if(!B||!B.cfg.ch3||B.cfg.onWin!==c3ProtoEnd)return o();
+  if(B.phase==='lost')return;B.phase='lost';const id=Object.entries({wind:1,magnet:1,lift:1}).map(([k])=>k).find(k=>battleC3(k).title===B.cfg.title);
+  $('ov').innerHTML=`<div class="overlay"><div class="card frame"><h3>小隊潰滅</h3><p>再試一次，或回到試玩選單。</p>
+   <div class="row"><button class="btn primary" id="c3-r">重新挑戰</button><button class="btn" id="c3-m">回試玩選單</button></div></div></div>`;
+  $('c3-r').onclick=()=>{$('ov').innerHTML='';c3ProtoStart(id);};$('c3-m').onclick=()=>{$('ov').innerHTML='';c3ProtoEnd();};};}
+/* title menu entry, under 第二章 */
+{const ch2=$('m-ch2');if(ch2){const b=document.createElement('button');b.className='mbtn';b.id='m-ch3p';b.innerHTML='第三章　機制試玩 <small>強風・磁力格・浮空平台</small>';
+  ch2.after(b);b.onclick=c3ProtoMenu;}}
 
 /* ======================= AUDIO PASS: file-based music with fallback, richer SFX ======================= */
 /* MUSIC_FILES / SFX_FILES are injected by build.py from the music/ and sfx/ folders */
