@@ -44,6 +44,8 @@ body.vn .vn-p{display:block}
 .vn-p.left img{transform:scaleX(-1)}
 .vn-p.sil img{transform:none;filter:drop-shadow(0 0 16px rgba(120,150,210,.3))}
 .vn-p.swap img{animation:stswap .22s ease}
+.vn-p.left.swap:not(.sil) img{animation-name:vnswapL}
+@keyframes vnswapL{from{opacity:.55;transform:scaleX(-1) translateY(4px)}to{opacity:1;transform:scaleX(-1)}}
 body.vn #st-stand{display:none}
 @media (max-width:600px){.vn-p{height:52vh;bottom:calc(18px + 90px)}.vn-p:not(.act){opacity:0}.vn-p.left{left:-6%}.vn-p.right{right:-6%}}
 @media (prefers-reduced-motion:reduce){#vn-bg .vn-img,#vn-bg .vn-dust{animation:none}}`;document.body.appendChild(st);}
