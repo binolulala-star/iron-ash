@@ -37,6 +37,10 @@ art/pixel-sprites.js
 chapter3/battle-rules.js
 chapter3/proto.js
 chapter3/cast.js
+chapter3/themes.js
+chapter3/story.js
+chapter3/maps.js
+chapter3/quests.js
 audio/audio-files.js
 systems/perf.js
 systems/battle-layout.js

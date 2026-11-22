@@ -118,3 +118,53 @@ HOOK.after('startBattle',cfg=>{const wi=$('wind-ind');if(wi)wi.remove();if(!cfg.
 {const o=updateHud;updateHud=function(...a){const r=o(...a);if(B&&B.cfg.wind)windHud();return r;};}
 /* pulse the pylon rings */
 function pylonGlow(dt){if(B&&B.props)Object.values(B.props).forEach(p=>{const r=p.userData&&p.userData.pylon;if(r)r.material.emissiveIntensity=1.1+Math.sin(performance.now()/260)*.5;});return !!B;}
+
+/* ---- lightning rods (boss board): block movement, catch the coil's discharge ---- */
+{const o=occupied;occupied=function(i,j,ign){return o(i,j,ign)||(B&&B.tiles[i]&&B.tiles[i][j]==='rod');};}
+{const o=refreshTile;refreshTile=function(i,j){o(i,j);if(!B||B.tiles[i][j]!=='rod')return;const key=i+','+j;if(B.props[key])E.world.remove(B.props[key]);
+  const g=new THREE.Group(),base=new THREE.Mesh(new THREE.CylinderGeometry(.26,.32,.2,8),texMat('rust',1,1,{metalness:.6}));base.position.y=.1;
+  const post=new THREE.Mesh(new THREE.CylinderGeometry(.06,.09,1.6,8),new THREE.MeshStandardMaterial({color:0xc87a40,metalness:.9,roughness:.3}));post.position.y=.9;
+  const tip=new THREE.Mesh(new THREE.ConeGeometry(.1,.3,6),new THREE.MeshStandardMaterial({color:0xffb070,metalness:.9,emissive:0x6a3010}));tip.position.y=1.85;
+  g.add(base,post,tip);g.userData.rodTip=tip;g.position.set(i-OFF,hAt(i,j)*HSTEP,j-OFF);g.traverse(m=>m.userData.cell=[i,j]);E.world.add(g);B.props[key]=g;};}
+function rodsInRow(j){const out=[];for(let i=0;i<N;i++)if(B.tiles[i][j]==='rod')out.push(i);return out;}
+/* ---- 雷暴線圈: charge one turn (telegraph the row), discharge the next ---- */
+{const o=enemyAct;enemyAct=async function(e){
+  if(e.type!=='coil'||!e.alive)return o(e);
+  if(e.grounded){e.grounded=0;floatAt(W(e.i,e.j),'外殼恢復','#c8a456');log('雷暴線圈重新絕緣，外殼恢復了。');}
+  if(e.stun>0)return o(e);
+  if(!e.charge){const U=['ryan','claire'].map(k=>B.units[k]).filter(u=>u.alive);if(!U.length)return;
+    const t=U.sort((a,b)=>md(a.i,a.j,e.i,e.j)-md(b.i,b.j,e.i,e.j))[0];e.charge=t.j;banner('雷暴線圈','蓄電中・下回合橫掃第 '+t.j+' 排');
+    c3RowMark(t.j);log(`雷暴線圈開始蓄電，鎖定第 ${t.j} 排。${rodsInRow(t.j).length?'那一排有避雷針——留在那裡，讓雷打避雷針！':'那一排沒有避雷針，快離開，或把站位移到有避雷針的排。'}`);
+    await sleep(600);return o(e);}
+  const row=e.charge;e.charge=0;c3RowMark(null);E.shake=1;banner('雷暴線圈','放電');await sleep(400);
+  const rods=rodsInRow(row);
+  if(rods.length){const i=rods[0];VFX&&VFX.bolt&&VFX.bolt(W(e.i,e.j).add(new THREE.Vector3(0,2.4,0)),W(i,row).add(new THREE.Vector3(0,1.9,0)),0xc8b4ff,.8);
+    burst(W(i,row),0xd8c8ff,50,2.4);e.grounded=1;e.tg=0;floatAt(W(e.i,e.j),'接地！','#ffd27a');log('雷被避雷針引走了！雷暴線圈接地——外殼失效 1 回合，#R18 傷害加倍。');}
+  else{for(let i=0;i<N;i++)burst(W(i,row),0xc8b4ff,10,1.8);
+    ['ryan','claire'].map(k=>B.units[k]).filter(u=>u.alive&&u.j===row).forEach(u=>damageUnit(u,e.d.ratk+16));log(`雷暴橫掃第 ${row} 排。`);}
+  if(e.hp<e.max*.5&&!e.enraged){e.enraged=true;banner('雷暴線圈','過載・風向逆轉');B.windIdx=(B.windIdx||0)+1;log('線圈過載，塔頂的風向倒轉了！');}
+  await sleep(500);};}
+function c3RowMark(row){if(B.rowMark){E.world.remove(B.rowMark);B.rowMark=null;}if(row===null||row===undefined)return;
+  const m=new THREE.Mesh(new THREE.PlaneGeometry(N,.96),new THREE.MeshBasicMaterial({color:0xb48aff,transparent:true,opacity:.28,depthWrite:false}));m.rotation.x=-Math.PI/2;m.position.set(0,.06,row-OFF);E.world.add(m);B.rowMark=m;
+  E.fxs.push((dt,t)=>{if(B&&B.rowMark===m){m.material.opacity=.2+Math.abs(Math.sin(t*4))*.2;return true;}return false;});}
+{const o=damageEnemy;damageEnemy=function(e,amt,opt={}){if(B&&e&&e.grounded&&e.alive&&amt>0)amt=Math.round(amt*1.5);return o(e,amt,opt);};}
+
+/* ---- #R18 勞倫茲力・電磁軌道砲 / #R19 伯努利・暴風氣旋障壁 ---- */
+Object.assign(RCOL,{R18:0x8ad8ff,R19:0xe8f4ff});setTimeout(()=>Object.assign(RSND,{R18:'zap',R19:'steam'}),0);
+{const o=CH2CAST;CH2CAST=function(r,cells,inC){o(r,cells,inC);
+  if(r.id==='R18'){const pts=r.__pts||[];let di=0,dj=0;if(pts.length>=2){di=Math.sign(pts[1].i-pts[0].i);dj=Math.sign(pts[1].j-pts[0].j);if(di&&dj){if(Math.abs(pts[1].i-pts[0].i)>=Math.abs(pts[1].j-pts[0].j))dj=0;else di=0;}}
+    let line=cells.slice();const nearPy=pts.some(p=>pylons().some(([a,b])=>md(a,b,p.i,p.j)<=1));
+    if(nearPy&&pts.length>=2){let [i,j]=[pts[1].i,pts[1].j];for(let k=0;k<2;k++){i+=di;j+=dj;if(inb(i,j))line.push([i,j]);}}
+    const hit=alive().filter(e=>line.some(([i,j])=>i===e.i&&j===e.j));
+    line.forEach(([i,j])=>burst(W(i,j),0x8ad8ff,8,1.4));
+    hit.forEach(e=>{damageEnemy(e,e.grounded?360:180,{tg:40});if(e.alive&&!isHeavy(e)&&(di||dj)){for(let k=0;k<3;k++){if(c3Shove(e,di,dj,'軌道砲')!=='moved')break;}}});
+    placeUnits(false);log((nearPy?'磁柱加速！':'')+(hit.length?`電磁軌道砲貫穿了 ${hit.length} 個敵人。`:'軌道上沒有敵人。'));}
+  if(r.id==='R19'){['ryan','claire'].forEach(k=>{const u=B.units[k];if(u.alive)u.calm=2;});
+    inC.forEach(e=>{if(isHeavy(e))return;e.stun=Math.max(e.stun||0,1);e.lifted=1;burst(W(e.i,e.j),0xe8f4ff,30,1.8);floatAt(W(e.i,e.j),'浮空','#e8f4ff');});
+    log(`氣旋障壁展開：全隊 2 回合不受強風影響${inC.length?`，${inC.length} 個敵人被捲到半空`:''}。`);}};}
+{const o=cast;cast=function(r){if(B&&(r.id==='R18'))r.__pts=B.anchors.slice(-r.n).map(a=>({i:a.i,j:a.j}));return o(r);};}
+/* calm counts down at each new player turn; lifted foes get blown twice as far */
+{const o=windImmune;windImmune=function(x){if(x.lifted)return false;return o(x);};}
+{const o=windTick;windTick=async function(){const L=alive().filter(e=>e.lifted);await o();
+  if(B.cfg.wind){const d=windDir();for(const e of L){if(e.alive&&!windSheltered(e,d))c3Shove(e,d[0],d[1],'氣旋');e.lifted=0;}placeUnits(false);}
+  ['ryan','claire'].forEach(k=>{const u=B.units[k];if(u.calm>0)u.calm--;});};}

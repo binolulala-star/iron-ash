@@ -456,7 +456,7 @@ body.in-theater .hud-top,body.in-theater #deck,body.in-theater .camctl,body.in-t
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
 <script>
 "use strict";
-const MUSIC_FILES={},SFX_FILES={},ASSETS=["env/bg_dawn.webp", "env/bg_hospital.webp", "env/bg_reactor.webp", "env/bg_snowtrain.webp", "env/ch_claire.webp", "env/ch_claire_walk.webp", "env/ch_coil.webp", "env/ch_colossus.webp", "env/ch_crystal.webp", "env/ch_docker.webp", "env/ch_erik.webp", "env/ch_folkA.webp", "env/ch_folkB.webp", "env/ch_folkC.webp", "env/ch_frostguard.webp", "env/ch_gendarme.webp", "env/ch_golem.webp", "env/ch_guard.webp", "env/ch_hans.webp", "env/ch_hound.webp", "env/ch_howard.webp", "env/ch_hunter.webp", "env/ch_keeper.webp", "env/ch_lewin.webp", "env/ch_lia.webp", "env/ch_locke.webp", "env/ch_marta.webp", "env/ch_mech.webp", "env/ch_mila.webp", "env/ch_miner.webp", "env/ch_mp.webp", "env/ch_oldminer.webp", "env/ch_orrick.webp", "env/ch_ryan.webp", "env/ch_ryan_walk.webp", "env/ch_soldier.webp", "env/ch_stormkite.webp", "env/ch_sweeper.webp", "env/ch_tim.webp", "env/ch_turret.webp", "env/ch_vera.webp", "env/ch_wolf.webp", "env/cr_cat.webp", "env/cr_dog.webp", "env/fp_house1.webp", "env/fp_row.webp", "env/fp_snow.webp", "env/fp_stone.webp", "env/fp_store.webp", "env/fp_tavern.webp", "env/ft_barracks.webp", "env/ft_clinic.webp", "env/ft_floor.webp", "env/ft_kitchen.webp", "env/ft_office.webp", "env/ft_wall.webp", "env/gl_cabin.webp", "env/lm_cargowall.webp", "env/lm_clock.webp", "env/lm_hangargate.webp", "env/lm_hangarin.webp", "env/lm_mine.webp", "env/lm_shed.webp", "env/lm_tank.webp", "env/lm_tower.webp", "env/lm_train.webp", "env/lm_trainwall.webp", "env/lm_vault.webp", "env/oh_brick.webp", "env/oh_cobble.webp", "env/oh_hall.webp", "env/oh_house.webp", "env/oh_shack.webp", "env/oh_station.webp", "env/oh_store.webp", "env/oh_tavern.webp", "env/oh_ware.webp", "env/oh_works.webp", "env/pr_acidbarrel.webp", "env/pr_barrel.webp", "env/pr_barrow.webp", "env/pr_bench.webp", "env/pr_bench2.webp", "env/pr_board.webp", "env/pr_brokencrate.webp", "env/pr_cannon.webp", "env/pr_cardtable.webp", "env/pr_cart.webp", "env/pr_crates.webp", "env/pr_crates2.webp", "env/pr_drum.webp", "env/pr_fish.webp", "env/pr_flag.webp", "env/pr_grate.webp", "env/pr_lamp.webp", "env/pr_lamp2.webp", "env/pr_lantern.webp", "env/pr_laundry.webp", "env/pr_luggage.webp", "env/pr_mailbox.webp", "env/pr_minecart.webp", "env/pr_pipe.webp", "env/pr_pump.webp", "env/pr_rack.webp", "env/pr_sandbag.webp", "env/pr_scrap.webp", "env/pr_search.webp", "env/pr_sign.webp", "env/pr_sled.webp", "env/pr_snowbench.webp", "env/pr_snowman.webp", "env/pr_stall.webp", "env/pr_stove.webp", "env/pr_supply.webp", "env/pr_toolbox.webp", "env/pr_tools.webp", "env/pr_valve.webp", "env/pr_valve2.webp", "env/pr_vendor.webp", "env/pr_woodpile.webp", "env/tx_acid.webp", "env/tx_brick.webp", "env/tx_concrete.webp", "env/tx_container.webp", "env/tx_embank.webp", "env/tx_frostwall.webp", "env/tx_hangar.webp", "env/tx_icecliff.webp", "env/tx_lake.webp", "env/tx_mud.webp", "env/tx_plank.webp", "env/tx_plaster.webp", "env/tx_rustroof.webp", "env/tx_sewerfloor.webp", "env/tx_sewerwall.webp", "env/tx_slate.webp", "env/tx_snowfield.webp", "env/tx_snowroof.webp", "env/tx_timber.webp", "env/tx_trainfloor.webp", "portraits/claire_angry.webp", "portraits/claire_grin.webp", "portraits/claire_hurt.webp", "portraits/claire_neutral.webp", "portraits/claire_teary.webp", "portraits/claireh_soft.webp", "portraits/erik_cry.webp", "portraits/erik_neutral.webp", "portraits/folkw_hurt.webp", "portraits/glan_smirk.webp", "portraits/guard_scared.webp", "portraits/guard_stern.webp", "portraits/hans_smile.webp", "portraits/hans_teary.webp", "portraits/howard_hurt.webp", "portraits/howard_smile.webp", "portraits/hunter_hurt.webp", "portraits/hunter_neutral.webp", "portraits/lewin_smile.webp", "portraits/lewin_stern.webp", "portraits/lewin_worried.webp", "portraits/lia_grin.webp", "portraits/lia_teary.webp", "portraits/lia_worried.webp", "portraits/locke_cold.webp", "portraits/locke_smile.webp", "portraits/marta_happy.webp", "portraits/marta_worried.webp", "portraits/mila_calm.webp", "portraits/mila_smile.webp", "portraits/mila_surprised.webp", "portraits/mila_teary.webp", "portraits/miner_smile.webp", "portraits/orrick_angry.webp", "portraits/orrick_cold.webp", "portraits/orrick_smile.webp", "portraits/ryan_ash.webp", "portraits/ryan_cold.webp", "portraits/ryan_gaze.webp", "portraits/ryan_roar.webp", "portraits/ryan_smirk.webp", "portraits/tim_cry.webp", "portraits/tim_laugh.webp", "portraits/tim_neutral.webp", "portraits/vera_angry.webp", "portraits/vera_cold.webp", "portraits/vera_smile.webp"];
+const MUSIC_FILES={},SFX_FILES={},ASSETS=["env/bg_airship.webp", "env/bg_dawn.webp", "env/bg_gauss.webp", "env/bg_hospital.webp", "env/bg_lighthouse.webp", "env/bg_reactor.webp", "env/bg_snowtrain.webp", "env/ch_claire.webp", "env/ch_claire_walk.webp", "env/ch_coil.webp", "env/ch_colossus.webp", "env/ch_crystal.webp", "env/ch_docker.webp", "env/ch_erik.webp", "env/ch_folkA.webp", "env/ch_folkB.webp", "env/ch_folkC.webp", "env/ch_frostguard.webp", "env/ch_gendarme.webp", "env/ch_golem.webp", "env/ch_guard.webp", "env/ch_hans.webp", "env/ch_hound.webp", "env/ch_howard.webp", "env/ch_hunter.webp", "env/ch_keeper.webp", "env/ch_lewin.webp", "env/ch_lia.webp", "env/ch_locke.webp", "env/ch_marta.webp", "env/ch_mech.webp", "env/ch_mila.webp", "env/ch_miner.webp", "env/ch_minicoil.webp", "env/ch_mp.webp", "env/ch_oldminer.webp", "env/ch_orrick.webp", "env/ch_patroldog.webp", "env/ch_ryan.webp", "env/ch_ryan_walk.webp", "env/ch_smuggler.webp", "env/ch_soldier.webp", "env/ch_stormkite.webp", "env/ch_sweeper.webp", "env/ch_tim.webp", "env/ch_turret.webp", "env/ch_vera.webp", "env/ch_wolf.webp", "env/cr_cat.webp", "env/cr_dog.webp", "env/fp_gauss.webp", "env/fp_house1.webp", "env/fp_row.webp", "env/fp_snow.webp", "env/fp_stone.webp", "env/fp_store.webp", "env/fp_tavern.webp", "env/ft_barracks.webp", "env/ft_clinic.webp", "env/ft_floor.webp", "env/ft_kitchen.webp", "env/ft_office.webp", "env/ft_wall.webp", "env/gl_cabin.webp", "env/lm_cargowall.webp", "env/lm_clock.webp", "env/lm_hangargate.webp", "env/lm_hangarin.webp", "env/lm_mine.webp", "env/lm_shed.webp", "env/lm_tank.webp", "env/lm_tower.webp", "env/lm_train.webp", "env/lm_trainwall.webp", "env/lm_vault.webp", "env/oh_brick.webp", "env/oh_cobble.webp", "env/oh_hall.webp", "env/oh_house.webp", "env/oh_shack.webp", "env/oh_station.webp", "env/oh_store.webp", "env/oh_tavern.webp", "env/oh_ware.webp", "env/oh_works.webp", "env/pr_acidbarrel.webp", "env/pr_barrel.webp", "env/pr_barrow.webp", "env/pr_bench.webp", "env/pr_bench2.webp", "env/pr_board.webp", "env/pr_bollard.webp", "env/pr_brokencrate.webp", "env/pr_cannon.webp", "env/pr_cardtable.webp", "env/pr_cart.webp", "env/pr_chain.webp", "env/pr_crates.webp", "env/pr_crates2.webp", "env/pr_drum.webp", "env/pr_fish.webp", "env/pr_flag.webp", "env/pr_grate.webp", "env/pr_lamp.webp", "env/pr_lamp2.webp", "env/pr_lantern.webp", "env/pr_laundry.webp", "env/pr_luggage.webp", "env/pr_mailbox.webp", "env/pr_minecart.webp", "env/pr_pipe.webp", "env/pr_pump.webp", "env/pr_pylon.webp", "env/pr_rack.webp", "env/pr_railcart.webp", "env/pr_rod.webp", "env/pr_sandbag.webp", "env/pr_scrap.webp", "env/pr_search.webp", "env/pr_sign.webp", "env/pr_signal.webp", "env/pr_sled.webp", "env/pr_snowbench.webp", "env/pr_snowman.webp", "env/pr_stall.webp", "env/pr_stove.webp", "env/pr_supply.webp", "env/pr_toolbox.webp", "env/pr_tools.webp", "env/pr_valve.webp", "env/pr_valve2.webp", "env/pr_vendor.webp", "env/pr_woodpile.webp", "env/tx_acid.webp", "env/tx_brassdeck.webp", "env/tx_brick.webp", "env/tx_concrete.webp", "env/tx_container.webp", "env/tx_embank.webp", "env/tx_frostwall.webp", "env/tx_hangar.webp", "env/tx_icecliff.webp", "env/tx_lake.webp", "env/tx_magnetite.webp", "env/tx_mud.webp", "env/tx_pier.webp", "env/tx_plank.webp", "env/tx_plaster.webp", "env/tx_rustroof.webp", "env/tx_sewerfloor.webp", "env/tx_sewerwall.webp", "env/tx_slate.webp", "env/tx_snowfield.webp", "env/tx_snowroof.webp", "env/tx_timber.webp", "env/tx_trainfloor.webp", "portraits/claire_angry.webp", "portraits/claire_grin.webp", "portraits/claire_hurt.webp", "portraits/claire_neutral.webp", "portraits/claire_teary.webp", "portraits/claireh_soft.webp", "portraits/erik_cry.webp", "portraits/erik_neutral.webp", "portraits/folkw_hurt.webp", "portraits/glan_smirk.webp", "portraits/guard_scared.webp", "portraits/guard_stern.webp", "portraits/hans_smile.webp", "portraits/hans_teary.webp", "portraits/howard_hurt.webp", "portraits/howard_smile.webp", "portraits/hunter_hurt.webp", "portraits/hunter_neutral.webp", "portraits/lewin_smile.webp", "portraits/lewin_stern.webp", "portraits/lewin_worried.webp", "portraits/lia_grin.webp", "portraits/lia_teary.webp", "portraits/lia_worried.webp", "portraits/locke_cold.webp", "portraits/locke_smile.webp", "portraits/marta_happy.webp", "portraits/marta_worried.webp", "portraits/mila_calm.webp", "portraits/mila_smile.webp", "portraits/mila_surprised.webp", "portraits/mila_teary.webp", "portraits/miner_smile.webp", "portraits/orrick_angry.webp", "portraits/orrick_cold.webp", "portraits/orrick_smile.webp", "portraits/ryan_ash.webp", "portraits/ryan_cold.webp", "portraits/ryan_gaze.webp", "portraits/ryan_roar.webp", "portraits/ryan_smirk.webp", "portraits/tim_cry.webp", "portraits/tim_laugh.webp", "portraits/tim_neutral.webp", "portraits/vera_angry.webp", "portraits/vera_cold.webp", "portraits/vera_smile.webp"];
 const $=id=>document.getElementById(id);
 /* ======================= DATA ======================= */
 const EL={Si:'土石',Fe:'純鐵',H2O:'水',C:'碳油',Acid:'強酸',Al:'鋁',Mg:'鎂',NaCl:'鹽',P:'磷',Org:'有機物'};
@@ -4904,7 +4904,7 @@ clearRun=function(){};
 {const o=chapter2End;chapter2End=function(){if(SLOT)writeSlot(SLOT,{v:2,stage:'cleared2',map:null,pos:null,t:Date.now(),ch:2,P:snapP()});o();};}
 setInterval(()=>{if($('title').hidden&&P.lv&&!document.hidden)P.play=(P.play||0)+1;},1000);
 const fmtPlay=s=>{s=s|0;const h=(s/3600)|0,m=((s%3600)/60)|0;return h?`${h} 小時 ${m} 分`:`${m} 分`;};
-const slotWhere=d=>d.stage==='boss'?'第三機庫・決戰前':d.stage==='ch2start'?'第一章 完 → 第二章':d.stage==='cleared2'?'第二章 完':(MAPS[d.map]?MAPS[d.map].name:'—');
+const slotWhere=d=>d.stage==='boss'?'第三機庫・決戰前':d.stage==='ch2start'?'第一章 完 → 第二章':d.stage==='cleared2'?'第二章 完 → 第三章':d.stage==='ch3start'?'第三章 開頭':d.stage==='cleared3'?'第三章 完':(MAPS[d.map]?MAPS[d.map].name:'—');
 function loadSlot(n){const d=readSlot(n);if(!d)return;SLOT=n;
   if(d.stage==='ch2start'||d.stage==='cleared2'){try{localStorage.setItem(CH2_KEY,JSON.stringify(Object.assign({},d.P,{flags:Object.assign({tut_move:1,tut_enc:1},d.P.flags)})));}catch(e){}
     if(d.stage==='cleared2')setTimeout(()=>toast('這個存檔已經通關第二章。從第二章開頭重新遊玩（等級與道具保留）。'),400);startCh2();return;}
@@ -4913,7 +4913,7 @@ function loadSlot(n){const d=readSlot(n);if(!d)return;SLOT=n;
   toast(`已讀取存檔（欄位 ${n}）。`);}
 function slotMenu(mode,onPick){
   const draw=(confirmN)=>{const rows=[1,2,3].map(n=>{const d=readSlot(n);
-    const info=d?`<b>${slotWhere(d)}</b><span class="px">第${d.ch===2?'二':'一'}章・萊恩 Lv ${d.P.lv.ryan.lv}・克蕾雅 Lv ${d.P.lv.claire.lv}・${d.P.money||0} ${MK}</span><span class="px">遊玩 ${fmtPlay(d.P.play)}・${new Date(d.t).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</span>`:'<b class="empty">空白欄位</b>';
+    const info=d?`<b>${slotWhere(d)}</b><span class="px">第${['一','二','三'][(d.ch||1)-1]||d.ch}章・萊恩 Lv ${d.P.lv.ryan.lv}・克蕾雅 Lv ${d.P.lv.claire.lv}・${d.P.money||0} ${MK}</span><span class="px">遊玩 ${fmtPlay(d.P.play)}・${new Date(d.t).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</span>`:'<b class="empty">空白欄位</b>';
     let btn='';if(mode==='load')btn=d?`<button class="btn primary" data-load="${n}">讀取</button><button class="btn" data-del="${n}">刪除</button>`:'';
     else btn=confirmN===n?`<button class="btn primary" data-pick="${n}">確定覆蓋</button><button class="btn" data-cancel>取消</button>`:`<button class="btn ${d?'':'primary'}" data-${d?'ask':'pick'}="${n}">${d?'覆蓋':'使用'}</button>`;
     if(mode==='load'&&confirmN===n)btn=`<button class="btn primary" data-delok="${n}">確定刪除</button><button class="btn" data-cancel>取消</button>`;
@@ -5726,6 +5726,56 @@ HOOK.after('startBattle',cfg=>{const wi=$('wind-ind');if(wi)wi.remove();if(!cfg.
 /* pulse the pylon rings */
 function pylonGlow(dt){if(B&&B.props)Object.values(B.props).forEach(p=>{const r=p.userData&&p.userData.pylon;if(r)r.material.emissiveIntensity=1.1+Math.sin(performance.now()/260)*.5;});return !!B;}
 
+/* ---- lightning rods (boss board): block movement, catch the coil's discharge ---- */
+{const o=occupied;occupied=function(i,j,ign){return o(i,j,ign)||(B&&B.tiles[i]&&B.tiles[i][j]==='rod');};}
+{const o=refreshTile;refreshTile=function(i,j){o(i,j);if(!B||B.tiles[i][j]!=='rod')return;const key=i+','+j;if(B.props[key])E.world.remove(B.props[key]);
+  const g=new THREE.Group(),base=new THREE.Mesh(new THREE.CylinderGeometry(.26,.32,.2,8),texMat('rust',1,1,{metalness:.6}));base.position.y=.1;
+  const post=new THREE.Mesh(new THREE.CylinderGeometry(.06,.09,1.6,8),new THREE.MeshStandardMaterial({color:0xc87a40,metalness:.9,roughness:.3}));post.position.y=.9;
+  const tip=new THREE.Mesh(new THREE.ConeGeometry(.1,.3,6),new THREE.MeshStandardMaterial({color:0xffb070,metalness:.9,emissive:0x6a3010}));tip.position.y=1.85;
+  g.add(base,post,tip);g.userData.rodTip=tip;g.position.set(i-OFF,hAt(i,j)*HSTEP,j-OFF);g.traverse(m=>m.userData.cell=[i,j]);E.world.add(g);B.props[key]=g;};}
+function rodsInRow(j){const out=[];for(let i=0;i<N;i++)if(B.tiles[i][j]==='rod')out.push(i);return out;}
+/* ---- 雷暴線圈: charge one turn (telegraph the row), discharge the next ---- */
+{const o=enemyAct;enemyAct=async function(e){
+  if(e.type!=='coil'||!e.alive)return o(e);
+  if(e.grounded){e.grounded=0;floatAt(W(e.i,e.j),'外殼恢復','#c8a456');log('雷暴線圈重新絕緣，外殼恢復了。');}
+  if(e.stun>0)return o(e);
+  if(!e.charge){const U=['ryan','claire'].map(k=>B.units[k]).filter(u=>u.alive);if(!U.length)return;
+    const t=U.sort((a,b)=>md(a.i,a.j,e.i,e.j)-md(b.i,b.j,e.i,e.j))[0];e.charge=t.j;banner('雷暴線圈','蓄電中・下回合橫掃第 '+t.j+' 排');
+    c3RowMark(t.j);log(`雷暴線圈開始蓄電，鎖定第 ${t.j} 排。${rodsInRow(t.j).length?'那一排有避雷針——留在那裡，讓雷打避雷針！':'那一排沒有避雷針，快離開，或把站位移到有避雷針的排。'}`);
+    await sleep(600);return o(e);}
+  const row=e.charge;e.charge=0;c3RowMark(null);E.shake=1;banner('雷暴線圈','放電');await sleep(400);
+  const rods=rodsInRow(row);
+  if(rods.length){const i=rods[0];VFX&&VFX.bolt&&VFX.bolt(W(e.i,e.j).add(new THREE.Vector3(0,2.4,0)),W(i,row).add(new THREE.Vector3(0,1.9,0)),0xc8b4ff,.8);
+    burst(W(i,row),0xd8c8ff,50,2.4);e.grounded=1;e.tg=0;floatAt(W(e.i,e.j),'接地！','#ffd27a');log('雷被避雷針引走了！雷暴線圈接地——外殼失效 1 回合，#R18 傷害加倍。');}
+  else{for(let i=0;i<N;i++)burst(W(i,row),0xc8b4ff,10,1.8);
+    ['ryan','claire'].map(k=>B.units[k]).filter(u=>u.alive&&u.j===row).forEach(u=>damageUnit(u,e.d.ratk+16));log(`雷暴橫掃第 ${row} 排。`);}
+  if(e.hp<e.max*.5&&!e.enraged){e.enraged=true;banner('雷暴線圈','過載・風向逆轉');B.windIdx=(B.windIdx||0)+1;log('線圈過載，塔頂的風向倒轉了！');}
+  await sleep(500);};}
+function c3RowMark(row){if(B.rowMark){E.world.remove(B.rowMark);B.rowMark=null;}if(row===null||row===undefined)return;
+  const m=new THREE.Mesh(new THREE.PlaneGeometry(N,.96),new THREE.MeshBasicMaterial({color:0xb48aff,transparent:true,opacity:.28,depthWrite:false}));m.rotation.x=-Math.PI/2;m.position.set(0,.06,row-OFF);E.world.add(m);B.rowMark=m;
+  E.fxs.push((dt,t)=>{if(B&&B.rowMark===m){m.material.opacity=.2+Math.abs(Math.sin(t*4))*.2;return true;}return false;});}
+{const o=damageEnemy;damageEnemy=function(e,amt,opt={}){if(B&&e&&e.grounded&&e.alive&&amt>0)amt=Math.round(amt*1.5);return o(e,amt,opt);};}
+
+/* ---- #R18 勞倫茲力・電磁軌道砲 / #R19 伯努利・暴風氣旋障壁 ---- */
+Object.assign(RCOL,{R18:0x8ad8ff,R19:0xe8f4ff});setTimeout(()=>Object.assign(RSND,{R18:'zap',R19:'steam'}),0);
+{const o=CH2CAST;CH2CAST=function(r,cells,inC){o(r,cells,inC);
+  if(r.id==='R18'){const pts=r.__pts||[];let di=0,dj=0;if(pts.length>=2){di=Math.sign(pts[1].i-pts[0].i);dj=Math.sign(pts[1].j-pts[0].j);if(di&&dj){if(Math.abs(pts[1].i-pts[0].i)>=Math.abs(pts[1].j-pts[0].j))dj=0;else di=0;}}
+    let line=cells.slice();const nearPy=pts.some(p=>pylons().some(([a,b])=>md(a,b,p.i,p.j)<=1));
+    if(nearPy&&pts.length>=2){let [i,j]=[pts[1].i,pts[1].j];for(let k=0;k<2;k++){i+=di;j+=dj;if(inb(i,j))line.push([i,j]);}}
+    const hit=alive().filter(e=>line.some(([i,j])=>i===e.i&&j===e.j));
+    line.forEach(([i,j])=>burst(W(i,j),0x8ad8ff,8,1.4));
+    hit.forEach(e=>{damageEnemy(e,e.grounded?360:180,{tg:40});if(e.alive&&!isHeavy(e)&&(di||dj)){for(let k=0;k<3;k++){if(c3Shove(e,di,dj,'軌道砲')!=='moved')break;}}});
+    placeUnits(false);log((nearPy?'磁柱加速！':'')+(hit.length?`電磁軌道砲貫穿了 ${hit.length} 個敵人。`:'軌道上沒有敵人。'));}
+  if(r.id==='R19'){['ryan','claire'].forEach(k=>{const u=B.units[k];if(u.alive)u.calm=2;});
+    inC.forEach(e=>{if(isHeavy(e))return;e.stun=Math.max(e.stun||0,1);e.lifted=1;burst(W(e.i,e.j),0xe8f4ff,30,1.8);floatAt(W(e.i,e.j),'浮空','#e8f4ff');});
+    log(`氣旋障壁展開：全隊 2 回合不受強風影響${inC.length?`，${inC.length} 個敵人被捲到半空`:''}。`);}};}
+{const o=cast;cast=function(r){if(B&&(r.id==='R18'))r.__pts=B.anchors.slice(-r.n).map(a=>({i:a.i,j:a.j}));return o(r);};}
+/* calm counts down at each new player turn; lifted foes get blown twice as far */
+{const o=windImmune;windImmune=function(x){if(x.lifted)return false;return o(x);};}
+{const o=windTick;windTick=async function(){const L=alive().filter(e=>e.lifted);await o();
+  if(B.cfg.wind){const d=windDir();for(const e of L){if(e.alive&&!windSheltered(e,d))c3Shove(e,d[0],d[1],'氣旋');e.lifted=0;}placeUnits(false);}
+  ['ryan','claire'].forEach(k=>{const u=B.units[k];if(u.calm>0)u.calm--;});};}
+
 /* ======================= CHAPTER 3 — mechanic playtest (title menu → 第三章 機制試玩) =======================
    Three small battles, one per new mechanic, with a Lv 7 party carrying chapter-2 notes. Placeholder art where
    the final sheets are not in yet. Nothing here touches save slots; equip loadout is restored on the way out. */
@@ -5785,6 +5835,626 @@ Object.assign(CH_ART,{mila:{cw:62,ch:100,body:100,fr:['idle','w1','w2','w3','w4'
  oldminer:{cw:76,ch:100,body:100,fr:['idle','walkA','hopA','walkB','hopB']},docker:{cw:68,ch:100,body:100,fr:['idle','walkA','hopA','walkB','hopB']}});
 ['mila','lewin','oldminer','docker'].forEach(k=>chLoad(k,CH_ART[k]));
 Object.assign(STAND,{mila:['calm','smile','surprised','teary'],lewin:['stern','smile','worried']});
+Object.assign(NAMES,{mila:'信號燈手・米菈',lewin:'城帆工程師・蕾溫',oldminer:'老礦工・巴托',docker:'碼頭工人・漢克',captain:'走私船長・葛洛',gendarme:'靜默憲兵'});
+Object.assign(STAND_MAP,{mila:{Neutral:'calm',Default_Cold:'calm',Smile:'smile',Happy:'smile',Default_Grin:'smile',Surprised:'surprised',Hurt:'surprised',Fork_Gaze:'surprised',Teary_Fierce:'teary',Cry:'teary'},
+ lewin:{Neutral:'stern',Default_Cold:'stern',Angry_Steam:'stern',Smile:'smile',Cynical_Smirk:'smile',Happy:'smile',Hurt:'worried',Memory_Headache:'worried',Fork_Gaze:'worried'}});
+['mila','lewin'].forEach(w=>STAND[w].forEach(k=>{const im=new Image();im.src=`portraits/${w}_${k}.webp`;STAND_PRE[w+'_'+k]=im;}));
+/* fallback palettes / low-res faces until the painted sheets load */
+Object.assign(HRPAL,{mila:HRPAL.lia,lewin:HRPAL.keeper,oldminer:HRPAL.hunter,docker:HRPAL.hunter,captain:HRPAL.keeper});
+Object.assign(CHAR,{mila:CHAR.lia,lewin:CHAR.keeper,oldminer:CHAR.hunter,docker:CHAR.hunter,captain:CHAR.keeper});
+Object.assign(TOWN_KIND,{mila:'mila',lewin:'lewin',oldminer:'oldminer',docker:'docker',captain:'keeper'});
+/* enemy aliases that reuse chapter-1/2 sheets under new names */
+Object.assign(CH_ART,{smuggler:Object.assign({},CH_ART.guard),patroldog:Object.assign({},CH_ART.hound),minicoil:Object.assign({},CH_ART.turret)});
+['smuggler','patroldog','minicoil'].forEach(k=>chLoad(k,CH_ART[k]));
+Object.assign(ENEMY,{
+ smuggler:Object.assign({},ENEMY.guard,{name:'走私客打手',hp:150,atk:24,drop:['C',1]}),
+ patroldog:Object.assign({},ENEMY.hound,{name:'憲兵巡邏犬',hp:80,atk:20}),
+ minicoil:Object.assign({},ENEMY.turret,{name:'小型線圈',hp:120,tg:40,atk:10,rng:4,ratk:28,metal:true,drop:['Fe',1],frames:()=>[tex(sweeperCanvas(0)),tex(sweeperCanvas(1))]}),
+});
+Object.assign(VERB,{smuggler:VERB.guard||['揮拳打向'],patroldog:VERB.hound||['撲咬'],minicoil:['放出電弧，打中']});
+Object.assign(EXP_OF,{smuggler:40,patroldog:24,minicoil:36});
+Object.assign(TH_H2,{smuggler:2.5,patroldog:1.6,minicoil:1.8});
+
+/* ======================= CHAPTER 3 — themes: battle boards, backdrops, storm ambience, story sets ======================= */
+const CH3_THEMES=['dock','alley','mine3','tower'];
+['tx_pier','tx_brassdeck','tx_magnetite'].forEach(k=>{if(!PIMG[k]){const im=new Image();im.src='env/'+k+'.webp';PIMG[k]=im;}});
+Object.assign(BOARD_PAINT,{dock:['tx_pier',0xb8b4ae],alley:['oh_cobble',0x9aa2b0],mine3:['tx_magnetite',0xc8d0e0],tower:['tx_brassdeck',0xb8b8bc]});
+Object.assign(FLOOR,{dock:'wood',alley:'cobble',mine3:'stone',tower:'plate'});
+Object.assign(ENV,{dock:['風暴外緣・飛艇碼頭','風速 22 m/s · 雷暴 · 地面 L0'],alley:['高斯港・下城區','無聲 · 雷暴 · 地面 L0–1'],
+  mine3:['高斯港地底・磁軌礦坑','磁場 0.8 T · 地面 L0–1'],tower:['避雷塔','高度 300 m · 風速 30 m/s · 浮空平台']});
+Object.assign(LOOT_TYPES,{dock:['scrap','oil','si'],alley:['scrap','al','oil'],mine3:['si','scrap','si','al'],tower:['al','scrap','oil']});
+Object.assign(THEME_SKY,{dock:['#141c2a','#3a4a64','#0a1018'],alley:['#121822','#34405a','#080c14'],mine3:['#06080e','#1a2236','#030408'],tower:['#101828','#40507a','#060a14']});
+Object.assign(GRADE_OF,{dock:'fortress',alley:'fortress',mine3:'vault',tower:'fortress',storm:'fortress',airship:'fortress',gauss:'fortress',gaussvn:'fortress',lighthouse:'dawn'});
+Object.assign(MOTES,{dock:[0xdfe8ff,50,.05,.05],tower:[0xdfe8ff,60,.05,.06],mine3:[0x8ab8ff,80,.05,.08]});
+Object.assign(MAP_SONG,{dock:'yard',gauss:'town',mine3:'sewer',tower:'yard'});
+Object.assign(VN_SETS,{airship:'bg_airship',gaussvn:'bg_gauss',lighthouse:'bg_lighthouse'});
+SETS.airship=function(){SETS.title();setFog(0x0a1018,.35);};
+SETS.gaussvn=function(){SETS.title();setFog(0x101828,.35);};
+SETS.lighthouse=function(){SETS.dawn();};
+Object.assign(SET_SONG,{airship:'yard',gaussvn:'town',lighthouse:'dawn'});
+
+/* rain + lightning used on boards and free maps */
+function stormRain(box,n=420){const [x0,y0,z0,x1,y1,z1]=box,g=new THREE.BufferGeometry(),p=new Float32Array(n*6);
+  for(let q=0;q<n;q++){const x=x0+rnd()*(x1-x0),y=y0+rnd()*(y1-y0),z=z0+rnd()*(z1-z0);p.set([x,y,z,x+.18,y-.5,z],q*6);}
+  g.setAttribute('position',new THREE.BufferAttribute(p,3));const L=new THREE.LineSegments(g,new THREE.LineBasicMaterial({color:0xb8c8e0,transparent:true,opacity:.42,depthWrite:false}));E.world.add(L);
+  E.fxs.push(dt=>{if(!L.parent)return false;const a=g.attributes.position.array;for(let q=0;q<n;q++){const o=q*6;let dy=dt*(14+(q%5));a[o+1]-=dy;a[o+4]-=dy;a[o]+=dt*4;a[o+3]+=dt*4;
+    if(a[o+4]<y0){const x=x0+rnd()*(x1-x0),z=z0+rnd()*(z1-z0);a.set([x,y1,z,x+.18,y1-.5,z],o);}}g.attributes.position.needsUpdate=true;});return L;}
+function lightning(every=6){let t=every*rnd(),f=0;const l=new THREE.DirectionalLight(0xd8e4ff,0);l.position.set(4,12,-6);E.world.add(l);
+  E.fxs.push(dt=>{if(!l.parent)return false;t-=dt;if(t<0){t=every*(.5+rnd());f=.32;if(typeof sfx==='function'&&E.mode!=='scene'&&rnd()<.5)try{sfx('rumble');}catch(e){}}
+    if(f>0){f-=dt;l.intensity=f>.22?2.6:f>.14?.2:f>.06?1.8:0;}else l.intensity=0;});return l;}
+function chain(x,y0,z,len,col=0x4a4a52){const g=new THREE.Group(),m=new THREE.MeshStandardMaterial({color:col,metalness:.8,roughness:.4});
+  for(let k=0;k<len/.32;k++){const r=new THREE.Mesh(new THREE.TorusGeometry(.12,.035,5,10),m);r.position.y=y0+k*.32;r.rotation.y=k%2?Math.PI/2:0;g.add(r);}g.position.set(x,0,z);E.world.add(g);return g;}
+function floatRock(x,y,z,s,col=0x3a404c){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(s,0),new THREE.MeshStandardMaterial({color:col,roughness:.95,flatShading:true}));
+  m.scale.y=.55;m.position.set(x,y,z);m.rotation.y=rnd()*3;E.world.add(m);const ph=rnd()*6;E.fxs.push((dt,t)=>{if(!m.parent)return false;m.position.y=y+Math.sin(t*.6+ph)*.15;});return m;}
+function magnetCan(x,y,z,s=1){const g=new THREE.Group(),b=new THREE.Mesh(new THREE.CylinderGeometry(.4*s,.4*s,1.2*s,12),new THREE.MeshStandardMaterial({color:0x6a5a3a,metalness:.8,roughness:.35}));
+  const c=new THREE.Mesh(new THREE.CylinderGeometry(.3*s,.3*s,.8*s,12),new THREE.MeshStandardMaterial({color:0x9ad8ff,emissive:0x4ab8ff,emissiveIntensity:1.2,transparent:true,opacity:.85}));
+  g.add(b,c);g.position.set(x,y,z);E.world.add(g);const l=new THREE.PointLight(0x7ac8ff,1.2,6);l.position.set(x,y,z);E.world.add(l);flicker(l,1.2,.5,7);return g;}
+{const o=backdrop;backdrop=function(th){
+  if(!CH3_THEMES.includes(th))return o(th);
+  const R=OFF+.5,z0=-R-.6;
+  if(th==='dock'){setFog(0x1a2232,.5);E.scene.fog.near=13;E.scene.fog.far=36;
+    for(let k=-3;k<=3;k++){block(.3,2.6,.3,k*2.3,-.2,z0-.2,texMat('rust',1,3,{color:0x6a5a48}));}block(N+5,.25,.3,0,1.1,z0-.2,texMat('rust',N,1,{color:0x6a5a48}));
+    floatRock(-5,-2,-7,1.6);floatRock(4,-1,-8,2.2);floatRock(7,1,-4,1.1);chain(-4.5,-1,-7.5,6);
+    const hull=block(4.4,1.6,1.6,R+2.2,0,-1.4,texMat('rust',3,1,{color:0x5a4a3a}));hull.rotation.y=.5;
+    keyLight(0xb8c8e8,.5,[-5,10,6]);stormRain([-8,-1,-8,8,9,8]);lightning(5);return 'rust';}
+  if(th==='alley'){setFog(0x141a26,.48);E.scene.fog.near=12;E.scene.fog.far=32;
+    block(N+5,5,.8,0,0,z0-.7,texMat('fstone',N+5,5,{color:0x6a7488}));
+    for(let k=-2;k<=2;k++){const l=new THREE.PointLight(0xffb060,1.1,6);l.position.set(k*2.8,2.4,z0+.2);E.world.add(l);flicker(l,1.1,.3,3+k);fbHaloLike(k*2.8,z0+.6);}
+    [[-R-.9,-2],[R+.9,0],[-R-.9,2.6]].forEach(([x,z])=>block(.25,3.2,.25,x,0,z,new THREE.MeshStandardMaterial({color:0xa88a4a,metalness:.8,roughness:.4})));
+    keyLight(0xb8c4e0,.48,[-5,10,6]);stormRain([-7,0,-7,7,8,7],320);lightning(7);return 'fstone';}
+  if(th==='mine3'){setFog(0x05070c,.6);E.scene.fog.near=10;E.scene.fog.far=26;
+    block(N+5,4.4,.8,0,0,z0-.7,new THREE.MeshStandardMaterial({map:envTex('tx_magnetite',N+5,4.4),roughness:.9}));
+    for(let k=-3;k<=3;k+=2){block(.35,3.6,.35,k*2,0,z0-.1,texMat('rust',1,3,{color:0x5a4a3a}));}
+    [[-3,z0+.4],[3,z0+.4]].forEach(([x,z])=>magnetCan(x,2.4,z,.8));
+    keyLight(0x9ab8e8,.7,[-5,10,6]);dustField(120,[-6,0,-6,6,4,6],0x9ad8ff,.05,.1);return 'rust';}
+  if(th==='tower'){setFog(0x1a2438,.55);E.scene.fog.near=14;E.scene.fog.far=40;
+    for(let k=-2;k<=2;k++)block(.28,6,.28,k*3,-3,z0-.3,new THREE.MeshStandardMaterial({color:0x5a5a64,metalness:.8,roughness:.4}));
+    floatRock(-6,-3,-6,2);floatRock(6,-2.6,-5,1.6);floatRock(0,-4,-9,3);
+    const rod=new THREE.Mesh(new THREE.ConeGeometry(.12,3.4,6),new THREE.MeshStandardMaterial({color:0xc87a40,metalness:.9,roughness:.3}));rod.position.set(0,4.6,z0-.4);E.world.add(rod);
+    keyLight(0xc8d4f0,.55,[-5,10,6]);stormRain([-8,-2,-8,8,10,8],460);lightning(4);return 'rust';}
+  return o(th);};}
+function fbHaloLike(x,z){const m=new THREE.Mesh(new THREE.PlaneGeometry(2.4,2.4).rotateX(-Math.PI/2),new THREE.MeshBasicMaterial({map:haloTex(),color:0xffa850,transparent:true,opacity:.3,blending:THREE.AdditiveBlending,depthWrite:false}));m.position.set(x,.02,z);E.world.add(m);}
+
+/* free-map storm: rain is already there on non-snow maps; add lightning + wind streaks */
+HOOK.after('buildFree',M=>{if(!M.storm)return;lightning(M.storm===2?4:6);
+  const g=new THREE.Group(),mat=new THREE.MeshBasicMaterial({color:0xe8f4ff,transparent:true,opacity:.22,depthWrite:false}),[W0,H0]=M.size;
+  for(let k=0;k<40;k++){const m=new THREE.Mesh(new THREE.PlaneGeometry(1.4+rnd()*1.6,.04),mat);m.rotation.x=-Math.PI/2;m.position.set(rnd()*W0,.4+rnd()*3,rnd()*H0);m.userData.v=4+rnd()*4;g.add(m);}
+  E.world.add(g);E.fxs.push(dt=>{if(!g.parent)return false;g.children.forEach(m=>{m.position.x+=m.userData.v*dt;if(m.position.x>W0+2)m.position.x=-2;});});});
+
+/* ======================= CHAPTER 3 — STORY · BATTLES · FLOW (風暴之環) ======================= */
+Object.assign(SCENES,{
+ /* ---------- 第一幕　飛入風暴 ---------- */
+ c3open:[
+  {loc:'第三章　風暴之環｜走私飛艇「灰鷗號」　離開白銀之顎第九天',set:'airship',cast:{ryan:[-1.2,-.6,1],claire:[1.2,-.6,-1]}},
+  {n:'舷窗外的雲層一直在發亮。不是陽光——是雷。風暴之環的雷暴從來不停，像一圈永遠在打鼓的牆。'},
+  {who:'captain',e:'Neutral',t:'抓穩了，客人。進風暴之環的航道只有一條，偏一度就會被吹去餵雲海。'},
+  {n:'克蕾雅坐在貨箱上擦機械鎧的指節。從要塞出來以後，她跟萊恩說過的話，十根手指數得完。'},
+  {who:'claire',e:'Neutral',t:'……亞伯特的筆記，指的就是這裡？'},
+  {who:'ryan',e:'Default_Cold',t:'駐波刻度一路往西。最後停在風暴的正中央。'},
+  {n:'萊恩取出音叉，在膝蓋上輕輕一敲。'},
+  {n:'——沒有聲音。'},
+  {n:'不是被雷聲蓋過，是真的沒有。音叉在他手裡顫動，卻像被什麼東西掐住了喉嚨。'},
+  {who:'ryan',e:'Fork_Gaze',t:'……響不起來。'},
+  {who:'claire',e:'Hurt',t:'怎麼會？那東西從學院到現在，從來沒失靈過。'},
+  {who:'ryan',e:'Fork_Gaze',t:'有東西在吃聲音。整片風暴……都在吃。'},
+  {n:'一道白光劈在船殼上。燈全滅了。'},
+  {who:'captain',e:'Neutral',t:'右舷著火！抓住任何能抓的東西——我們要迫降了！'},
+ ],
+ dockIn:[
+  {loc:'風暴外緣・飛艇碼頭'},
+  {n:'灰鷗號拖著黑煙，一頭栽進碼頭的纜繩網。木棧道在腳下嘎吱作響，再往外一步，就是翻滾的雲海。'},
+  {who:'claire',e:'Angry_Steam',t:'咳……還活著。萊恩？'},
+  {who:'ryan',e:'Default_Cold',t:'沒事。風很大，靠著牆走。站在空地上，會被吹下去。'},
+  {who:'captain',e:'Neutral',t:'船要修三天。碼頭盡頭有升降籠通往城裡——如果那些鳥讓你們過去的話。'},
+ ],
+ b1pre3:[
+  {n:'纜繩上停著一排灰色的大鳥。牠們的羽毛末端劈啪作響，帶著靜電。'},
+  {who:'captain',e:'Neutral',t:'風暴鳶！牠們聞到船上的燃油了——還有那幾個想趁亂搶貨的混帳！'},
+  {who:'ryan',e:'Default_Cold',t:'克蕾雅，躲到貨箱後面再出手。風會把站在外面的人推出去。'},
+ ],
+ b1post3:[
+  {who:'captain',e:'Neutral',t:'……謝了。說真的，我以為你們是那種只會看地圖的中央官員。'},
+  {who:'captain',e:'Neutral',t:'進城以後小心點。高斯港三個月前開始就怪怪的，我送貨進去，沒有一個人開口跟我講價。'},
+  {who:'claire',e:'Hurt',t:'沒有人……講話？'},
+ ],
+ dockHank:[
+  {who:'docker',e:'Neutral',t:'（碼頭工人比了個手勢，又指指自己的喉嚨，搖搖頭。）'},
+  {n:'他從口袋掏出一張被雨打濕的紙條：「城裡的人都說不出話了。我是三天前才上來的，今天早上也開始啞了。快走。」'},
+  {who:'ryan',e:'Fork_Gaze',t:'三天。……越久越嚴重。'},
+ ],
+ /* ---------- 第二幕　沉默的城 ---------- */
+ gaussIn:[
+  {loc:'高斯港・下城區',set:'gaussvn',cast:{ryan:[-1.2,-.6,1],claire:[1.2,-.6,-1]}},
+  {n:'高斯港懸在雷雲正中。整座城由四條巨大的鐵鏈吊著，鏈子末端是發著藍光的電磁鐵——城就這麼浮著，不靠地，也不靠天。'},
+  {n:'街上有人。賣煤的、修管線的、抱著小孩的。他們張口、比手勢、點頭——'},
+  {n:'可是整條街，除了風聲和雷聲，什麼都聽不到。'},
+  {who:'claire',e:'Hurt',t:'……好像整座城都被按了靜音。'},
+  {n:'萊恩的灰瞳裡，每個人的喉嚨都纏著一圈細細的灰白絲線。絲線全都往上，往城中央那座高聳的避雷塔飄去。'},
+  {who:'ryan',e:'Fork_Gaze',t:'聲音被抽走了。和奧姆鎮的記憶、要塞的情緒一樣——收集起來，送去同一個地方。'},
+  {who:'claire',e:'Neutral',t:'那為什麼我們還能說話？'},
+  {who:'ryan',e:'Fork_Gaze',t:'……不知道。'},
+ ],
+ milaMeet:[
+  {n:'巷口的燈柱下，一個披著黃色雨衣的女孩舉著提燈，瞪大眼睛看著你們。'},
+  {n:'她的提燈一明、一滅、又一明——是信號燈的燈語。'},
+  {who:'mila',e:'Surprised',t:'（燈光：短、短、長）……你們，還能說話？'},
+  {who:'claire',e:'Default_Grin',t:'看得懂燈語嗎？我來翻譯——她問我們是不是還能說話。……對，我們能。妳叫什麼名字？'},
+  {who:'mila',e:'Neutral',t:'（燈光）米、菈。信號燈手。……快躲起來。'},
+  {who:'mila',e:'Hurt',t:'（燈光急促地閃）憲兵——在抓——還有聲音的人。'},
+ ],
+ b2pre3:[
+  {n:'巷子兩頭同時出現了穿灰色大衣的憲兵。他們的臉被黃銅口罩罩住，口罩上的格柵裡沒有呼吸聲。'},
+  {who:'gendarme',e:'Neutral',t:'……（口罩下傳來電流般的嗡鳴）'},
+  {who:'ryan',e:'Default_Cold',t:'米菈，退到我們後面。'},
+ ],
+ b2post3:[
+  {who:'mila',e:'Neutral',t:'（燈光）跟我來。燈塔。安全。'},
+  {n:'米菈領著兩人穿過一條又一條管線小巷，來到城東一座老舊的信號燈塔。'},
+ ],
+ lighthouse:[
+  {loc:'高斯港・信號燈塔'},
+  {n:'燈塔頂層貼滿了手寫的燈語表。米菈在一塊黑板上飛快地寫字，寫完就舉給你們看。'},
+  {who:'mila',e:'Neutral',t:'（黑板）「三個月前，一個戴灰色手套的男人上了避雷塔。他在塔頂裝了一個大線圈。」'},
+  {who:'mila',e:'Hurt',t:'（黑板）「那天晚上打了很大的雷。第二天早上，全城的人都說不出話了。」'},
+  {who:'claire',e:'Angry_Steam',t:'灰色手套……是亞伯特。'},
+  {who:'mila',e:'Neutral',t:'（黑板）「線圈要很多很多電。電是從城底下的磁軌礦坑拉上去的。」'},
+  {who:'ryan',e:'Default_Cold',t:'先切斷礦坑的電源，線圈就沒有足夠的電能吸收聲音。'},
+  {who:'mila',e:'Teary_Fierce',t:'（黑板上的字寫得很用力）「我想再聽一次我媽媽唱歌。」'},
+  {who:'claire',e:'Teary_Fierce',t:'……交給我們。礦坑的入口在哪？'},
+  {who:'mila',e:'Smile',t:'（燈光：長、長）城南。升降籠。'},
+ ],
+ /* ---------- 第三幕　磁軌礦坑 ---------- */
+ mine3In:[
+  {loc:'高斯港地底・磁軌礦坑'},
+  {n:'升降籠一路往下。城的底部是整塊巨大的磁鐵礦，礦坑就挖在這塊浮岩的肚子裡。'},
+  {n:'岩壁上釘著一根根磁柱，泛著藍光。克蕾雅的右臂忽然被往旁邊一扯。'},
+  {who:'claire',e:'Angry_Steam',t:'哇——！我的手自己在動！'},
+  {who:'ryan',e:'Default_Cold',t:'磁柱在吸妳的機械鎧。離它們遠一點，或者讓我把它們反過來。'},
+ ],
+ b3pre3:[
+  {n:'礦道深處，兩團黑色的岩塊站了起來。岩縫間流著藍色的電光，鐵釘和碎鐵像毛刺一樣黏在它們身上。'},
+  {who:'claire',e:'Default_Grin',t:'磁鐵礦做的魔像……牠們吸鐵，我的手也是鐵。這下有意思了。'},
+ ],
+ lab3:[
+  {n:'礦坑最深處，有一間用帆布隔起來的臨時實驗室。桌上散著筆記，旁邊是一排被拆空的電容。'},
+  {n:'萊恩翻開最上面那本。字跡工整得近乎冷酷。'},
+  {n:'「聲音是記憶的振動。人說出的每一個字，都帶著他想起那件事時的頻率。」'},
+  {n:'「只要收集到足夠的共振頻率，就能把一個人『唱』回來。」'},
+  {who:'claire',e:'Hurt',t:'……把一個人唱回來？他想復活誰？'},
+  {who:'ryan',e:'Fork_Gaze',t:'……'},
+  {n:'筆記下面壓著一本礦工名冊。其中一頁被整齊地撕掉了，只在裝訂線旁留下半個字母——「A」。'},
+ ],
+ talk7:[
+  {n:'回程的升降籠很慢。鐵鏈一節一節地響，克蕾雅背靠著籠壁，看著萊恩。'},
+  {who:'claire',e:'Neutral',t:'萊恩。'},
+  {who:'claire',e:'Neutral',t:'你在要塞說過，救我的人不是你。那時候我很生氣。……現在我只想知道，你還有什麼沒告訴我。'},
+  {who:'ryan',e:'Default_Cold',t:'……'},
+  {who:'ryan',e:'Fork_Gaze',t:'我的灰瞳，不是天生的。'},
+  {who:'claire',e:'Hurt',t:'什麼？'},
+  {who:'ryan',e:'Fork_Gaze',t:'事故那天晚上，我的眼睛被零號爐的光燒壞了。醒來的時候，就變成這樣——看得見那些不該看見的東西。'},
+  {who:'ryan',e:'Fork_Gaze',t:'是誰動的手、為什麼，我還不知道。……這是真話。'},
+  {n:'克蕾雅看了他很久。'},
+  {who:'claire',e:'Teary_Fierce',t:'……好。這次我信你。'},
+ ],
+ /* ---------- 第四幕　避雷塔 ---------- */
+ workshop:[
+  {loc:'高斯港・城帆工坊'},
+  {n:'工坊裡掛滿了巨大的帆布翼。一位綁著灰色長辮的老太太正在黑板上畫風洞圖，看到你們進來，用粉筆敲了敲黑板。'},
+  {who:'lewin',e:'Neutral',t:'（黑板）「米菈說了。你們要上塔。用走的會被吹下去。」'},
+  {who:'lewin',e:'Neutral',t:'（黑板上畫出一片帆的剖面，上下兩條箭頭）「上面跑得快，下面跑得慢。快的地方壓力小——帆就被往上推。這是城帆讓整座城保持平衡的原理。」'},
+  {who:'claire',e:'Default_Grin',t:'伯努利定律！學院的流體力學課教過。'},
+  {who:'lewin',e:'Cynical_Smirk',t:'（黑板）「那妳應該知道，把帆繞成一圈，就能在身邊造一圈風牆。」'},
+  {n:'萊恩把礦坑帶回的水和炭粉混進陣式，畫出一圈旋轉的氣流——工坊裡的帆布同時鼓了起來。'},
+  {who:'ryan',e:'Default_Cold',t:'#R19 伯努利・暴風氣旋障壁。陣裡的人不怕風，陣裡的敵人會被捲到半空。'},
+  {n:'窗外又是一道雷。音叉在萊恩手裡猛地一震——依然沒有聲音，但他感覺得到那股共振。'},
+  {who:'ryan',e:'Fork_Gaze',t:'……雷打下來的瞬間，音叉會跟著共振。不是聲音，是電流。'},
+  {who:'ryan',e:'Cynical_Smirk',t:'鐵、電流、磁場——勞倫茲力。把兩塊鐵當成軌道，電流一通，就能把東西射出去。'},
+  {who:'ryan',e:'Default_Cold',t:'#R18 勞倫茲力・電磁軌道砲。站在磁柱旁邊發射，射程更遠。'},
+  {who:'lewin',e:'Smile',t:'（黑板）「去吧。把那個線圈拆了。我想念罵學徒的聲音。」'},
+ ],
+ towerIn:[
+  {loc:'避雷塔'},
+  {n:'避雷塔是整座城最高的地方。塔身外圍是一圈一圈的浮空平台，跟著電磁鐵的脈衝起落。'},
+  {n:'越往上，風越大。雷就在頭頂上翻滾。'},
+  {who:'claire',e:'Angry_Steam',t:'這種地方蓋什麼平台……建築師是想謀殺誰？'},
+  {who:'ryan',e:'Default_Cold',t:'看平台角落的箭頭。綠色往上，橘色往下。算好再跳。'},
+ ],
+ b4pre3:[
+  {n:'平台中段架著兩座小型線圈，電弧在它們之間來回跳動。憲兵守在平台邊緣。'},
+  {who:'ryan',e:'Default_Cold',t:'先拆線圈。它們在幫塔頂充電。'},
+ ],
+ bossPre3:[
+  {n:'塔頂。'},
+  {n:'一座三人高的銅線圈蹲踞在避雷針下，四隻黃銅腳抓著地板。頂端的水晶球裡，有成千上萬條細小的聲紋在亂竄——那是整座城的聲音。'},
+  {who:'claire',e:'Hurt',t:'那些……都是人的聲音？'},
+  {who:'ryan',e:'AshEye_Overload',t:'米菈的媽媽、碼頭的漢克、整條街的人。全都被關在那顆球裡。'},
+  {n:'線圈發出一陣尖銳的嗡鳴，像在笑。'},
+  {who:'ryan',e:'Default_Cold',t:'它每兩回合放一次電，橫掃一整排。站到有避雷針的那一排——雷會被引去打避雷針，它會接地，外殼會短暫失效。'},
+  {who:'claire',e:'Combat_Roar',t:'聽起來很簡單。——上吧！'},
+ ],
+ bossPost3:[
+  {n:'水晶球從內部裂開。'},
+  {n:'不是碎片落下來——是聲音。成千上萬個被關住的字、笑聲、哭聲、名字，像一場倒著下的雨，衝上雷雲，又灑回城裡。'},
+  {n:'底下的街道上，有人喊出了第一聲。然後是第二聲、第十聲、一百聲。'},
+  {who:'claire',e:'Teary_Fierce',t:'……聽到了嗎，萊恩。他們在叫彼此的名字。'},
+  {n:'萊恩握著音叉。它終於響了——清亮的一聲，在雷聲之間傳得很遠。'},
+ ],
+ /* ---------- 第五幕　信 ---------- */
+ c3end:[
+  {loc:'信號燈塔頂｜風暴之環　黎明',set:'lighthouse',cast:{ryan:[-1.2,-.6,1],claire:[1.2,-.6,-1]}},
+  {n:'風暴之環破了一個口。三個月來第一次，陽光照到了高斯港。'},
+  {who:'mila',e:'Teary_Fierce',t:'……謝、謝、你們。'},
+  {who:'mila',e:'Smile',t:'嘿嘿。我的聲音，原來是這樣的啊。好奇怪。'},
+  {who:'claire',e:'Default_Grin',t:'很好聽喔。比燈語好懂多了。'},
+  {n:'米菈跑下樓去找媽媽了。燈塔頂上只剩下兩個人，和一陣終於平靜下來的風。'},
+  {n:'克蕾雅從外套內袋拿出那封信。郵戳是三年前的十一月十日，寄件人只寫了一個字母——「H」。'},
+  {who:'claire',e:'Neutral',t:'我想起來了。這是霍華德教授的字。'},
+  {n:'她拆開信封。'},
+ ],
+ c3letter:[
+  {n:'「克蕾雅：」'},
+  {n:'「如果這封信送到了妳手上，代表我沒來得及當面跟妳說。亞伯特在零號爐上做的實驗，已經超出了學院能控制的範圍。他相信只要收集夠多的『人』，就能把失去的東西找回來。」'},
+  {n:'「我沒辦法阻止他。所以拜託妳一件事——如果我出了什麼事，照顧好萊恩。那孩子什麼都往自己身上扛，從來不說。」'},
+ ],
+ c3letter13:[
+  {n:'「還有一件事。亞伯特是我從第十三號採掘聚落帶出來的。他父親死在一點十三分的那場崩塌裡，那年他九歲。」'},
+  {n:'「他想找回來的，也許從來不是什麼理論。」'},
+ ],
+ c3letterEnd:[
+  {n:'「真正的阻尼棒，我藏在學院城地下的舊溫室。只有你們兩個打得開。——H」'},
+  {who:'claire',e:'Cry',t:'……照顧好萊恩。教授，你自己才是什麼都往身上扛的那個人。'},
+  {who:'ryan',e:'Fork_Gaze',t:'學院城的舊溫室……'},
+  {who:'ryan',e:'Default_Cold',t:'回去吧。回到一切開始的地方。'},
+ ],
+});
+
+/* ---------------- battles ---------------- */
+function battleC3real(id){
+  const done=(flag,post,after)=>()=>{P.flags[flag]=1;if(after)after();else{resumeMap();if(post)setTimeout(()=>talkScene(post),300);}};
+  const C={
+   b1:{theme:'dock',N:7,title:'飛艇碼頭・風暴鳶來襲',wind:{seq:[[1,0],[0,1],[-1,0],[0,-1]],every:3,edge:'fall'},
+     enemies:[['stormkite',1,0],['stormkite',3,1],['stormkite',5,0],['smuggler',6,2]],
+     res:[['wall',1,3],['wall',5,4],['wall',3,5],['scrap',0,5],['oil',6,6],['si',2,2]],colTex:'rust',onWin:done('b1','b1post3'),
+     guide:'白色氣流是風向。每個敵方回合結束，站在空地上的人會順風被吹 1 格；貨箱（牆）的正後方是「風影格」，吹不動。把敵人吹出平台邊緣就會直接墜落。風暴鳶乘風飛行，不受影響。'},
+   b2:{theme:'alley',N:7,title:'下城區巷戰',
+     enemies:[['gendarme',1,0],['gendarme',5,0],['gendarme',3,1],['patroldog',0,2],['patroldog',6,2]],hgt:[[0,4,1],[6,4,1]],
+     res:[['wall',2,3],['wall',4,3],['scrap',0,6],['al',6,6],['oil',3,4],['si',1,5]],colTex:'fstone',onWin:done('b2',null,()=>{resumeMap();setTimeout(()=>playScene(SCENES.b2post3.concat(SCENES.lighthouse),()=>{P.flags.lh=1;enterMap('gauss',{pos:[34.6,15.6]});setTimeout(()=>toast('城南的礦坑升降籠可以搭了。'),800);},{keep:true,actors:exActors()}),300);}),
+     guide:'窄巷裡沒有強風，但兩側都是敵人。用石牆和高台卡住巡邏犬的路線，讓憲兵一個一個過來。'},
+   b3:{theme:'mine3',N:7,title:'磁軌礦坑・磁鐵礦魔像',
+     enemies:[['golem',1,1],['golem',5,1],['gendarme',3,0],['patroldog',6,0]],
+     res:[['pylon',3,2],['pylon',1,4],['pylon',5,4],['scrap',0,6],['oil',6,6],['si',3,5],['si',0,3]],colTex:'rust',onWin:done('b3',null,()=>{resumeMap();setTimeout(()=>talkScene('lab3',()=>{P.flags.lab=1;c3Clue(4);}),300);}),
+     guide:'藍色光環是磁柱：每回合開始，2 格內的金屬單位（魔像、憲兵、克蕾雅的機械臂）會被吸過去 1 格。萊恩站在磁柱旁可以用「共振反轉」改成斥力 2 回合。魔像太重，風吹不動，但磁力拉得動。'},
+   b4:{theme:'tower',N:7,title:'避雷塔中段',wind:{seq:[[0,-1],[-1,0],[0,1],[1,0]],every:3,edge:'fall'},
+     lift:[[1,2,0],[2,2,1],[4,2,2],[5,2,3],[3,4,1],[0,5,2],[6,5,0]],
+     enemies:[['minicoil',1,0],['minicoil',5,0],['gendarme',3,1],['gendarme',3,3]],
+     res:[['wall',3,0],['scrap',0,6],['oil',6,6],['si',3,6],['al',6,3]],colTex:'rust',onWin:done('b4',null),
+     guide:'浮空平台在 0、1、2 層之間升降，角落的箭頭是下一回合的方向。站在高處攻擊傷害 +25%。這裡同時有強風——#R19 的氣旋障壁能讓全隊不受風影響，#R18 能把敵人一路轟下平台。'},
+   boss:{theme:'tower',N:9,bigBoss:true,title:'避雷塔頂・雷暴線圈',wind:{seq:[[1,0],[-1,0]],every:4,edge:'wall'},
+     lift:[[0,6,0],[8,6,2]],
+     enemies:[['coil',4,1],['minicoil',1,2],['minicoil',7,2]],
+     res:[['rod',0,4],['rod',8,5],['rod',4,6],['si',1,7],['si',7,7],['scrap',2,6],['scrap',6,6],['oil',0,8],['oil',8,8],['al',4,8]],colTex:'rust',
+     onWin:()=>{P.flags.boss3=1;resumeMap();setTimeout(()=>playScene(SCENES.bossPost3,c3Ending,{keep:true,actors:exActors()}),300);},
+     guide:'雷暴線圈每兩回合放一次電，橫掃一整排。紅銅色的是避雷針：站在有避雷針的那一排，雷會被引過去，線圈會「接地」1 回合——外殼失效，受到的傷害 +50%，#R18 加倍。小線圈會替它充電，先拆掉比較輕鬆。'},
+  };
+  return Object.assign({ch3:true,explore:false},C[id]);
+}
+HOOK.after('startBattle',cfg=>{if(cfg.bigBoss&&cfg.ch3)banner('第三章',cfg.title);});
+
+/* ---------------- chapter flow ---------------- */
+function enterChapter3(){CHAPTER=3;P.flags.ch3=1;}
+{const o=enterMap;enterMap=function(id,opts={}){if(MAPS[id]&&MAPS[id].ch===3)enterChapter3();return o(id,opts);};}
+function ch3Equip(ids){ids.forEach(id=>{if(!save.equip.includes(id)){if(save.equip.length>=4)save.equip.pop();save.equip.unshift(id);}});persist();}
+/* R18/R19 belong to chapter 3 but stay sealed until the workshop scene */
+{const o=canCast;canCast=function(r){if((r.id==='R18'&&!P.flags.r18)||(r.id==='R19'&&!P.flags.r19))return false;return o(r);};}
+function startCh3(){
+  const snap=ch3Carry();resetParty();
+  if(snap&&snap.P&&snap.P.lv){Object.assign(P,JSON.parse(JSON.stringify(snap.P)));P.flags=Object.assign({},snap.P.flags||{});}
+  else{P.lv={ryan:{lv:9,exp:0},claire:{lv:9,exp:0}};P.owned=['amulet','bracer','fork','heatsink'];P.gear={ryan:'fork',claire:'heatsink'};P.items={bandage:3,coffee:2,capsule:1};P.stash={Fe:2,C:1,H2O:1};P.money=P.money||120;}
+  ['dock','gauss','mine3','tower'].forEach(m=>{Object.keys(P.flags).forEach(k=>{if(k.startsWith('ev_'+m+'_')||k===m+'_in')delete P.flags[k];});});
+  ['b1','b2','b3','b4','boss3','mila','lh','lab','talk7','r18','r19','c3_13','lens','blueprint'].forEach(k=>delete P.flags[k]);
+  Object.keys(P.flags).forEach(k=>{if(k.startsWith('c3')||k.startsWith('q_c3'))delete P.flags[k];});
+  syncMax();healParty(1);enterChapter3();
+  if(typeof SLOT!=='undefined'&&SLOT)writeSlot(SLOT,{v:2,stage:'ch3start',map:null,pos:null,t:Date.now(),ch:3,P:snapP()});
+  playScene(SCENES.c3open,()=>{enterMap('dock');});}
+function c3Ending(){enterMap('gauss',{pos:[22,20]});setTimeout(()=>{
+  const list=SCENES.c3end.concat(SCENES.c3letter,P.flags.c3_13?SCENES.c3letter13:[],SCENES.c3letterEnd);
+  playScene(list,chapter3End);},300);}
+function chapter3End(){
+  save.cleared3=true;persist();if(typeof SLOT!=='undefined'&&SLOT)writeSlot(SLOT,{v:2,stage:'cleared3',map:null,pos:null,t:Date.now(),ch:3,P:snapP()});
+  clearRun();show('title');
+  $('ov').innerHTML=`<div class="overlay"><div class="card frame"><span class="t-eyebrow">CHAPTER 3 COMPLETE</span><h3>第三章　完</h3>
+   <p>高斯港的聲音回來了。克蕾雅讀完了霍華德教授的信${P.flags.c3_13?'，也知道了亞伯特的來處':''}。下一站，是一切開始的地方——中央學院城。</p>
+   <p class="note">第四章（中央學院城・舊溫室）製作中。</p>
+   <div class="row"><button class="btn primary" id="c3-t">回到標題</button><button class="btn" id="c3-b">再戰雷暴線圈</button></div></div></div>`;
+  $('c3-t').onclick=()=>{$('ov').innerHTML='';};
+  $('c3-b').onclick=()=>{$('ov').innerHTML='';enterChapter3();P.flags.r18=P.flags.r19=1;const c=battleC3real('boss');c.onWin=()=>chapter3End();openBase(()=>startBattle(c),'出擊：避雷塔頂');};}
+/* chapter 2 end → straight into chapter 3 */
+{const o=chapter2End;chapter2End=function(...a){const r=o(...a);const card=document.querySelector('#ov .card');if(!card)return r;
+  const note=card.querySelector('.note');if(note)note.textContent='你的等級、飾品、道具和劇情進度會帶進第三章。';
+  const row=card.querySelector('.row'),b=document.createElement('button');b.className='btn primary';b.id='c2-3';b.textContent='進入第三章';row.prepend(b);
+  const t=$('c2-t');if(t)t.classList.remove('primary');b.onclick=()=>{$('ov').innerHTML='';startCh3();};return r;};}
+/* save slots: a slot that finished chapter 2 (or sits at chapter 3's start) continues into chapter 3 */
+{const o=loadSlot;loadSlot=function(n){const d=readSlot(n);
+  if(d&&(d.stage==='cleared2'||d.stage==='ch3start'||d.stage==='cleared3')){SLOT=n;try{localStorage.setItem(CH3_KEY,JSON.stringify({v:3,t:Date.now(),P:d.P}));}catch(e){}
+    if(d.stage==='cleared3')setTimeout(()=>toast('這個存檔已經通關第三章。從第三章開頭重新遊玩（等級與道具保留）。'),400);startCh3();return;}
+  return o(n);};}
+/* title menu: 第三章 under 第二章 (the playtest entry stays below it) */
+{const ch2=$('m-ch2');if(ch2){const b=document.createElement('button');b.className='mbtn';b.id='m-ch3';b.innerHTML='第三章　風暴之環 <small>從第三章開始・高斯港</small>';
+  ch2.after(b);b.onclick=()=>typeof slotMenu==='function'?slotMenu('new',()=>startCh3()):startCh3();}}
+
+/* ======================= CHAPTER 3 — FREE MAPS: 飛艇碼頭 · 高斯港下城區 · 磁軌礦坑 · 避雷塔 ======================= */
+Object.assign(PROP_AR,{pr_signal:.42,pr_pylon:.61,pr_rod:.45,pr_bollard:1.44,pr_chain:1.86,pr_railcart:1.35});
+Object.assign(ENV_AR,{fp_gauss:.559});
+const c3m=(n,rx,ry,o={})=>envMat(n,rx,ry,Object.assign({emissiveIntensity:0},o));
+const c3col=(rx,ry,col=0x6a7488)=>mat2('brick2',rx,ry,{color:col});
+/* narrow stone townhouse with the painted facade on its door side and a flat tin roof */
+function gaussHouse(x0,z0,x1,z1,h,door='s',lit=true){const m=fbWall(x0,z0,x1,z1,h,c3col((x1-x0)/2,h/2));const occ=FB.occ[FB.occ.length-1];
+  const roof=new THREE.Mesh(new THREE.BoxGeometry(x1-x0+.4,.25,z1-z0+.4),new THREE.MeshStandardMaterial({color:0x3a4250,metalness:.5,roughness:.6}));roof.position.set((x0+x1)/2,h+.12,(z0+z1)/2);E.world.add(roof);occ.meshes.push(roof);
+  const w=(door==='s'||door==='n')?x1-x0:z1-z0,pl=new THREE.Mesh(new THREE.PlaneGeometry(w,h),facadeMat('fp_gauss',w,h));
+  if(door==='s')pl.position.set((x0+x1)/2,h/2,z1+.03);if(door==='n'){pl.position.set((x0+x1)/2,h/2,z0-.03);pl.rotation.y=Math.PI;}
+  if(door==='e'){pl.position.set(x1+.03,h/2,(z0+z1)/2);pl.rotation.y=Math.PI/2;}if(door==='w'){pl.position.set(x0-.03,h/2,(z0+z1)/2);pl.rotation.y=-Math.PI/2;}
+  E.world.add(pl);occ.meshes.push(pl);
+  // brass pipes up the corners
+  [[x0+.15,z1+.15],[x1-.15,z1+.15]].forEach(([x,z])=>{const p=new THREE.Mesh(new THREE.CylinderGeometry(.08,.08,h+.6,6),new THREE.MeshStandardMaterial({color:0xa88a4a,metalness:.8,roughness:.4}));p.position.set(x,(h+.6)/2,door==='s'?z:z0-.15);E.world.add(p);});
+  if(lit){const c=door==='s'?[(x0+x1)/2,z1+.9]:door==='n'?[(x0+x1)/2,z0-.9]:door==='e'?[x1+.9,(z0+z1)/2]:[x0-.9,(z0+z1)/2];fbHalo(c[0],c[1],2.2,0xffb060,.28);}return m;}
+function c3Rail(x0,z0,x1,z1){const L=Math.hypot(x1-x0,z1-z0),a=Math.atan2(z1-z0,x1-x0);[-.35,.35].forEach(o=>{const r=new THREE.Mesh(new THREE.BoxGeometry(L,.06,.06),new THREE.MeshStandardMaterial({color:0x6a6a74,metalness:.8}));
+  r.position.set((x0+x1)/2-Math.sin(a)*o,.04,(z0+z1)/2+Math.cos(a)*o);r.rotation.y=-a;E.world.add(r);});
+  for(let k=0;k<L;k+=.8){const t=new THREE.Mesh(new THREE.BoxGeometry(.16,.05,1),new THREE.MeshStandardMaterial({color:0x4a3a2a}));t.position.set(x0+Math.cos(a)*k,.02,z0+Math.sin(a)*k);t.rotation.y=-a;E.world.add(t);}}
+function c3Railing(x0,z0,x1,z1){const L=Math.hypot(x1-x0,z1-z0),a=Math.atan2(z1-z0,x1-x0),mat=new THREE.MeshStandardMaterial({color:0x8a7040,metalness:.7,roughness:.5});
+  const bar=new THREE.Mesh(new THREE.BoxGeometry(L,.06,.06),mat);bar.position.set((x0+x1)/2,.95,(z0+z1)/2);bar.rotation.y=-a;E.world.add(bar);
+  for(let k=0;k<=L;k+=1.2){const p=new THREE.Mesh(new THREE.BoxGeometry(.07,.95,.07),mat);p.position.set(x0+Math.cos(a)*k,.47,z0+Math.sin(a)*k);E.world.add(p);}
+  FB.box.push([Math.min(x0,x1)-.12,Math.min(z0,z1)-.12,Math.max(x0,x1)+.12,Math.max(z0,z1)+.12]);}
+const c3Clouds=(W0,H0,y=-3)=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(W0+60,H0+60),new THREE.MeshStandardMaterial({color:0x5a6680,roughness:1,transparent:true,opacity:.92}));m.rotation.x=-Math.PI/2;m.position.set(W0/2,y,H0/2);E.world.add(m);
+  for(let k=0;k<26;k++){const s=new THREE.Mesh(new THREE.SphereGeometry(2+rnd()*3,8,6),new THREE.MeshStandardMaterial({color:0x7a86a0,roughness:1,transparent:true,opacity:.7}));s.scale.y=.4;s.position.set(rnd()*(W0+30)-15,y+.4,rnd()*(H0+30)-15);
+    if(s.position.x>-1&&s.position.x<W0+1&&s.position.z>-1&&s.position.z<H0+1)s.position.x+=W0+6;E.world.add(s);}};
+
+/* ---------------- 飛艇碼頭 ---------------- */
+const C3DK={W:34,H:24};
+MAPS.dock={name:'風暴外緣・飛艇碼頭',theme:'dock',free:1,ch:3,storm:1,build:buildDock,size:[C3DK.W,C3DK.H],grid:Array(C3DK.H).fill('.'.repeat(C3DK.W)),enc:false,table:[['stormkite']],
+  start:[5,19],rest:[6,15.6],sunCol:0xb8c8e8,sunInt:.36,
+  obj:()=>!P.flags.b1?'趕走碼頭上的風暴鳶':'碼頭東北角的升降籠，通往高斯港',
+  zones:[{r:[0,12,14,24],name:'迫降區・灰鷗號'},{r:[14,8,34,24],name:'貨運棧道',danger:1},{r:[18,0,34,8],name:'升降籠'}],
+  mmFloor:[[0,0,34,24,'#8a8478'],[18,0,34,8,'#9a9488']],
+  colliders:()=>({box:(X.colCache||{box:[]}).box.slice(),circ:(X.colCache||{circ:[]}).circ.slice()}),
+  events:[
+   {id:'captain',kind:'npc',who:'captain',at:[8.6,16.4],label:'灰鷗號的船長',fn:()=>say([{who:'captain',e:'Neutral',t:P.flags.b1?'船三天內修好。等你們辦完事，我再載你們出去——前提是你們還活著。':'先別管船了！那些鳥要把燃油罐啄破了！'}])},
+   {id:'hank',kind:'npc',who:'docker',at:[22.6,14.2],label:'沉默的碼頭工人',talk:'dockHank',once:true},
+   {id:'b1',kind:'auto',at:[16,15],r:3,cond:()=>!P.flags.b1,battle:()=>battleC3real('b1'),pre:'b1pre3'},
+   {id:'reg',kind:'sign',at:[27.4,5.2],label:'港務局登記簿',fn:()=>c3Clue(1)},
+   {id:'lensD',kind:'sign',at:[3.2,4],label:'纜繩堆裡閃著光',fn:()=>c3Lens('D')},
+   {id:'stoveD',kind:'stove',at:[6,15.6],label:'灰鷗號的鍋爐（休息・整備）',rest:true},
+   {id:'chD1',kind:'chest',at:[12.6,21.6],label:'掉出貨艙的木箱',loot:{Fe:2,C:1},items:['bandage']},
+   {id:'chD2',kind:'chest',at:[31.4,12.6],label:'棧道盡頭的工具箱',loot:{Al:1,H2O:2},items:['coffee']},
+   {id:'lift',kind:'exit',at:[26,2],r:1.4,label:'升降籠・往高斯港',cond:()=>P.flags.b1,deny:'風暴鳶還在升降籠附近盤旋。',go:()=>{if(!P.flags.gauss_in){P.flags.gauss_in=1;playScene(SCENES.gaussIn,()=>enterMap('gauss'));}else enterMap('gauss');}},
+  ]};
+function buildDock(){
+  setFog(0x1e2636,.46);E.scene.fog.near=14;E.scene.fog.far=40;const W0=C3DK.W,H0=C3DK.H;
+  c3Clouds(W0,H0,-4);envFloor(0,0,W0,H0,'tx_pier',3,0);fbBound(W0,H0);
+  // edges: railings on the cloud side
+  c3Railing(0,H0-.2,W0,H0-.2);c3Railing(W0-.2,8,W0-.2,H0);c3Railing(0,0,0,H0);
+  // the crashed airship
+  const hull=new THREE.Mesh(new THREE.CylinderGeometry(2.2,1.6,9,12,1,false),c3m('tx_pier',3,2,{color:0x8a6a4a}));hull.rotation.z=Math.PI/2;hull.rotation.y=.25;hull.position.set(6,1.6,10);hull.castShadow=true;E.world.add(hull);
+  FB.box.push([1.6,8.2,10.6,11.8]);FB.occ.push({meshes:[hull],box:new THREE.Box3(new THREE.Vector3(1.4,0,8),new THREE.Vector3(10.8,3.8,12)),f:1});
+  const bag=new THREE.Mesh(new THREE.SphereGeometry(3.2,14,10),new THREE.MeshStandardMaterial({color:0x8a8270,roughness:.95}));bag.scale.set(1.6,.7,.8);bag.position.set(6.4,5.2,9.6);bag.rotation.y=.25;E.world.add(bag);
+  steamPlume(9.6,2.8,10.6,12,0x3a3a40);
+  // cargo crates as wind shelters
+  [[15,11],[16.1,11],[19,17.4],[24,9.6],[25.1,9.6],[29,16],[13,19.2]].forEach(([x,z])=>fbBox(x,z,1,1,1,mat2('plank',.5,.5)));
+  [[20,6],[30,6],[12,4],[4,22]].forEach(([x,z])=>fbProp('pr_bollard',x,z,.9,{r:.4}));
+  fbProp('pr_chain',17,21.6,.7);fbProp('pr_chain',30.6,20.4,.7);
+  [[14,8],[22,20],[33,10],[10,14]].forEach(([x,z])=>fbProp('pr_signal',x,z,2.6,{r:.25,glow:.9}));
+  // lift cage
+  const cage=new THREE.Group();for(const [x,z] of [[24.6,.6],[27.4,.6],[24.6,3.4],[27.4,3.4]]){const p=new THREE.Mesh(new THREE.BoxGeometry(.12,4.2,.12),new THREE.MeshStandardMaterial({color:0xa88a4a,metalness:.8}));p.position.set(x,2.1,z);cage.add(p);}
+  const top=new THREE.Mesh(new THREE.BoxGeometry(3.2,.2,3.2),new THREE.MeshStandardMaterial({color:0x5a4a30,metalness:.6}));top.position.set(26,4.2,2);cage.add(top);E.world.add(cage);chain(26,4.3,2,6);fbLamp(26,3.6,3.8);
+  // floating rocks & the city in the distance
+  floatRock(-6,1,-4,2.4);floatRock(40,0,8,3);floatRock(16,-1,-8,2);chain(-6,2,-4,8);
+  const city=new THREE.Group();for(let k=0;k<9;k++){const b=new THREE.Mesh(new THREE.BoxGeometry(1.6+rnd()*2,3+rnd()*7,1.6+rnd()*2),new THREE.MeshStandardMaterial({color:0x2a3040,emissive:0x0a0c12}));b.position.set(k*2.2-9,2+rnd()*2,0);city.add(b);}
+  city.position.set(W0/2+4,6,-16);E.world.add(city);
+  const cl=new THREE.PointLight(0xffc890,1.1,10);cl.position.set(8,2.6,14);E.world.add(cl);flicker(cl,1.1,.3,3);
+}
+
+/* ---------------- 高斯港・下城區 ---------------- */
+const C3GA={W:44,H:34};
+MAPS.gauss={name:'高斯港・下城區',theme:'gauss',free:1,ch:3,storm:1,build:buildGauss,size:[C3GA.W,C3GA.H],grid:Array(C3GA.H).fill('.'.repeat(C3GA.W)),enc:false,table:[['gendarme']],
+  start:[3,22],rest:[22,17.6],sunCol:0xb0c0e0,sunInt:.46,
+  obj:()=>!P.flags.mila?'找一個還能溝通的人（廣場附近）':!P.flags.lh?'跟著米菈去信號燈塔':!P.flags.b3?'城南的升降籠下到磁軌礦坑':!P.flags.r19?'到城西的城帆工坊找蕾溫':'從城北的塔門登上避雷塔',
+  zones:[{r:[0,16,10,28],name:'碼頭升降口'},{r:[14,12,30,24],name:'磁鐵廣場'},{r:[0,0,14,16],name:'城帆工坊'},{r:[32,4,44,22],name:'信號燈塔'},{r:[14,24,30,34],name:'礦坑升降籠'},{r:[14,0,32,10],name:'避雷塔門'},{r:[30,22,44,34],name:'舊礦工街'}],
+  mmFloor:[[0,0,44,34,'#7a8090'],[14,12,30,24,'#8a90a0']],
+  colliders:()=>({box:(X.colCache||{box:[]}).box.slice(),circ:(X.colCache||{circ:[]}).circ.slice()}),
+  events:[
+   {id:'milaA',kind:'npc',who:'mila',at:[24.6,21.4],label:'舉著提燈的女孩',hideIf:()=>P.flags.mila,fn:()=>{playScene(SCENES.milaMeet.concat(SCENES.b2pre3),()=>{P.flags.mila=1;fx('flash');setTimeout(()=>startBattle(battleC3real('b2')),500);},{keep:true,actors:exActors()});}},
+   {id:'milaB',kind:'npc',who:'mila',at:[36.4,14.6],label:'米菈',hideIf:()=>!P.flags.lh,fn:()=>c3MilaTalk()},
+   {id:'lewin',kind:'npc',who:'lewin',at:[8.4,11.2],label:'城帆工坊的老工程師',fn:()=>c3LewinTalk()},
+   {id:'bato',kind:'npc',who:'oldminer',at:[36,28.6],label:'握著懷錶的老礦工',fn:()=>c3Clue(2)},
+   {id:'catG',kind:'sign',at:[29.4,30.6],label:'屋簷下的黑貓',fn:()=>c3Cat()},
+   {id:'lensG',kind:'sign',at:[41.6,31.4],label:'排水溝裡的黃銅片',fn:()=>c3Lens('G')},
+   {id:'board3',kind:'sign',at:[20.4,23.6],label:'廣場佈告欄',fn:()=>say([{n:'佈告欄上貼滿了手寫的紙條，沒有一張是印刷的。'},{n:'「尋人：我女兒不說話了，但她會點頭。看到穿紅鞋的小女孩請帶她回麵包店。」'},{n:'「本店改用手寫點單。請指著想要的麵包。——老漢斯麵包」'},{who:'claire',e:'Hurt',t:'……整座城都在努力假裝一切正常。'}])},
+   {id:'stoveG',kind:'stove',at:[22,17.6],label:'磁鐵廣場的熱水爐（休息・整備）',rest:true},
+   {id:'chG1',kind:'chest',at:[2.6,2.6],label:'工坊後院的零件箱',loot:{Fe:2,Al:1},items:['capsule']},
+   {id:'chG2',kind:'chest',at:[42,24.6],label:'舊礦工街的木箱',loot:{C:2,Si:2},items:['bandage']},
+   {id:'toDock',kind:'exit',at:[1,22],r:1.2,label:'往碼頭',cond:()=>true,go:()=>enterMap('dock',{pos:[26,4.6]})},
+   {id:'toMine',kind:'exit',at:[22,32.6],r:1.4,label:'礦坑升降籠',cond:()=>P.flags.lh,deny:'升降籠鎖著。先弄清楚這座城發生了什麼事。',go:()=>enterMap('mine3')},
+   {id:'toTower',kind:'exit',at:[23,1.2],r:1.4,label:'避雷塔門',cond:()=>P.flags.r19,deny:'塔門外的風大得站不住。去城帆工坊問問有沒有辦法。',go:()=>enterMap('tower')},
+  ]};
+function buildGauss(){
+  setFog(0x1a2232,.46);E.scene.fog.near=15;E.scene.fog.far=42;const W0=C3GA.W,H0=C3GA.H;
+  c3Clouds(W0,H0,-5);envFloor(0,0,W0,H0,'oh_cobble',3.4,0,{color:0x8a92a4});envFloor(14,12,30,24,'tx_brassdeck',3,.004,{color:0x9a9aa4});fbBound(W0,H0);
+  // central magnet plaza: giant electromagnet hanging on chains
+  const can=magnetCan(22,6.5,18,2.2);chain(22,8,18,12);[[19,15],[25,15],[19,21],[25,21]].forEach(([x,z])=>fbPipe(22,18,x,z,.3,.12,0xa88a4a));
+  fbHalo(22,18,6,0x6ab8ff,.18);FB.circ.push([22,18,1.2]);
+  // west: sail workshop (big shed with sails)
+  fbWall(2,4,14,5,4.2,c3col(6,2));fbWall(2,5,2.8,14,4.2,c3col(4,2));const shed=roofPrism(13,10.6,1.6,new THREE.MeshStandardMaterial({color:0x5a5040,roughness:.9}));shed.position.set(8,4.2,9.5);E.world.add(shed);
+  FB.occ.push({meshes:[shed],box:new THREE.Box3(new THREE.Vector3(1.5,0,3.5),new THREE.Vector3(14.5,5.8,15)),f:1});
+  for(let k=0;k<3;k++){const s=new THREE.Mesh(new THREE.PlaneGeometry(2.6,3.4),new THREE.MeshStandardMaterial({color:0xe8dcc0,side:THREE.DoubleSide,roughness:.9}));s.position.set(5+k*3,2.6,7);s.rotation.y=.2;E.world.add(s);
+    const ph=k;E.fxs.push((dt,t)=>{if(!s.parent)return false;s.rotation.y=.2+Math.sin(t*1.4+ph)*.18;});}
+  // north: tower gate + base of the lightning tower
+  const tw=new THREE.Mesh(new THREE.CylinderGeometry(2.4,3.2,22,10),new THREE.MeshStandardMaterial({color:0x4a5060,metalness:.6,roughness:.5}));tw.position.set(23,11,-4);E.world.add(tw);
+  fbWall(14,0,20,1.2,3.4,c3col(3,1.6));fbWall(26,0,32,1.2,3.4,c3col(3,1.6));[[20.4,.6],[25.6,.6]].forEach(([x,z])=>{fbBox(x,z,1,1,4.4,mat2('brick2',1,2,{color:0x5a6072}));fbLamp(x,z+.8,4.6,0x9ad8ff);});
+  // east: the signal lighthouse
+  const lh=new THREE.Mesh(new THREE.CylinderGeometry(1.8,2.2,10,12),c3col(4,5,0x8a8478));lh.position.set(38,5,10);lh.castShadow=true;E.world.add(lh);FB.circ.push([38,10,2.4]);
+  const lamp=new THREE.Mesh(new THREE.CylinderGeometry(1.2,1.2,1.4,10),new THREE.MeshBasicMaterial({color:0xffd27a}));lamp.position.set(38,10.6,10);E.world.add(lamp);
+  const ll=new THREE.PointLight(0xffc870,1.6,14);ll.position.set(38,10.6,10);E.world.add(ll);E.fxs.push((dt,t)=>{if(!ll.parent)return false;const on=Math.sin(t*2.2)>0||Math.sin(t*.7)>.6;ll.intensity=on?1.8:.2;lamp.material.color.setHex(on?0xffd27a:0x5a4a2a);});
+  FB.occ.push({meshes:[lh],box:new THREE.Box3(new THREE.Vector3(35.6,0,7.6),new THREE.Vector3(40.4,10,12.4)),f:1});
+  // houses
+  gaussHouse(14,4,19,9.4,4.6,'s');gaussHouse(27,4,32,9.4,4.4,'s');gaussHouse(32,14,37,20,4.2,'w');gaussHouse(10,18,14,24,4.4,'e');
+  gaussHouse(31,26,36,31,4,'n');gaussHouse(37,25,43,30,4.6,'w');gaussHouse(4,26,10,32,4.2,'n');gaussHouse(14,27,19.6,32,4.4,'e');gaussHouse(24.4,27,30,32,4.2,'w');
+  // mine lift (south) + rails
+  const cage=new THREE.Group();for(const [x,z] of [[20.6,31],[23.4,31],[20.6,33.6],[23.4,33.6]]){const p=new THREE.Mesh(new THREE.BoxGeometry(.12,3.6,.12),new THREE.MeshStandardMaterial({color:0xa88a4a,metalness:.8}));p.position.set(x,1.8,z);cage.add(p);}E.world.add(cage);fbLamp(22,32.2,3.2,0x9ad8ff);
+  c3Rail(22,24,22,31);fbProp('pr_railcart',24.4,26,1.1,{r:.6});
+  // props
+  [[16,13],[28,13],[16,23],[28,23],[6,20],[40,20],[33,24]].forEach(([x,z])=>fbProp('pr_signal',x,z,2.6,{r:.25,glow:.7}));
+  [[12.6,15],[30.4,12.6],[41,4]].forEach(([x,z])=>fbBarrel(x,z));fbProp('pr_bollard',3,24.6,.9,{r:.4});
+  [[8,23],[38.6,22.6],[18,10.6]].forEach(([x,z])=>fbBox(x,z,1,1,1,mat2('plank',.5,.5)));
+}
+
+/* ---------------- 磁軌礦坑 ---------------- */
+const C3MN={W:36,H:28};
+MAPS.mine3={name:'磁軌礦坑',theme:'mine3',free:1,ch:3,build:buildMine3,size:[C3MN.W,C3MN.H],grid:Array(C3MN.H).fill('.'.repeat(C3MN.W)),enc:false,table:[['golem']],
+  start:[18,25],rest:[30,23],sunCol:0x8aa8e0,sunInt:.34,
+  obj:()=>!P.flags.b3?'往礦坑深處找線圈的電源':!P.flags.lab?'調查礦坑最深處':'搭升降籠回到城裡',
+  zones:[{r:[12,20,24,28],name:'升降籠底站'},{r:[8,8,28,20],name:'主礦道',danger:1},{r:[0,0,12,12],name:'舊坑道'},{r:[24,0,36,12],name:'帆布實驗室'}],
+  mmFloor:[[0,0,36,28,'#3a4050'],[8,8,28,20,'#4a5264']],
+  colliders:()=>({box:(X.colCache||{box:[]}).box.slice(),circ:(X.colCache||{circ:[]}).circ.slice()}),
+  events:[
+   {id:'b3',kind:'auto',at:[18,14],r:3,cond:()=>!P.flags.b3,battle:()=>battleC3real('b3'),pre:'b3pre3'},
+   {id:'oath',kind:'sign',at:[4.4,4],label:'坑壁上的刻字',fn:()=>c3Clue(3)},
+   {id:'lensM',kind:'sign',at:[10.4,22.4],label:'礦車底下有東西在反光',fn:()=>c3Lens('M')},
+   {id:'bp',kind:'sign',at:[33,9.6],label:'被風吹到角落的捲軸',fn:()=>c3Blueprint()},
+   {id:'stoveM',kind:'stove',at:[30,23],label:'值班室的煤爐（休息・整備）',rest:true},
+   {id:'chM1',kind:'chest',at:[2.6,14.6],label:'廢棄的炸藥箱',loot:{C:2,Si:1},items:['coffee']},
+   {id:'chM2',kind:'chest',at:[34,26],label:'值班室的鐵櫃',loot:{Fe:3},items:['bandage']},
+   {id:'up',kind:'exit',at:[18,27],r:1.4,label:'升降籠・回到城裡',cond:()=>P.flags.lab,deny:'電源還沒切斷。往深處走。',
+     go:()=>{const go=()=>enterMap('gauss',{pos:[22,29.6]});if(!P.flags.talk7){P.flags.talk7=1;playScene(SCENES.talk7,go,{keep:true,actors:exActors()});}else go();}},
+  ]};
+function buildMine3(){
+  setFog(0x05070c,.4);E.scene.fog.near=12;E.scene.fog.far=34;const W0=C3MN.W,H0=C3MN.H;
+  envFloor(-6,-6,W0+6,H0+6,'tx_magnetite',4,-.02,{color:0x6a7488});fbBound(W0,H0);
+  const rockM=(rx,ry)=>c3m('tx_magnetite',rx,ry,{color:0x9aa4b8});
+  // cave walls around + rock pillars
+  fbWall(-1,-1,W0+1,0,5,rockM(12,2),{occ:false});fbWall(-1,0,0,H0,5,rockM(10,2),{occ:false});fbWall(W0,0,W0+1,H0,5,rockM(10,2),{occ:false});
+  fbWall(0,H0,12,H0+1,5,rockM(4,2),{occ:false});fbWall(24,H0,W0,H0+1,5,rockM(4,2),{occ:false});
+  [[6,18,4,5],[30,16,4,4],[12,4,3,3],[24,4,2,3]].forEach(([x,z,w,d])=>fbWall(x-w/2,z-d/2,x+w/2,z+d/2,4.6,rockM(w/2,2)));
+  // rails, carts, pylons, crystal lamps
+  c3Rail(18,26,18,8);c3Rail(18,8,32,8);c3Rail(6,12,18,12);fbProp('pr_railcart',11,22,1.1,{r:.6});fbProp('pr_railcart',26,8.6,1.1,{r:.6});
+  [[14,12],[22,16],[9,8],[28,12]].forEach(([x,z])=>fbProp('pr_pylon',x,z,2.4,{r:.4}));
+  [[9,8,2],[28,12,2],[14,12,2],[22,16,2]].forEach(([x,z])=>{const l=new THREE.PointLight(0x6ab8ff,1.4,7);l.position.set(x,2.2,z);E.world.add(l);flicker(l,1.4,.4,6+x);});
+  magnetCan(18,3.6,6,1.2);
+  // canvas lab in the north-east
+  const tent=roofPrism(8,7,2.2,new THREE.MeshStandardMaterial({color:0xb8a888,side:THREE.DoubleSide,roughness:.95}));tent.position.set(30,2.4,5);E.world.add(tent);
+  [[26.4,1.6],[33.6,1.6],[26.4,8.4],[33.6,8.4]].forEach(([x,z])=>fbBox(x,z,.16,.16,2.4,new THREE.MeshStandardMaterial({color:0x3a2a1e})));
+  fbBox(30,4.4,2.6,1.1,.9,mat2('plank',1,.5));fbLamp(30,4.4,1.2,0x9ad8ff);
+  [[27,6],[33,6],[31,2.6]].forEach(([x,z])=>fbBarrel(x,z,0x3a4a5a));
+  // lift shaft
+  const cage=new THREE.Group();for(const [x,z] of [[16.6,26],[19.4,26],[16.6,28],[19.4,28]]){const p=new THREE.Mesh(new THREE.BoxGeometry(.12,4.6,.12),new THREE.MeshStandardMaterial({color:0xa88a4a,metalness:.8}));p.position.set(x,2.3,z);cage.add(p);}E.world.add(cage);fbLamp(18,26.6,3.6);
+  dustField(160,[0,0,0,W0,4,H0],0x9ad8ff,.05,.08);E.hemi.intensity=Math.max(E.hemi.intensity,.5);
+  [[10,16],[26,16],[18,10],[6,6]].forEach(([x,z])=>{const l=new THREE.PointLight(0xffc890,.9,9);l.position.set(x,2.6,z);E.world.add(l);});
+  const sl=new THREE.PointLight(0xffb070,1,8);sl.position.set(30,2,23);E.world.add(sl);flicker(sl,1,.3,3);
+}
+
+/* ---------------- 避雷塔 ---------------- */
+const C3TW={W:28,H:30};
+MAPS.tower={name:'避雷塔',theme:'tower',free:1,ch:3,storm:2,build:buildTower,size:[C3TW.W,C3TW.H],grid:Array(C3TW.H).fill('.'.repeat(C3TW.W)),enc:false,table:[['minicoil']],
+  start:[14,27],rest:[22.6,24],sunCol:0xc0cce8,sunInt:.4,
+  obj:()=>!P.flags.b4?'往上爬，拆掉中段的小型線圈':'登上塔頂，摧毀雷暴線圈',
+  zones:[{r:[0,20,28,30],name:'塔基・錨鏈平台'},{r:[0,10,28,20],name:'中段浮空平台',danger:1},{r:[0,0,28,10],name:'塔頂',danger:1}],
+  mmFloor:[[0,0,28,30,'#8a8a90']],
+  colliders:()=>({box:(X.colCache||{box:[]}).box.slice(),circ:(X.colCache||{circ:[]}).circ.slice()}),
+  events:[
+   {id:'anchor',kind:'sign',at:[4.6,25.4],label:'第 13 號錨鏈',fn:()=>c3Clue(5)},
+   {id:'b4',kind:'auto',at:[14,16],r:3,cond:()=>!P.flags.b4,battle:()=>battleC3real('b4'),pre:'b4pre3'},
+   {id:'boss',kind:'auto',at:[14,6.4],r:2.6,cond:()=>P.flags.b4&&!P.flags.boss3,battle:()=>battleC3real('boss'),pre:'bossPre3'},
+   {id:'stoveT',kind:'stove',at:[22.6,24],label:'塔基的值班爐（休息・整備）',rest:true},
+   {id:'chT1',kind:'chest',at:[2.6,14],label:'平台邊的補給箱',loot:{H2O:2,C:2},items:['capsule']},
+   {id:'down',kind:'exit',at:[14,29.2],r:1.4,label:'回到城裡',cond:()=>true,go:()=>enterMap('gauss',{pos:[23,3.6]})},
+  ]};
+function buildTower(){
+  setFog(0x222c44,.5);E.scene.fog.near=16;E.scene.fog.far=46;const W0=C3TW.W,H0=C3TW.H;
+  c3Clouds(W0,H0,-8);envFloor(0,0,W0,H0,'tx_brassdeck',3,0);fbBound(W0,H0);
+  c3Railing(0,0,0,H0);c3Railing(W0,0,W0,H0);c3Railing(0,H0,W0,H0);c3Railing(0,0,W0,0);
+  // tower core in the middle-top + the giant rod
+  const core=new THREE.Mesh(new THREE.CylinderGeometry(1.6,2,8,10),new THREE.MeshStandardMaterial({color:0x4a5060,metalness:.7,roughness:.4}));core.position.set(14,4,1.4);E.world.add(core);
+  const rod=new THREE.Mesh(new THREE.ConeGeometry(.3,9,8),new THREE.MeshStandardMaterial({color:0xc87a40,metalness:.9,roughness:.3,emissive:0x2a1004}));rod.position.set(14,12.5,1.4);E.world.add(rod);
+  const glow=new THREE.PointLight(0xb48aff,2,14);glow.position.set(14,8,3);E.world.add(glow);flicker(glow,2,1.2,9);
+  // bobbing platforms (decor) on both sides
+  [[3,8],[25,8],[3,18],[25,18],[8,12],[20,12]].forEach(([x,z],k)=>{const p=new THREE.Mesh(new THREE.BoxGeometry(2.4,.4,2.4),c3m('tx_brassdeck',1,1));p.position.set(x,.2,z);E.world.add(p);
+    E.fxs.push((dt,t)=>{if(!p.parent)return false;p.position.y=.2+Math.max(0,Math.sin(t*.8+k))*.5;});});
+  // anchor chains at the base
+  [[4,26],[24,26]].forEach(([x,z])=>{chain(x,-6,z,8);fbProp('pr_chain',x+1.2,z+1,.7);});
+  [[6,22],[22,22],[6,10],[22,10]].forEach(([x,z])=>fbProp('pr_rod',x,z,2.6,{r:.3}));
+  [[2,22],[26,14]].forEach(([x,z])=>fbProp('pr_signal',x,z,2.6,{r:.25,glow:.6}));
+  floatRock(-8,-2,10,3);floatRock(36,-1,16,2.6);floatRock(14,-4,-10,4);
+}
+
+/* ======================= CHAPTER 3 — side story 「十三號」 + two small requests ======================= */
+QUESTS.push(
+ {id:'c3thirteen',ch:3,map:'dock',title:'十三號',where:'高斯港各處',act:'第十三號採掘聚落的痕跡散落在風暴之環。找齊五條線索。',done:'亞伯特來自第十三號聚落。'},
+ {id:'c3lens',ch:3,map:'gauss',title:'信號燈的透鏡',where:'碼頭・下城區・礦坑',act:'米菈的信號燈少了 3 片黃銅透鏡。找到後交給燈塔的米菈。',done:'米菈的燈又能打出完整的燈語了。'},
+ {id:'c3bp',ch:3,map:'gauss',title:'被吹走的設計圖',where:'磁軌礦坑',act:'蕾溫的城帆設計圖被風吹進了礦坑。找到後交還給她。',done:'蕾溫用新的城帆把整座城扶正了一點。'});
+Object.assign(GEAR,{
+ lampcharm:{name:'信號燈片護符',who:'ryan',hp:25,desc:'HP +25。米菈用多出來的透鏡磨成的護符，迎著光會打出「平安」的燈語。'},
+ watch13:{name:'十三號的懷錶',who:'claire',hp:20,atk:10,desc:'HP +20、攻擊 +10。停在一點十三分的懷錶。巴托說，該有人把它帶出風暴了。'},
+ sailcloth:{name:'城帆布斗篷',who:'claire',hp:35,desc:'HP +35。蕾溫用城帆的邊角料縫的斗篷，風再大也吹不透。'},
+});
+/* ---- 十三號 clues ---- */
+const C3_CLUE={
+ 1:[{n:'登記簿的紙頁被潮氣泡得發皺。萊恩一頁一頁往前翻，翻到二十年前。'},
+    {n:'「入港登記：移民船『第十三號』。出發地：第十三號採掘聚落。乘客：礦工十三戶，共四十一人。」'},
+    {who:'claire',e:'Neutral',t:'第十三號採掘聚落……在哪裡聽過。'},
+    {who:'ryan',e:'Fork_Gaze',t:'奧姆鎮最早的名字。水塔上寫著，鎮公所的鐘也停在一點十三分。',if:'egg_tank'},
+    {who:'ryan',e:'Fork_Gaze',t:'……奧姆鎮最早就叫這個名字。',ifnot:'egg_tank'}],
+ 2:[{n:'老礦工坐在門檻上，一遍一遍地打開懷錶，又闔上。看到你們走近，他把懷錶遞了過來。'},
+    {n:'錶針停在一點十三分。錶蓋內側刻著一行小字：「第十三號採掘聚落・第七坑道」。'},
+    {who:'oldminer',e:'Neutral',t:'（他用粉筆在地上寫）「二十年前，奧姆的礦坑塌了。一點十三分。我們剩下的人搬來這裡。」'},
+    {who:'oldminer',e:'Neutral',t:'（又寫）「有個小男孩，爸爸被埋在裡面。他每天都坐在坑口，對著石頭說話。後來一個戴圓眼鏡的教授把他帶走了。」'},
+    {who:'claire',e:'Memory_Headache',t:'圓眼鏡的教授……霍華德教授？'},
+    {who:'ryan',e:'Fork_Gaze',t:'奧姆鎮那個咳嗽的老礦工，也說過一樣的話。',if:'q_miner'}],
+ 3:[{n:'坑壁上刻著一排很深的字，被磁鐵礦的粉末填得發黑。'},
+    {n:'「鐵與灰，可以等價交換——」'},
+    {n:'後半句被一塊崩落的岩石擋住了。'},
+    {who:'ryan',e:'Fork_Gaze',t:'……「人心不在可議價之列」。奧姆鎮雕像背後刻的，就是後半段。',if:'egg_statue'},
+    {who:'claire',e:'Neutral',t:'鐵與灰可以等價交換，人心不在可議價之列……這是礦工們的誓言。',if:'egg_statue'},
+    {who:'ryan',e:'Fork_Gaze',t:'這是一句誓言的前半段。後半段……也許刻在別的地方。',ifnot:'egg_statue'}],
+ 4:[{n:'（礦工名冊被撕掉的那一頁，只剩裝訂線旁的半個「A」。）'},{who:'ryan',e:'Fork_Gaze',t:'第十三號聚落的名冊。被撕掉的那頁……姓 A 開頭。'}],
+ 5:[{n:'第 13 號錨鏈的鐵環上，有人用釘子刻了一個小小的圖案。'},
+    {n:'是一把音叉。刻痕很淺、歪歪扭扭，看得出是小孩子的手筆。旁邊還有一個字母：「A」。'},
+    {who:'claire',e:'Hurt',t:'音叉……跟你那把一模一樣。'},
+    {who:'ryan',e:'AshEye_Overload',t:'……這把音叉，是霍華德教授給我的。他說，是「一個學生留下來的」。'}],
+};
+function c3Clue(n){const key='c3c'+n,first=!P.flags[key];
+  if(!first&&n!==4){say([{n:['','登記簿上那一頁，萊恩已經記住了。','老礦工又把懷錶打開、闔上。','「鐵與灰，可以等價交換——」','','錨鏈上的小音叉，被雨洗得發亮。'][n]}]);return;}
+  if(first&&!Q('c3thirteen'))P.flags['q_c3thirteen']=1;
+  const L=C3_CLUE[n].filter(l=>(!l.if||P.flags[l.if])&&(!l.ifnot||!P.flags[l.ifnot]));
+  const run=()=>{P.flags[key]=1;const got=[1,2,3,4,5].filter(i=>P.flags['c3c'+i]).length;
+    if(first)setTimeout(()=>toast(`支線「十三號」線索 ${got}/5`),300);
+    if(got===5&&!P.flags.c3_13){P.flags.c3_13=1;qDone('c3thirteen');const k=addLoot('watch13');setTimeout(()=>toast(`五條線索都齊了。取得 ${k}。`),1400);}};
+  if(n===4){run();return;}
+  say(L,run);}
+/* ---- 米菈的透鏡 ---- */
+function c3Lens(where){const key='c3lens'+where;if(P.flags[key]){toast('這裡已經找過了。');return;}
+  P.flags[key]=1;const n=['D','G','M'].filter(w=>P.flags['c3lens'+w]).length;sfx('ui');toast(`撿到黃銅透鏡（${n}/3）`);
+  if(Q('c3lens')!==2&&!Q('c3lens'))P.flags['q_c3lens']=1;}
+function c3MilaTalk(){const n=['D','G','M'].filter(w=>P.flags['c3lens'+w]).length;
+  if(Q('c3lens')===2){say([{who:'mila',e:'Smile',t:P.flags.boss3?'……我的聲音，好奇怪。可是我好喜歡。':'（燈光：長、短、長）——平安。'}]);return;}
+  if(n>=3){say([{who:'mila',e:'Surprised',t:'（燈光瘋狂地閃）三片！全部！'},{n:'米菈把透鏡一片一片裝回燈罩。燈塔的光一下子變得又白又亮，直直射穿了雨幕。'},
+    {who:'mila',e:'Teary_Fierce',t:'（黑板）「多的這片，給你們。磨成護符。」'}],()=>{qDone('c3lens');const k=addLoot('lampcharm');toast(`取得 ${k}。`);});return;}
+  if(!Q('c3lens')){say([{who:'mila',e:'Neutral',t:'（黑板）「燈少了三片透鏡，燈語打不清楚。被雷打下來的時候掉到城裡各處去了。」'},
+    {who:'mila',e:'Neutral',t:'（黑板）「碼頭、街上、礦坑。如果看到黃銅色的圓片……」'},{who:'claire',e:'Default_Grin',t:'包在我們身上。'}],()=>{P.flags['q_c3lens']=1;qBadge&&qBadge(1);toast('新委託：信號燈的透鏡');});return;}
+  say([{who:'mila',e:'Neutral',t:`（燈光）透鏡……${n}/3。`},{who:'mila',e:'Neutral',t:!P.flags.b3?'（黑板）「礦坑的升降籠在城南。」':!P.flags.r19?'（黑板）「去城帆工坊找蕾溫奶奶。她什麼都會。」':'（黑板）「塔門在城北。小心風。」'}]);}
+/* ---- 蕾溫：工坊（R18/R19）+ 設計圖 ---- */
+function c3Blueprint(){if(P.flags.c3bpgot){toast('捲軸已經收起來了。');return;}P.flags.c3bpgot=1;
+  say([{n:'一捲被風吹到角落的設計圖，上面畫著巨大的帆布翼，邊角簽著「L.」。'},{who:'claire',e:'Default_Grin',t:'這個……是不是城帆工坊的東西？帶回去還給她吧。'}],()=>{if(!Q('c3bp'))P.flags['q_c3bp']=1;toast('取得「城帆設計圖」。');});}
+function c3LewinTalk(){
+  if(P.flags.lab&&!P.flags.r19){playScene(SCENES.workshop,()=>{P.flags.r18=P.flags.r19=1;ch3Equip(['R19','R18']);backToMap();
+      setTimeout(()=>toast('解鎖手札 #R18 勞倫茲力・電磁軌道砲、#R19 伯努利・暴風氣旋障壁，已自動裝入。'),400);},{keep:true,actors:exActors()});return;}
+  if(P.flags.c3bpgot&&Q('c3bp')!==2){say([{who:'lewin',e:'Hurt',t:'（黑板上的字抖了一下）「……我的設計圖。我以為再也找不回來了。」'},
+      {who:'lewin',e:'Smile',t:'（黑板）「拿著。用城帆的邊角料縫的。風再大也吹不透。」'}],()=>{qDone('c3bp');const k=addLoot('sailcloth');giveMoney(80);toast(`取得 ${k}、80 ${MK}。`);});return;}
+  if(!P.flags.lab){say([{who:'lewin',e:'Neutral',t:'（老太太頭也不抬，在黑板上寫字）「要上塔？先去把礦坑的電切了。線圈沒電，風才會小一點。」'},
+      {who:'lewin',e:'Neutral',t:'（又寫）「還有，看到一捲畫著帆的設計圖，幫我撿回來。上個月被風吹進礦坑了。」'}],()=>{if(!Q('c3bp'))P.flags['q_c3bp']=1;});return;}
+  say([{who:'lewin',e:'Cynical_Smirk',t:'（黑板）「還在這幹嘛？塔在北邊。」'}]);}
+/* ---- 煤灰 cameo ---- */
+function c3Cat(){const seen=P.flags.egg_cat;
+  say(seen?[{n:'屋簷下蹲著一隻黑貓。脖子上沒有鈴鐺——鈴鐺在克蕾雅的工具包裡。'},{who:'claire',e:'Default_Grin',t:'……煤灰？你怎麼跑到這麼遠的地方來？'},
+      {n:'黑貓「喵」了一聲。在這座沒有聲音的城裡，那聲音清楚得不可思議。'},{who:'ryan',e:'Fork_Gaze',t:'……貓的聲音沒被拿走。'}]
+    :[{n:'屋簷下蹲著一隻黑貓，正在舔爪子。'},{n:'牠「喵」了一聲。在這座沒有聲音的城裡，那聲音清楚得不可思議。'},{who:'ryan',e:'Fork_Gaze',t:'……貓的聲音沒被拿走。'}]);}
 
 /* ======================= AUDIO PASS: file-based music with fallback, richer SFX ======================= */
 /* MUSIC_FILES / SFX_FILES are injected by build.py from the music/ and sfx/ folders */

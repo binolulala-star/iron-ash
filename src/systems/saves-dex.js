@@ -17,7 +17,7 @@ clearRun=function(){};
 {const o=chapter2End;chapter2End=function(){if(SLOT)writeSlot(SLOT,{v:2,stage:'cleared2',map:null,pos:null,t:Date.now(),ch:2,P:snapP()});o();};}
 setInterval(()=>{if($('title').hidden&&P.lv&&!document.hidden)P.play=(P.play||0)+1;},1000);
 const fmtPlay=s=>{s=s|0;const h=(s/3600)|0,m=((s%3600)/60)|0;return h?`${h} 小時 ${m} 分`:`${m} 分`;};
-const slotWhere=d=>d.stage==='boss'?'第三機庫・決戰前':d.stage==='ch2start'?'第一章 完 → 第二章':d.stage==='cleared2'?'第二章 完':(MAPS[d.map]?MAPS[d.map].name:'—');
+const slotWhere=d=>d.stage==='boss'?'第三機庫・決戰前':d.stage==='ch2start'?'第一章 完 → 第二章':d.stage==='cleared2'?'第二章 完 → 第三章':d.stage==='ch3start'?'第三章 開頭':d.stage==='cleared3'?'第三章 完':(MAPS[d.map]?MAPS[d.map].name:'—');
 function loadSlot(n){const d=readSlot(n);if(!d)return;SLOT=n;
   if(d.stage==='ch2start'||d.stage==='cleared2'){try{localStorage.setItem(CH2_KEY,JSON.stringify(Object.assign({},d.P,{flags:Object.assign({tut_move:1,tut_enc:1},d.P.flags)})));}catch(e){}
     if(d.stage==='cleared2')setTimeout(()=>toast('這個存檔已經通關第二章。從第二章開頭重新遊玩（等級與道具保留）。'),400);startCh2();return;}
@@ -26,7 +26,7 @@ function loadSlot(n){const d=readSlot(n);if(!d)return;SLOT=n;
   toast(`已讀取存檔（欄位 ${n}）。`);}
 function slotMenu(mode,onPick){
   const draw=(confirmN)=>{const rows=[1,2,3].map(n=>{const d=readSlot(n);
-    const info=d?`<b>${slotWhere(d)}</b><span class="px">第${d.ch===2?'二':'一'}章・萊恩 Lv ${d.P.lv.ryan.lv}・克蕾雅 Lv ${d.P.lv.claire.lv}・${d.P.money||0} ${MK}</span><span class="px">遊玩 ${fmtPlay(d.P.play)}・${new Date(d.t).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</span>`:'<b class="empty">空白欄位</b>';
+    const info=d?`<b>${slotWhere(d)}</b><span class="px">第${['一','二','三'][(d.ch||1)-1]||d.ch}章・萊恩 Lv ${d.P.lv.ryan.lv}・克蕾雅 Lv ${d.P.lv.claire.lv}・${d.P.money||0} ${MK}</span><span class="px">遊玩 ${fmtPlay(d.P.play)}・${new Date(d.t).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</span>`:'<b class="empty">空白欄位</b>';
     let btn='';if(mode==='load')btn=d?`<button class="btn primary" data-load="${n}">讀取</button><button class="btn" data-del="${n}">刪除</button>`:'';
     else btn=confirmN===n?`<button class="btn primary" data-pick="${n}">確定覆蓋</button><button class="btn" data-cancel>取消</button>`:`<button class="btn ${d?'':'primary'}" data-${d?'ask':'pick'}="${n}">${d?'覆蓋':'使用'}</button>`;
     if(mode==='load'&&confirmN===n)btn=`<button class="btn primary" data-delok="${n}">確定刪除</button><button class="btn" data-cancel>取消</button>`;

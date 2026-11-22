@@ -1,5 +1,5 @@
-tests/out/
-__pycache__/
 *.pyc
 .DS_Store
 __pycache__/
+tests/out/
+tests/out3/
