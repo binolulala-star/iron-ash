@@ -26,6 +26,7 @@ art/props.js
 art/materials.js
 systems/quests-eggs.js
 systems/saves-dex.js
+chapter3/carry.js
 art/boards-backdrops.js
 art/silhouettes.js
 art/postfx.js
